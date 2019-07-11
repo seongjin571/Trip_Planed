@@ -1,0 +1,270 @@
+@font-face {
+    font-family: 'LotteMartDream';
+    font-style: normal;
+    font-weight: 800;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
+  }
+button:hover {
+    cursor: pointer;
+}
+body::-webkit-scrollbar { 
+    display: none; 
+}
+.tour-info::-webkit-scrollbar { 
+    display: none; 
+}
+body,
+html {
+    font-family: 'LotteMartDream';
+    margin: 0;
+}
+p,div,button{
+    font-family: 'LotteMartDream';
+}
+
+
+.location-name {
+    line-height: 270px;
+    color: white;
+    margin-left: 20px;
+    font-size: 30px;
+    margin: 0 0 0 20px;
+}
+
+.add-plan { 
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
+
+.add-plan>button {
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+    border: 1.5px solid #4c80f1;
+    background-color: white;
+    color: #4c80f1;
+    margin-top: 25px;
+}
+
+.add-plan-container, .tour-info-container {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-plan-wrap {
+    display: table;
+    height: 100%;
+    width: 40%;
+    margin: 0 auto;
+}
+
+.add-plan-verti-div,.tour-info-verti-div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.add-plan-content {
+    background-color: white;
+    border-radius: 3px;
+    padding: 30px;
+}
+
+.add-plan-content input {
+    height: 50px;
+    border: 1px solid rgba(216, 214, 214, 0.8);
+    border-radius: 3px;
+    margin: 20px 0;
+}
+
+.input-plan-content {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.add-plan-btn, .add-tour-plan-btn {
+    width: 100%;
+    background-color: #4c80f1;
+    border: 1px solid #4c80f1;
+    color: white;
+    font-size: 17px;
+    height: 50px;
+    border-radius: 3px;
+}
+
+span[class^=plan-delete-btn] {
+    position: absolute;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #ff7777;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+span[class^=plan-delete-btn]:hover {
+    transform: scale(1.05);
+}
+.tour-dest-wrap{
+    max-width: 1000px;
+    margin: 0 auto ;
+}
+.tour-dest-container{
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 50px;
+    background-color: #f6f6f6;
+}
+.tour-dest-ul{
+    padding: 0;
+}
+.tour-dest-ul::after{
+    content: '';
+    clear: both;
+    display: block;
+}
+.tour-dest-list{
+    list-style: none;
+    float: left;
+    width: 320px;
+    height: 200px;
+    margin: 0 0 70px 20px;
+}
+.tour-dest-list:nth-child(3n + 1){
+    margin: 0 0 70px 0px;
+}
+.tour-dest-ul:hover{
+    cursor: pointer;
+}
+.tour-dest-content{
+    margin-top: 15px;
+}
+.tour-dest-img{
+    box-sizing: border-box;
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
+}
+
+.tour-dest-list:nth-child(6n + 1) .tour-dest-img {
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/market6.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.tour-dest-list:nth-child(6n + 2) .tour-dest-img {
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/market4.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.tour-dest-list:nth-child(6n + 3) .tour-dest-img {
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/market5.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.tour-dest-list:nth-child(6n + 4) .tour-dest-img {
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/market6.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.tour-dest-list:nth-child(6n + 5) .tour-dest-img {
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/market7.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.tour-dest-list:nth-child(6n + 6) .tour-dest-img {
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/market8.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.tour-img{
+    border-right: 1px solid #dedede;
+    width: 450px;
+    height: 600px;
+    background: url('../images/market4.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    float: left;
+    background-position: center;
+}
+.tour-content{
+    float: left;
+    height: 600px;
+    width: 449px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.tour-info-content::after{
+    content: '';
+    clear: both;
+    display: block;
+}
+.tour-info{
+    border-bottom: 1px solid #dedede;
+    overflow-y: auto;
+    height: 320px;
+}
+
+.add-tour input{
+    margin: 20px 0;
+}
+.add-tour input, .add-tour select{
+    height: 30px;
+}
+.add-tour{
+    margin-top: 20px;
+}
+.tour-info-wrap{
+    display: table;
+    width: 900px;
+    margin: 0 auto;
+    height: 100%;
+}
+.tour-info-content {
+    height: 600px;
+    background-color: white;
+    border-radius: 3px;
+}
+.eiffel-img{
+    position: absolute;
+    left: 10;
+    width: 25px;
+    top: 10;
+}
+.store-plan-btn{
+    width: 50%;
+    height: 50px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1.5px solid #4c80f1;
+    margin-left: 25%;
+    color: #4c80f1;
+    font-size: 16px;
+}
+.mypage-link{
+    display: block;
+    position: absolute;
+    width: 4%;
+    top: 25;
+    right: 20;
+}
+.mypage-link img{
+    width: 100%;
+    height: auto;
+}

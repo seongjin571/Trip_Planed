@@ -1,0 +1,197 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>plan</title>
+    <link rel="stylesheet" href="/css/plan.css">
+    <link rel="stylesheet" href="/css/planchart.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+
+<body>
+    <div>
+        <div class="header">
+            <a href="/main">
+                <img src="/images/logo.png" alt="트립 프랜드 로고" class="logo-img">
+            </a>
+            <ul class="nav">
+                <li class="nav-list"><a class="nav-link" href="/mypage/seongjin571">마이페이지</a></li>
+                <li class="nav-list"><a class="nav-link" href="/api/shareplan">공유계획</a></li>
+                <li class="nav-list"><a class="nav-link" href="/api/logout">로그아웃</a></li>
+            </ul>
+        </div>
+        <img class="trip-location" src="images/back.png" width="100%" height="auto" />
+        <!-- <p class="location-name">가평</p> -->
+        <h1 class="plan-title" data-totalDay=5>가자 남이섬!!</h1>
+        <div class="plan-container">
+            <div class="plan-day" data-day=1>
+                <div class="day-count">1Day</div>
+                <div class="plan-day-wrap">
+                    <div class="add-plan" data-day=1>
+                        <button class="add-direct" data-day=1>일정 추가</button>
+                    </div>
+                </div>
+            </div>
+            <div class="plan-day" data-day=2>
+                <div class="day-count">2Day</div>
+                <div class="plan-day-wrap">
+                    <div class="add-plan" data-day=2>
+                        <button class="add-direct" data-day=2>일정 추가</button>
+                    </div>
+                </div>
+            </div>
+            <div class="plan-day" data-day=3>
+                <div class="day-count">3Day</div>
+                <div class="plan-day-wrap">
+                    <div class="add-plan" data-day=3>
+                        <button class="add-direct" data-day=3>일정 추가</button>
+                    </div>
+                </div>
+            </div>
+            <div class="plan-day" data-day=4>
+                <div class="day-count">4Day</div>
+                <div class="plan-day-wrap">
+                    <div class="add-plan" data-day=4>
+                        <button class="add-direct" data-day=4>일정 추가</button>
+                    </div>
+                </div>
+            </div>
+            <div class="plan-day" data-day=5>
+                <div class="day-count">5Day</div>
+                <div class="plan-day-wrap">
+                    <div class="add-plan" data-day="5">
+                        <button class="add-direct" data-day=5>일정 추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="store-plan-btn">계획 저장</button>
+
+        <div class="tour-dest-container">
+            <div class="tour-dest-wrap">
+                <h1>춘천 관광 여행지</h1>
+                <ul class="tour-dest-ul">
+                    <li class="tour-dest-list">
+                        <div class="tour-dest-img"></div>
+                        <h4 class="tour-dest-content">남이섬</h4>
+                    </li>
+                    <li class="tour-dest-list">
+                        <div class="tour-dest-img"></div>
+                        <h4 class="tour-dest-content">쁘띠 프랑스</h4>
+                    </li>
+                    <li class="tour-dest-list">
+                        <div class="tour-dest-img"></div>
+                        <h4 class="tour-dest-content">제이드가든 수목원</h4>
+                    </li>
+                    <li class="tour-dest-list">
+                        <div class="tour-dest-img"></div>
+                        <h4 class="tour-dest-content">강촌레일파크 김유정레일바이크</h4>
+                    </li>
+                    <li class="tour-dest-list">
+                        <div class="tour-dest-img"></div>
+                        <h4 class="tour-dest-content">엘리시안 강촌</h4>
+                    </li>
+                    <li class="tour-dest-list">
+                        <div class="tour-dest-img"></div>
+                        <h4 class="tour-dest-content">자라섬</h4>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="copy-rights">
+                © 2019 2H&A. All rights reserved.
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="add-plan-container">
+        <div class="add-plan-wrap">
+            <div class="add-plan-verti-div">
+                <div class="add-plan-content">
+                    <h1><span class="day"></span>Day</h1>
+                    <label for="start-time">시작 시간</label><input type="time" name="startTime" class="input-start-time" />
+                    <label for="finish-time">종료 시간</label><input type="time" name="finsihTime"
+                        class="input-finish-time" /><br />
+                    <label for="plan-content">일정 내용</label><br />
+                    <input type="text" name="planContent" id="plan-content" class="input-plan-content" />
+                    <button class="add-plan-btn">일정 추가</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tour-info-container">
+        <div class="tour-info-wrap">
+            <div class="tour-info-verti-div">
+                <div class="tour-info-content">
+                    <div class="tour-img">
+                        <!-- <img class="tour-img" src="images/market10.jpg" width="450px" height="auto"></img> -->
+                    </div>
+                    <div class="tour-content">
+                        <h2 class="tour-name"></h2>
+                        <div class="tour-info">
+                            <p>강원도 춘천시 남산면 방하리에 있는 섬. | 명칭 유래 남이섬이라는 지명은 남이(南怡) 장군의 묘소로부터 유래하였다. 그러나 남이 장군의 묘소가 섬 어디에
+                                있는지는
+                                정확히 알려지지 않고 있다. 자연환경 강원도 춘천시와 경기도 가평군의 경계를 이루고 있으며 어쩌구 저쩌구 하면서 그렇다고 이러아아훅 오</p>
+                            <p>입장료 : 30,000원</p>
+                            <p>위치 : 강원 춘천시 남산면 남이섬길 1
+                                구(지번) 주소
+                                남산면 방하리 198 (지번)</p>
+                            <p>전화 번호 : 031-580-8114</p>
+                            <p>운영 시간 : 09:00 ~ 22:00</p>
+                        </div>
+                        <div class="add-tour">
+                            <label for="select-day">날짜 선택</label>
+                            <select name="day" id="select-day">
+                                <option value=1 selected="selected">1Day</option>
+                                <option value=2>2Day</option>
+                                <option value=3>3Day</option>
+                                <option value=4>4Day</option>
+                                <option value=5>5Day</option>
+                            </select><br />
+                            <label for="start-time">시작 시간</label><input type="time" name="startTime"
+                                class="input-start-time" />
+                            <label for="finish-time">종료 시간</label><input type="time" name="finsihTime"
+                                class="input-finish-time" /><br />
+                            <button class="add-tour-plan-btn">일정 추가</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="template-direct" class="template-direct">
+            <div class="one-plan">
+                <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
+                <div class="time">
+                    <input name="startTime" value={startTime} readonly class="start-time" />
+                    <span> - </span>
+                    <input name="finishTime" value={finishTime} readonly class="finish-time" />
+                </div>
+                <div class="detail-plan">
+                        <input name="planContent" value='{planContent}' readonly class="plan-content" />
+                </div>
+            </div>
+
+</script>
+<script type="template-tour" class="template-tour">
+        <div class="one-plan">
+                <img src="images/tour.png" class="eiffel-img">
+                <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
+                <div class="time">
+                    <input name="startTime" value={startTime} readonly class="start-time" />
+                    <span> - </span>
+                    <input name="finishTime" value={finishTime} readonly class="finish-time" />
+                </div>
+                <div class="detail-plan">
+                        <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
+                </div>
+            </div>
+</script>
+<script src="js/plan.js"></script>
+
+</html>

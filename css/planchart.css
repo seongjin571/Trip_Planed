@@ -1,0 +1,77 @@
+.plan-container::after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.plan-day { 
+    width: 250px;
+    float: left;
+    min-height: 150px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.one-plan { 
+    width: 100%;
+    height: 80px;
+    border-bottom: 3px solid white;
+    text-align: center;
+    position: relative;
+}
+
+.day-count { 
+    text-align: center;
+    font-size: 18px;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 2px solid rgba(212, 212, 212, 0.5);
+    background-color: #4c80f1;
+    color: white;
+}
+
+
+.plan-container {
+    max-width: 1000px;
+    min-width: 350px;
+    margin: 0 auto 50px;
+    background-color: white;
+    /* border: 2px solid rgba(212, 212, 212, 0.5); */
+    padding: 0 3px;
+}
+
+.plan-day:nth-child(2n) .plan-day-wrap {
+    background-color: #d1dddb4d;
+    margin: 6px 3px;
+}
+
+.plan-day:nth-child(2n+1) .plan-day-wrap {
+    background-color: #85b8cb2b;
+    margin: 6px 3px;
+}
+
+.time {
+    height: 30px;
+    line-height: 45px;
+}
+
+input[class^=start-time],
+input[class^=finish-time] {
+    background-color: inherit;
+    border: none;
+    width: 15%;
+    text-align: center;
+}
+
+.plan-content {
+    background-color: inherit;
+    border: none;
+    text-align: center;
+    height: 50px;
+    width: 100%;
+    font-size: 15px;
+}
+.plan-title{
+    max-width: 1000px;
+    margin: 30px auto;
+}

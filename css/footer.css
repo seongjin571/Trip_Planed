@@ -1,0 +1,10 @@
+.footer{
+height: 100px;
+line-height: 100px;
+background-color: #353535;
+}
+.copy-rights{
+    color: white;
+    max-width: 1000px;
+    margin: 0 auto;
+}

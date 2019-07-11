@@ -1,0 +1,118 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/mypage.css">
+    <link rel="stylesheet" href="/css/planchart.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+
+<body>
+    <div class="header">
+        <a href="/main">
+            <img src="/images/logo.png" alt="트립 프랜드 로고" class="logo-img">
+        </a>
+        <ul class="nav">
+            <li class="nav-list"><a class="nav-link" href="/mypage/seongjin571">마이페이지</a></li>
+            <li class="nav-list"><a class="nav-link" href="/api/shareplan">공유계획</a></li>
+            <li class="nav-list"><a class="nav-link" href="/api/logout">로그아웃</a></li>
+        </ul>
+    </div>
+    <img class="trip-location" src="/images/mypage.png" width="100%" height="auto" />
+    <ul class="plan-ul">
+        <% const planLength = result.length;
+                for(let i = 0; i < planLength; i++){
+            %>
+        <li class="plan-list" data-planId=<%= result[i].plan_id %> data-totalday=<%= result[i].total_day%>>
+            <div class="sample-img"></div>
+            <div class="plan-content-wrap">
+                <span>춘천</span>
+                <h3><%= result[i].plan_title %></h3>
+                <p>일정 : 7/15 ~ 7/19</p>
+                <img src="/images/heart.png" alt="하트 이미지" class="heart-img">
+                <span class="good-count"><%= result[i].good %></span>
+            </div>
+        </li>
+        <% } %>
+    </ul>
+    <div class="footer">
+        <div class="copy-rights">
+            © 2019 2H&A. All rights reserved.
+        </div>
+    </div>
+
+    <div class="detail-plan-container">
+        <div class="detail-plan-wrap">
+            <div class="detail-plan-verti-div">
+                <div class="plan-container" id="plan-modal-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="template-day" class="template-day">
+                <div class="plan-day">
+                        <div class="day-count">{day}Day</div>
+                        <div class="plan-day-wrap">
+                        </div>
+                    </div>
+        </script>
+
+    <script type="template-tour" class="template-tour">
+            <div class="one-plan">
+                    <span></span>
+                    <div class="time">
+                        <input name="startTime" value={startTime} readonly class="start-time" />
+                        <span> - </span>
+                        <input name="finishTime" value={finishTime} readonly class="finish-time" />
+                    </div>
+                    <div class="detail-plan">
+                            <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
+                    </div>
+                </div>
+    </script>
+    <script>
+        const eiffelImg = "<img src='images/tour.png' class='eiffel-img'>";
+        const planList = document.querySelectorAll('.plan-list');
+        planList.forEach(function (e) {
+            e.addEventListener('click', function (v) {
+                const planContainer = document.querySelector('.plan-container');
+                planContainer.innerHTML = "";
+                document.querySelector('.detail-plan-container').style.display = "block";
+                const planId = e.dataset.planid;
+                const totalDay = e.dataset.totalday;
+                const templateHtml = document.querySelector('.template-day').innerHTML;
+                for (let i = 0; i < totalDay; i++) {
+                    const newTemplateHtml = templateHtml.replace('{day}', i + 1);
+                    planContainer.innerHTML += newTemplateHtml;
+                }
+                const url = "/getPlan?planId=" + planId;
+                planHttp = new XMLHttpRequest();
+                planHttp.addEventListener("load", function (result) {
+                    const data = JSON.parse(planHttp.responseText);
+                    data.result.forEach(function (e) {
+                        console.log(e);
+                        const dayWrap = document.getElementsByClassName('plan-day-wrap')[e.day - 1];
+                        let onePlan = document.querySelector('.template-tour').innerHTML;
+                        const newTemplateHtml = onePlan.replace('{startTime}', e.start_time)
+                            .replace('{finishTime}', e.finish_time)
+                            .replace('{planContent}', e.plan_content);
+                        if (e.tour_flag === 1) newTemplateHtml = newTemplateHtml.replace('<span></span>', eiffelImg);
+                        dayWrap.innerHTML += newTemplateHtml;
+                    })
+                })
+                planHttp.open("GET", url);
+                planHttp.send();
+            })
+        })
+
+        const detailPlanContainer = document.querySelector('.detail-plan-container');
+        detailPlanContainer.addEventListener('click', function (e) {
+            if (e.target.className === 'detail-plan-verti-div')
+                this.style.display = 'none';
+        });
+
+    </script>
+</body>
+
+</html>
