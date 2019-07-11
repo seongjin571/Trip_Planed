@@ -35,8 +35,8 @@
                 <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img">
                 <img src="/images/check.png" alt="체크 이미지" class="check-img">
                 <label for="select-loction">지역선택</label>
-                <select name="select_loction" name="location" id="select-loction">
-
+                <select name="select_loction" name="location" class="select-loction">
+                    <option>선택하세요</option>
                     <option value="1">서울</option>
                     <option value="2">인천</option>
                     <option value="3">대전</option>
@@ -53,6 +53,9 @@
                     <option value="37">전라북도</option>
                     <option value="38">전라남도</option>
                     <option value="39">제주도</option>
+                </select>
+                <select name="select_loction" name="location" class="select-small-location">
+                    <option>선택하세요</option>
                 </select>
             </div>
             <div>
@@ -109,9 +112,29 @@
             © 2019 2H&A. All rights reserved.
         </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script language="javascript" type="text/javascript">
 
+        const selectLoction = document.querySelector('.select-loction');
+        selectLoction.addEventListener('change', function () {
+            const url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + this.value + "&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest";
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    const smallLocation = document.querySelector('.select-small-location');
+                    smallLocation.innerHTML = "";
+                    smallLocation.innerHTML = "<option>선택하세요</option>";
+                    $.each(result.response.body.items.item, function (i, d) {
+                        smallLocation.innerHTML += '<option value =' + d.code + ">" + d.name + "</option>";
+                    });
+                }
+            });
+        })
+
+        
         function calDay() {
             const startDay = document.getElementsByClassName("day-input")[0].value;
             const finishDay = document.getElementsByClassName("day-input")[1].value;
@@ -188,6 +211,7 @@
             this.selectDayBtn = document.querySelectorAll('.select-day-button');
             this.calendarContainer = document.querySelector('.calendar-container');
             this.planTitle = document.querySelector('.plan-title');
+            this.selectLoction = document.querySelector('.select-small-location');
             this.enrollEvent();
         }
         makePlan.prototype = {
@@ -231,20 +255,23 @@
                     }.bind(this))
                 }.bind(this));
 
+                this.selectLoction.addEventListener('change', function(e){
+                    if(this.selectLoction.value > 0) this.doCheck(1);
+                    else this.cancelCheck(1);
+                }.bind(this))
+
             },
 
             doCheck: function (index) {
                 document.getElementsByClassName('check-img')[index].style.display = 'inline';
                 document.getElementsByClassName('nocheck-img')[index].style.display = 'none';
                 this.count++;
-                console.log(this.count);
             },
 
             cancelCheck: function (index) {
                 document.getElementsByClassName('check-img')[index].style.display = 'none';
                 document.getElementsByClassName('nocheck-img')[index].style.display = 'inline';
                 if (this.count > 0) this.count--;
-                console.log(this.count);
             }
         }
 
