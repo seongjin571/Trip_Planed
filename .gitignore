@@ -1,0 +1,16 @@
+*.log
+
+node_modules
+
+.DS_Store
+
+*.temp
+*~
+
+app.js
+
+package.json
+
+package-lock.json
+
+sql.txt
