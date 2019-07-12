@@ -1,7 +1,76 @@
+@font-face {
+    font-family: 'LotteMartDream';
+    font-style: normal;
+    font-weight: 800;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
+  }
+button:hover {
+    cursor: pointer;
+}
+body::-webkit-scrollbar { 
+    display: none; 
+}
+.tour-info::-webkit-scrollbar { 
+    display: none; 
+}
+body,
+html {
+    font-family: 'LotteMartDream';
+    margin: 0;
+}
+p,div,button,input{
+    font-family: 'LotteMartDream';
+}
 .container{
     background-color: #efefef;
     padding: 50px 0;
 }
+#signup_form{
+    padding: 30px;
+}
+
+#signup_form input{
+    margin: 20px 0;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+#first_div {
+    width: 300px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+#submit_btn {
+    cursor: pointer;
+    height: 40px !important;
+    width: 100%;
+    border: 1px solid #efefef;
+    background-color: #4c80f1;
+    font-size: 15px;
+    color: white;
+    border-radius: 3px;
+}
+.member-data{
+    width: 300px;
+}
+
+.check-img{
+    height: 17px;
+}
+.okcheck-img {
+    height: 17px;
+    display: none;
+}
+h1{
+    text-align: center;
+}
+.check_img_div{
+    display: inline-block;
+    width: 120px;
+}
+
 @media screen and (min-width: 360px) and (max-width: 500px) {
     #wrap {
         display: table;
@@ -16,96 +85,11 @@
         vertical-align: middle;
     }
 
-    #first_div {
-        width: 300px;
-        margin: 0 auto;
-        background-color: #efefef;
-        text-align: center;
-    }
-
-
-    #signup_form {
-        vertical-align: middle;
-        max-width: 90%;
-        margin: 0 auto;
-        background-color: white;
-        height: 200px;
-    }
-
-    #user_name {
-        vertical-align: middle;
-        margin-top: 5%;
-        background-color: #efefef;
-        height: 30px;
-        width: 70%;
-        cursor: pointer;
-        color: black;
-        border-radius: 10px;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #user_name:focus {
-        border: 1px solid aqua;
-        border-radius: 10px;
-    }
-
-    #password {
-        cursor: pointer;
-        background-color: #efefef;
-        margin-top: 5%;
-        height: 30px;
-        width: 70%;
-        border-radius: 10px;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #password:focus {
-        border: 1px solid aqua;
-        border-radius: 10px;
-    }
-
-    #submit_btn {
-        vertical-align: middle;
-        cursor: pointer;
-        margin-top: 5%;
-        height: 30px;
-        width: 80%;
-        border-radius: 5px;
-        border: 1px solid #efefef;
-        background-color: deepskyblue;
-        font-size: 15px;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-        box-shadow: 5px 5px 5px;
-    }
 
     #signup_text {
         cursor: pointer;
     }
 
-    #hr {
-        width: 80%;
-        margin-bottom: 10px;
-    }
-
-    .check-img {
-        height: 20px;
-        margin-top: 10px;
-        display: none;
-    }
-
-    .nocheck-img {
-        margin: 0 auto;
-        height: 20px;
-
-    }
-    #check_img_div1{
-        display: inline-flex;
-        width : 20px;
-        height: 20px;
-    }
-    #check_img_div2{
-        display: inline-flex;
-    }
     #padding_val{
        height: 30px;
     }
@@ -127,68 +111,6 @@
 
     #first_div {
         width: 400px;
-        margin: 0 auto;
-        background-color: white;
-        text-align: center;
-    }
-
-
-    #signup_form {
-        vertical-align: middle;
-        max-width: 90%;
-        margin: 0 auto;
-        background-color: white;
-        height: 250px;
-    }
-
-    #user_name {
-        vertical-align: middle;
-        margin-top: 5%;
-        background-color: #efefef;
-        height: 50px;
-        width: 70%;
-        cursor: pointer;
-        color: black;
-        border-radius: 10px;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #user_name:focus {
-        border: 1px solid aqua;
-        border-radius: 10px;
-    }
-
-    #password {
-        cursor: pointer;
-        background-color: #efefef;
-        margin-top: 5%;
-        height: 50px;
-        width: 70%;
-        border-radius: 10px;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #password:focus {
-        border: 1px solid aqua;
-        border-radius: 10px;
-    }
-
-    #submit_btn {
-        vertical-align: middle;
-        cursor: pointer;
-        margin-top: 5%;
-        height: 50px;
-        width: 80%;
-        border-radius: 5px;
-        border: 1px solid #efefef;
-        background-color: deepskyblue;
-        font-size: 15px;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #signup_text {
-        cursor: pointer;
     }
 
     #hr {
@@ -196,25 +118,6 @@
         margin-bottom: 10px;
     }
 
-    .check-img {
-        height: 20px;
-        margin-top: 10px;
-        display: none;
-    }
-
-    .nocheck-img {
-        margin: 0 auto;
-        height: 20px;
-
-    }
-    #check_img_div1{
-        display: inline-flex;
-        width : 20px;
-        height: 20px;
-    }
-    #check_img_div2{
-        display: inline-flex;
-    }
 }
 
 @media screen and (min-width: 800px) and (max-width : 1200px) {
@@ -233,93 +136,6 @@
 
     #first_div {
         width: 600px;
-        margin: 0 auto;
-        background-color: white;
-        text-align: center;
-    }
-
-
-    #signup_form {
-        vertical-align: middle;
-        max-width: 90%;
-        margin: 0 auto;
-        background-color: white;
-        height: 250px;
-    }
-
-    #user_name {
-        vertical-align: middle;
-        margin-top: 5%;
-        background-color: #efefef;
-        height: 50px;
-        width: 70%;
-        cursor: pointer;
-        color: black;
-        border-radius: 10px;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #user_name:focus {
-        border: 1px solid aqua;
-        border-radius: 10px;
-    }
-
-    #password {
-        cursor: pointer;
-        background-color: #efefef;
-        margin-top: 5%;
-        height: 50px;
-        width: 70%;
-        border-radius: 10px;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #password:focus {
-        border: 1px solid aqua;
-        border-radius: 10px;
-    }
-
-    #submit_btn {
-        vertical-align: middle;
-        cursor: pointer;
-        margin-top: 5%;
-        height: 50px;
-        width: 80%;
-        border-radius: 5px;
-        border: 1px solid #efefef;
-        background-color: deepskyblue;
-        font-size: 15px;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #signup_text {
-        cursor: pointer;
-    }
-
-    #hr {
-        width: 80%;
-        margin-bottom: 10px;
-    }
-
-    .check-img {
-        height: 20px;
-        margin-top: 10px;
-        display: none;
-    }
-
-    .nocheck-img {
-        margin: 0 auto;
-        height: 20px;
-
-    }
-    #check_img_div1{
-        display: inline-flex;
-        width : 20px;
-        height: 20px;
-    }
-    #check_img_div2{
-        display: inline-flex;
     }
 }
 
@@ -339,92 +155,5 @@
 
     #first_div {
         width: 600px;
-        margin: 0 auto;
-        background-color: white;
-        text-align: center;
-    }
-
-
-    #signup_form {
-        vertical-align: middle;
-        max-width: 90%;
-        margin: 0 auto;
-        background-color: white;
-        height: 250px;
-    }
-
-    #user_name {
-        vertical-align: middle;
-        margin-top: 5%;
-        background-color: #efefef;
-        height: 50px;
-        width: 70%;
-        cursor: pointer;
-        color: black;
-        border-radius: 10px;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #user_name:focus {
-        border: 1px solid aqua;
-        border-radius: 10px;
-    }
-
-    #password {
-        cursor: pointer;
-        background-color: #efefef;
-        margin-top: 5%;
-        height: 50px;
-        width: 70%;
-        border-radius: 10px;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #password:focus {
-        border: 1px solid aqua;
-        border-radius: 10px;
-    }
-
-    #submit_btn {
-        vertical-align: middle;
-        cursor: pointer;
-        margin-top: 5%;
-        height: 50px;
-        width: 80%;
-        border-radius: 5px;
-        border: 1px solid #efefef;
-        background-color: deepskyblue;
-        font-size: 15px;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-        box-shadow: 5px 5px 5px;
-    }
-
-    #signup_text {
-        cursor: pointer;
-    }
-
-    #hr {
-        width: 80%;
-        margin-bottom: 10px;
-    }
-
-    .check-img {
-        height: 20px;
-        margin-top: 10px;
-        display: none;
-    }
-
-    .nocheck-img {
-        margin: 0 auto;
-        height: 20px;
-
-    }
-    #check_img_div1{
-        display: inline-flex;
-        width : 20px;
-        height: 20px;
-    }
-    #check_img_div2{
-        display: inline-flex;
     }
 }
