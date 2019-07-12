@@ -47,6 +47,7 @@
                     <option value="12">관광지</option>
                     <option value="14">문화 시설</option>
                     <option value="15">행사/공연/축제</option>
+                    <option value="25">여행코스</option>
                     <option value="28">레포츠</option>
                     <option value="32">숙박</option>
                     <option value="38">쇼핑</option>
@@ -151,7 +152,9 @@
 <script type="template-tour" class="template-tour-list">
             <li class='tour-dest-list' data-id={tourId} data-type-id={typeId}>
                 <img class='tour-dest-img' src={tourImg} onerror="this.src='/images/tour1.jpg'"></img>
-                <h4 class='tour-dest-content'>{tourName}</h4>
+                <div class="tour-title-wrap">
+                    <img src="/images/tour{typeId}.png" class="tour-type-image"><h4 class='tour-dest-content'>{tourName}</h4>
+                </div>
             </li>
 </script>
 <script src="/js/plan.js"></script>
@@ -188,7 +191,7 @@
             console.log(data);
             tourData = data;
             newTourHTML += templateHtml.replace('{tourId}', data.contentid)
-                .replace('{typeId}', data.contenttypeid)
+                .replace(/{typeId}/gi, data.contenttypeid)
                 .replace('{tourImg}', data.firstimage)
                 .replace('{tourName}', data.title);
             tourUl.innerHTML = newTourHTML;

@@ -146,10 +146,13 @@ span[class^=plan-delete-btn]:hover {
 .tour-dest-ul:hover{
     cursor: pointer;
 }
-.tour-dest-content{
-    margin: 0;
+.tour-title-wrap{
     height: 50px;
     line-height: 40px;
+    display: inline-flex;
+}
+.tour-dest-content{
+    margin: 0;
 }
 .tour-dest-img{
     box-sizing: border-box;
@@ -240,4 +243,11 @@ span[class^=plan-delete-btn]:hover {
 }
 .tour-dest{
     display: inline-block;
+}
+.tour-type-image{
+    width: 20px;
+    height: 20px;
+    margin-top: 7px;
+    margin-right: 6px;
+    margin-left: 5px;
 }
