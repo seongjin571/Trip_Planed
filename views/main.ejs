@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/footer.css">
 
     <script type="text/javascript">
-
+ 
     </script>
 </head>
 
@@ -16,14 +16,14 @@
             <img src="/images/logo.png" alt="트립 프랜드 로고" class="logo-img">
         </a>
         <ul class="nav">
-            <li class="nav-list"><a class="nav-link" href="/mypage/<%= id %>">마이페이지</a></li>
+            <li class="nav-list"><a class="nav-link" href="/mypage">마이페이지</a></li>
             <li class="nav-list"><a class="nav-link" href="/api/shareplan">공유계획</a></li>
             <li class="nav-list"><a class="nav-link" href="/logout">로그아웃</a></li>
         </ul>
     </div>
     <img class="trip-location" src="/images/mainpage.png" width="100%" height="auto" />
     <div class="make-plan-container">
-        <div class="make-plan-wrap">
+        <form action="/api/makeplan" method="post" class="make-plan-form">
             <h1>계획 생성</h1>
             <div>
                 <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img">
@@ -35,7 +35,7 @@
                 <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img">
                 <img src="/images/check.png" alt="체크 이미지" class="check-img">
                 <label for="select-loction">지역선택</label>
-                <select name="select_loction" name="location" class="select-loction">
+                <select name="select_big_location" class="select-location">
                     <option>선택하세요</option>
                     <option value="1">서울</option>
                     <option value="2">인천</option>
@@ -54,27 +54,29 @@
                     <option value="38">전라남도</option>
                     <option value="39">제주도</option>
                 </select>
-                <select name="select_loction" name="location" class="select-small-location">
+                <select name="select_small_location" class="select-small-location">
                     <option>선택하세요</option>
                 </select>
+                <input type="text" name="big_location" class="big-location location" />
+                <input type="text" name="small_location" class="small-location location" />
             </div>
             <div>
                 <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img">
                 <img src="/images/check.png" alt="체크 이미지" class="check-img">
                 <label for="select-day">시작일</label>
-                <button class="select-day-button" data-count=0>날짜 선택</button>
+                <button type="button" class="select-day-button" data-count=0>날짜 선택</button>
                 <input type="text" name="start_day" readonly class="day-input">
             </div>
             <div>
                 <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img">
                 <img src="/images/check.png" alt="체크 이미지" class="check-img">
                 <label for="select-day">종료일</label>
-                <button class="select-day-button" data-count=1>날짜 선택</button>
+                <button type="button" class="select-day-button" data-count=1>날짜 선택</button>
                 <input type="text" name="finish_day" readonly class="day-input">
             </div>
             <input type="text" name="total_day" class="total-day" />
             <button class="make-plan-btn">계획 만들기</button>
-        </div>
+        </form>
     </div>
 
     <div class="calendar-container">
@@ -116,8 +118,9 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script language="javascript" type="text/javascript">
 
-        const selectLoction = document.querySelector('.select-loction');
+        const selectLoction = document.querySelector('.select-location');
         selectLoction.addEventListener('change', function () {
+            document.querySelector('.big-location').value = this.options[this.selectedIndex].text;
             const url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + this.value + "&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest";
             $.ajax({
                 url: url,
@@ -134,7 +137,7 @@
             });
         })
 
-        
+
         function calDay() {
             const startDay = document.getElementsByClassName("day-input")[0].value;
             const finishDay = document.getElementsByClassName("day-input")[1].value;
@@ -247,6 +250,7 @@
                                     document.getElementsByClassName('day-input')[1].value = "";
                                 }
                                 else {
+                                    document.querySelector('.total-day').value = totalDay;
                                     this.calendarContainer.style.display = 'none';
                                     this.doCheck(Number(e.dataset.count) + 2);
                                 }
@@ -255,8 +259,9 @@
                     }.bind(this))
                 }.bind(this));
 
-                this.selectLoction.addEventListener('change', function(e){
-                    if(this.selectLoction.value > 0) this.doCheck(1);
+                this.selectLoction.addEventListener('change', function (e) {
+                    document.querySelector('.small-location').value = this.selectLoction[this.selectLoction.selectedIndex].text;
+                    if (this.selectLoction.value > 0) this.doCheck(1);
                     else this.cancelCheck(1);
                 }.bind(this))
 

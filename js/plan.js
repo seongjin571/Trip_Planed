@@ -54,17 +54,6 @@ addPlan.prototype = {
             this.closeModal();
         }.bind(this));
 
-        const tourList = document.querySelectorAll('.tour-dest-list');
-        tourList.forEach(function (e) {
-            e.addEventListener('click', function () {
-                const tourNameWrap = document.querySelector('.tour-name');
-                document.querySelector('.tour-info-container').style.display = "block";
-                document.querySelector('body').style.overflow = 'hidden';
-                const tourName = e.firstElementChild.nextElementSibling.innerHTML;
-                tourNameWrap.innerHTML = tourName;
-            })
-        });
-
         const addTourBtn = document.querySelector('.add-tour-plan-btn');
         addTourBtn.addEventListener('click', function (e) {
             this.setTimeInput(1);

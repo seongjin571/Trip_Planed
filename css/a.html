@@ -91,7 +91,7 @@
 </script>
 
 <body>
-    <select name="areaCode" class="type_select">
+    <select name="areaCode" class="type_select" class="select-location">
         <option value="1">서울</option>
         <option value="2">인천</option>
         <option value="3">대전</option>
@@ -109,6 +109,7 @@
         <option value="38">전라남도</option>
         <option value="39">제주도</option>
     </select>
+    <select name="" class="small-location"></select>
 
     <select name="type" class="type_select__">
         <option value="12">관광지</option>
@@ -124,6 +125,24 @@
     <div id="wrap">
         <ul class="ul"></ul>
     </div>
+
+    <script>
+        const selectLoction = document.querySelector('.select-location');
+        selectLoction.addEventListener('change', function () {
+            const url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + this.value + "&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest";
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function (result) {
+                    const smallLocation = document.querySelector('.small-location');
+                    smallLocation.innerHTML = "";
+                    $.each(result.response.body.items.item, function (i, d) {
+                        smallLocation.innerHTML += '<option value =' + d.code + ">" + d.name + "</option>";
+                    });
+                }
+            });
+        })
+    </script>
 </body>
 
 </html>
