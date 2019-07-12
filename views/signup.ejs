@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" style=" height : 100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/css/signup.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+
+</head>
+
+<body style="width : 100%; height : 100%;">
+    <div class="header">
+        <a href="/main">
+            <img src="/images/logo.png" alt="트립 프랜드 로고" class="logo-img">
+        </a>
+    </div>
+    <img class="trip-location" src="/images/member.png" width="100%" height="auto" />
+    <div class="container">
+            <div id="first_div">
+                <form id="signup_form" action='/signup' method='post'>
+                    <div id="check_img_div1">
+                        <img src="/images/nocheck.png" alt="" class="nocheck-img" id="nocheckid1">
+                        <img src="/images/check.png" alt="" class="check-img" id="checkid1">
+                    </div>
+
+                    <input type="text" id="user_name" name='user_name' placeholder="user_name"
+                        style='margin-bottom: 10px;' onchange='change_user_name(this)''>
+                    <br>
+                    <div id="check_img_div2">
+                        <img src="/images/nocheck.png" alt="" class="nocheck-img" id="nocheckid2">
+                        <img src="/images/check.png" alt="" class="check-img" id="checkid2">
+                    </div>
+
+                    <input type="password" id="password" name='password' placeholder="password"
+                        style='margin-bottom: 10px;' onchange='change_password(this)''>
+                    <br>
+                    <input id="submit_btn" onclick="gogo();" type='button' value='확인' style='margin-bottom: 10px;' />
+                    <br />
+                </form>
+    </div>
+</div>
+<div class="footer">
+    <div class="copy-rights">
+        © 2019 2H&A. All rights reserved.
+    </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    var flag1 = 0;
+    var flag2 = 0;
+    var email_reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    var user_name_reg = /^[A-Za-z0-9]{6,12}$/;
+    var password_reg = /(?=.*\d{1,15})(?=.*[~`!@#$%\^&*()-+=]{1,15})(?=.*[a-zA-Z]{2,15}).{8,15}$/;
+
+    var user_name_value;
+    var password_value;
+    
+    function change_user_name(obj){
+        user_name_value = $("#user_name").val();
+        
+        if(user_name_value.match(user_name_reg))
+        {
+            flag1 = 1;
+            document.getElementById('checkid1').style.display = 'inline';
+            document.getElementById('nocheckid1').style.display = 'none';
+        }else if(user_name_value.match(email_reg))
+        {
+            flag1 = 1;
+            document.getElementById('checkid1').style.display = 'inline';
+            document.getElementById('nocheckid1').style.display = 'none';
+        }
+        else {
+            flag1 = 0;
+            document.getElementById('checkid1').style.display = 'none';
+            document.getElementById('nocheckid1').style.display = 'inline';
+        }
+
+    }
+    
+    
+    function change_password(obj){
+        password_value = $("#password").val();
+        if(password_value.match(password_reg))
+        {
+            flag2 = 1;
+            document.getElementById('checkid2').style.display = 'inline';
+            document.getElementById('nocheckid2').style.display = 'none';
+        }
+        else{
+            flag2 = 0;
+            document.getElementById('checkid2').style.display = 'none';
+            document.getElementById('nocheckid2').style.display = 'inline';
+        }
+    }
+    
+    function gogo() {
+       if(flag1 == 1 && flag2 == 1)
+       {
+            document.querySelector("#signup_form").submit();
+            console.log("hrere")
+       }
+       else
+       {
+           alert("정규식에 맞지않아!")
+       }
+       
+        
+    }
+
+    
+    
+</script>
+</html>

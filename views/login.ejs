@@ -1,0 +1,406 @@
+<!DOCTYPE html style="height : 100%;">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
+        charset="utf-8"></script>
+    <title>로그인</title>
+    <style>
+        /**/
+        #wrap {
+            display: table;
+            height: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #content {
+            height: 100%;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        #first_div {
+           
+            margin: 0 auto;
+            background-color: white;
+            height: 680px;
+            text-align: center;
+        }
+
+        #first_div img {
+            margin: 0 auto;
+            margin-top: 7%;
+        }
+
+        #login_form {
+            vertical-align: middle;
+            max-width: 90%;
+            margin: 0 auto;
+            background-color: white;
+            height: 250px;
+        }
+
+        #user_name {
+            vertical-align: middle;
+            margin-top: 5%;
+            background-color: #efefef;
+            height: 50px;
+            width: 80%;
+            cursor: pointer;
+            color: black;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px;
+        }
+
+        #user_name:focus {
+            border: 1px solid aqua;
+            border-radius: 10px;
+        }
+
+        #password {
+            cursor: pointer;
+            background-color: #efefef;
+            margin-top: 5%;
+            height: 50px;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px;
+        }
+
+        #password:focus {
+            border: 1px solid aqua;
+            border-radius: 10px;
+        }
+
+        #submit_btn {
+            vertical-align: middle;
+            cursor: pointer;
+            margin-top: 5%;
+            height: 50px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #efefef;
+            background-color: deepskyblue;
+            font-size: 15px;
+            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+            box-shadow: 5px 5px 5px;
+        }
+
+        #hr {
+            width: 80%;
+        }
+
+        #go_signup {
+            margin-top: 5%;
+            font-size: 15px;
+            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+
+        }
+
+        #naverIdLogin {
+            cursor: pointer;
+
+            height: 170px;
+            width: 100% !important;
+        }
+
+        #naverIdLogin img {
+            height: 70px !important;
+            width: 70% !important;
+            box-shadow: 5px 5px 5px;
+        }
+
+        @media screen and (min-width: 360px) and (max-width: 500px) {
+            #wrap {
+                display: table;
+                height: 100%;
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            #content {
+                height: 100%;
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+            #first_div {
+                max-width: 360px;
+                margin: 0 auto;
+                background-color: white;
+                height: 490px;
+                text-align: center;
+            }
+
+            #first_div img {
+                margin: 0 auto;
+                margin-top: 7%;
+            }
+
+            #login_form {
+                vertical-align: middle;
+                max-width: 90%;
+                margin: 0 auto;
+                background-color: white;
+                height: 180px;
+            }
+
+            #user_name {
+                vertical-align: middle;
+                margin-top: 5%;
+                background-color: #efefef;
+                height: 36px;
+                width: 80%;
+                cursor: pointer;
+                color: black;
+                border-radius: 10px;
+                box-shadow: 5px 5px 5px;
+            }
+
+            #user_name:focus {
+                border: 1px solid aqua;
+                border-radius: 10px;
+            }
+
+            #password {
+                cursor: pointer;
+                background-color: #efefef;
+                margin-top: 5%;
+                height: 36px;
+                width: 80%;
+                border-radius: 10px;
+                box-shadow: 5px 5px 5px;
+            }
+
+            #password:focus {
+                border: 1px solid aqua;
+                border-radius: 10px;
+            }
+
+            #submit_btn {
+                vertical-align: middle;
+                cursor: pointer;
+                margin-top: 5%;
+                height: 36px;
+                width: 80%;
+                border-radius: 5px;
+                border: 1px solid #efefef;
+                background-color: deepskyblue;
+                font-size: 15px;
+                font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+                box-shadow: 5px 5px 5px;
+            }
+
+            #hr {
+                width: 80%;
+            }
+
+            #go_signup {
+                margin-top: 5%;
+                font-size: 15px;
+                font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+
+            }
+
+            #naverIdLogin {
+                cursor: pointer;
+
+                height: 122px;
+                width: 100% !important;
+            }
+
+            #naverIdLogin img {
+                height: 50px !important;
+                width: 70% !important;
+                box-shadow: 5px 5px 5px;
+            }
+        }
+
+        @media screen and (min-width: 500px) and (max-width: 768px) {
+            #first_div {
+                max-width: 500px;
+                margin: 0 auto;
+                background-color: white;
+            }
+        }
+
+        @media screen and (min-width: 800px) {
+            #wrap {
+            display: table;
+            height: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #content {
+            height: 100%;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        #first_div {
+            max-width: 768px;
+            margin: 0 auto;
+            background-color: white;
+            height: 860px;
+            text-align: center;
+        }
+
+        #first_div img {
+            margin: 0 auto;
+            margin-top: 7%;
+        }
+
+        #login_form {
+            vertical-align: middle;
+            max-width: 90%;
+            margin: 0 auto;
+            background-color: white;
+            height: 300px;
+        }
+
+        #user_name {
+            vertical-align: middle;
+            margin-top: 5%;
+            background-color: #efefef;
+            height: 50px;
+            width: 80%;
+            cursor: pointer;
+            color: black;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px;
+        }
+
+        #user_name:focus {
+            border: 1px solid aqua;
+            border-radius: 10px;
+        }
+
+        #password {
+            cursor: pointer;
+            background-color: #efefef;
+            margin-top: 5%;
+            height: 50px;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px;
+        }
+
+        #password:focus {
+            border: 1px solid aqua;
+            border-radius: 10px;
+        }
+
+        #submit_btn {
+            vertical-align: middle;
+            cursor: pointer;
+            margin-top: 5%;
+            height: 60px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #efefef;
+            background-color: deepskyblue;
+            font-size: 20px;
+            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+            box-shadow: 5px 5px 5px;
+        }
+
+        #hr {
+            width: 80%;
+        }
+
+        #go_signup {
+            margin-top: 3%;
+            font-size: 20px;
+            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+
+        }
+
+        #naverIdLogin {
+            cursor: pointer;
+            height: 180px;
+            width: 100% !important;
+        }
+
+        #naverIdLogin img {
+            height: 60px !important;
+            width: 70% !important;
+            box-shadow: 5px 5px 5px;
+        }
+        }
+    </style>
+</head>
+
+<body style="width : 100%; height : 100%;background-color: #efefef;">
+    <div id="wrap">
+        <div id="content">
+            <div id="first_div">
+                <img src="/images/logo.png" style="width : 50%; margin-bottom: 7%;" /><br>
+                <form id="login_form">
+                    <input type="text" id="user_name" name='user_name' placeholder="user_name"
+                        style='margin-bottom: 10px;'>
+                    <br>
+                    <input type="password" id="password" name='password' placeholder="password"
+                        style='margin-bottom: 10px;'>
+                    <br>
+                    <input id="submit_btn" type='submit' value='로그인' style='margin-bottom: 10px;' />
+                    <br />
+                </form>
+                <p style="cursor : pointer" id="go_signup" onClick="location.href='http://localhost:8080/signup'">회원가입
+                </p>
+                <hr id="hr" />
+                <div id="naverIdLogin"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $("#login_form").submit(function (event) {
+        event.preventDefault();
+
+        const data = {
+            user_name: $("#user_name").val(),
+            password: $("#password").val()
+        }
+        //console.log(data);
+        $.ajax({
+            type: "post",
+            url: "login",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            cache: false,
+            datatype: "json",
+            data: data,
+            success: function (result) {
+
+                if (result.result == 'good') {
+                    alert("로그인성공");
+                    $(window).attr('location', 'main');
+                } else {
+                    alert("아이디 및 비밀번호가 틀립니다");
+                }
+            },
+            error: function (error) {
+                alert("login.ejs ajax error");
+            }
+        });//ajax
+    })//submit function
+
+    var naverLogin = new naver.LoginWithNaverId(
+        {
+            clientId: "h9R6HXR2eJDOySprixai",
+            clientSecret: "0MGEYrU98e",
+            callbackUrl: "http://localhost:8080/navercallback.html",
+            isPopup: false,
+            loginButton: { color: "green", type: 3, height: 60 }
+        }
+    );
+
+    naverLogin.init();
+</script>
+
+</html>
