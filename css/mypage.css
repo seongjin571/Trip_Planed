@@ -7,7 +7,7 @@
 body::-webkit-scrollbar { 
     display: none; 
 }
-p,div,button{
+p, div, button, input{
     font-family: 'LotteMartDream';
 }
 

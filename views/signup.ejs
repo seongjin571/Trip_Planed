@@ -20,34 +20,47 @@
     </div>
     <img class="trip-location" src="/images/member.png" width="100%" height="auto" />
     <div class="container">
-            <div id="first_div">
-                <form id="signup_form" action='/signup' method='post'>
-                    <div id="check_img_div1">
-                        <img src="/images/nocheck.png" alt="" class="nocheck-img" id="nocheckid1">
-                        <img src="/images/check.png" alt="" class="check-img" id="checkid1">
+        <div id="first_div">
+            <form id="signup_form" action='/signup' method='post'>
+                <h1>회원 가입</h1>
+                <div class="form-data">
+                    <div class="check_img_div">
+                        <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img check-img" id="nocheckid1" />
+                        <img src="/images/check.png" alt="체크 이미지" class="okcheck-img check-img" id="checkid1" />
+                        <label for="user_name">아이디</label>
                     </div>
-
-                    <input type="text" id="user_name" name='user_name' placeholder="user_name"
-                        style='margin-bottom: 10px;' onchange='change_user_name(this)''>
-                    <br>
-                    <div id="check_img_div2">
-                        <img src="/images/nocheck.png" alt="" class="nocheck-img" id="nocheckid2">
-                        <img src="/images/check.png" alt="" class="check-img" id="checkid2">
+                    <input type="text" id="user_name" name='user_name' onchange='change_user_name(this)'
+                        class="member-data" required/>
+                </div>
+                <div class="form-data">
+                    <div class="check_img_div">
+                        <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img check-img" id="nocheckid2" />
+                        <img src="/images/check.png" alt="체크 이미지" class="okcheck-img check-img" id="checkid2" />
+                        <label for="password">비밀번호</label>
                     </div>
+                    <input type="password" id="password" name='password' onchange='change_password(this)'
+                        class="member-data" />
+                </div>
 
-                    <input type="password" id="password" name='password' placeholder="password"
-                        style='margin-bottom: 10px;' onchange='change_password(this)''>
-                    <br>
-                    <input id="submit_btn" onclick="gogo();" type='button' value='확인' style='margin-bottom: 10px;' />
-                    <br />
-                </form>
+                <div class="form-data">
+                    <div class="check_img_div">
+                        <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img check-img" id="nocheckid2" />
+                        <img src="/images/check.png" alt="체크 이미지" class="okcheck-img check-img" id="checkid2" />
+                        <label for="password">비밀번호 확인</label>
+                    </div>
+                    <input type="password" id="password" name='password' onchange='change_password(this)'
+                        class="member-data" />
+                </div>
+                <input id="submit_btn" onclick="gogo();" type='button' value='확인' style='margin-bottom: 10px;' />
+                <br />
+            </form>
+        </div>
     </div>
-</div>
-<div class="footer">
-    <div class="copy-rights">
-        © 2019 2H&A. All rights reserved.
+    <div class="footer">
+        <div class="copy-rights">
+            © 2019 2H&A. All rights reserved.
+        </div>
     </div>
-</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
@@ -59,17 +72,15 @@
 
     var user_name_value;
     var password_value;
-    
-    function change_user_name(obj){
+
+    function change_user_name(obj) {
         user_name_value = $("#user_name").val();
-        
-        if(user_name_value.match(user_name_reg))
-        {
+
+        if (user_name_value.match(user_name_reg)) {
             flag1 = 1;
             document.getElementById('checkid1').style.display = 'inline';
             document.getElementById('nocheckid1').style.display = 'none';
-        }else if(user_name_value.match(email_reg))
-        {
+        } else if (user_name_value.match(email_reg)) {
             flag1 = 1;
             document.getElementById('checkid1').style.display = 'inline';
             document.getElementById('nocheckid1').style.display = 'none';
@@ -81,38 +92,34 @@
         }
 
     }
-    
-    
-    function change_password(obj){
+
+
+    function change_password(obj) {
         password_value = $("#password").val();
-        if(password_value.match(password_reg))
-        {
+        if (password_value.match(password_reg)) {
             flag2 = 1;
             document.getElementById('checkid2').style.display = 'inline';
             document.getElementById('nocheckid2').style.display = 'none';
         }
-        else{
+        else {
             flag2 = 0;
             document.getElementById('checkid2').style.display = 'none';
             document.getElementById('nocheckid2').style.display = 'inline';
         }
     }
-    
+
     function gogo() {
-       if(flag1 == 1 && flag2 == 1)
-       {
+        if (flag1 == 1 && flag2 == 1) {
             document.querySelector("#signup_form").submit();
             console.log("hrere")
-       }
-       else
-       {
-           alert("정규식에 맞지않아!")
-       }
-       
-        
+        }
+        else {
+            alert("정규식에 맞지않아!")
+        }
+
+
     }
 
-    
-    
 </script>
+
 </html>
