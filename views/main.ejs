@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/footer.css">
 
     <script type="text/javascript">
- 
+
     </script>
 </head>
 
@@ -158,16 +158,16 @@
         let date = new Date();
         function prevCalendar() {
             today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-            buildCalendar();
+            buildCalendar(0);
         }
         function nextCalendar() {
             today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-            buildCalendar();
+            buildCalendar(1);
         }
         let yearWrap;
         let monthWrap;
 
-        function buildCalendar() {
+        function buildCalendar(index) {
             const doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
             const lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
@@ -207,6 +207,41 @@
                     cell.bgColor = "#FAF58C";
                 }
             }
+
+            const day = document.querySelectorAll('.row-day>td');
+            const calendarContainer = document.querySelector('.calendar-container');
+            day.forEach(function (v) {
+                v.addEventListener('click', function (c) {
+                    const dateInput = document.getElementsByClassName('day-input')[index];
+                    dateInput.value = yearWrap.innerHTML + '-' + monthWrap.innerHTML + '-' + c.target.innerHTML;
+                    calendarContainer.style.display = 'none';
+                    const totalDay = calDay();
+                    if (totalDay < 1) {
+                        alert('날짜를 다시 선택해 주세요');
+                        cancelCheck(2);
+                        cancelCheck(3);
+                        document.getElementsByClassName('day-input')[0].value = "";
+                        document.getElementsByClassName('day-input')[1].value = "";
+                    }
+                    else {
+                        document.querySelector('.total-day').value = totalDay;
+                        calendarContainer.style.display = 'none';
+                        doCheck(Number(index) + 2);
+                    }
+                })
+            })
+        }
+
+        doCheck = function (index) {
+            document.getElementsByClassName('check-img')[index].style.display = 'inline';
+            document.getElementsByClassName('nocheck-img')[index].style.display = 'none';
+            this.count++;
+        }
+
+        cancelCheck = function (index) {
+            document.getElementsByClassName('check-img')[index].style.display = 'none';
+            document.getElementsByClassName('nocheck-img')[index].style.display = 'inline';
+            if (this.count > 0) this.count--;
         }
 
         function makePlan() {
@@ -221,9 +256,9 @@
             enrollEvent: function () {
                 this.planTitle.addEventListener('change', function () {
                     if (this.planTitle.value !== '')
-                        this.doCheck(0);
+                        doCheck(0);
                     else
-                        this.cancelCheck(0);
+                        cancelCheck(0);
                 }.bind(this));
 
                 this.calendarContainer.addEventListener('click', function (e) {
@@ -234,50 +269,16 @@
                 this.selectDayBtn.forEach(function (e) {
                     e.addEventListener('click', function () {
                         document.querySelector('.calendar-container').style.display = 'block';
-                        buildCalendar();
-                        const day = document.querySelectorAll('.row-day>td');
-                        day.forEach(function (v) {
-                            v.addEventListener('click', function (c) {
-                                const dateInput = document.getElementsByClassName('day-input')[e.dataset.count];
-                                dateInput.value = yearWrap.innerHTML + '-' + monthWrap.innerHTML + '-' + c.target.innerHTML;
-                                this.calendarContainer.style.display = 'none';
-                                const totalDay = calDay();
-                                if (totalDay < 1) {
-                                    alert('날짜를 다시 선택해 주세요');
-                                    this.cancelCheck(2);
-                                    this.cancelCheck(3);
-                                    document.getElementsByClassName('day-input')[0].value = "";
-                                    document.getElementsByClassName('day-input')[1].value = "";
-                                }
-                                else {
-                                    document.querySelector('.total-day').value = totalDay;
-                                    this.calendarContainer.style.display = 'none';
-                                    this.doCheck(Number(e.dataset.count) + 2);
-                                }
-                            }.bind(this))
-                        }.bind(this))
+                        buildCalendar(e.dataset.count);
                     }.bind(this))
                 }.bind(this));
 
                 this.selectLoction.addEventListener('change', function (e) {
                     document.querySelector('.small-location').value = this.selectLoction[this.selectLoction.selectedIndex].text;
-                    if (this.selectLoction.value > 0) this.doCheck(1);
-                    else this.cancelCheck(1);
-                }.bind(this))
-
+                    if (this.selectLoction.value > 0) doCheck(1);
+                    else cancelCheck(1);
+                }.bind(this));
             },
-
-            doCheck: function (index) {
-                document.getElementsByClassName('check-img')[index].style.display = 'inline';
-                document.getElementsByClassName('nocheck-img')[index].style.display = 'none';
-                this.count++;
-            },
-
-            cancelCheck: function (index) {
-                document.getElementsByClassName('check-img')[index].style.display = 'none';
-                document.getElementsByClassName('nocheck-img')[index].style.display = 'inline';
-                if (this.count > 0) this.count--;
-            }
         }
 
         const makePlanFun = new makePlan();
