@@ -25,7 +25,7 @@
         }
 
         #first_div {
-           
+
             margin: 0 auto;
             background-color: white;
             height: 680px;
@@ -231,107 +231,107 @@
 
         @media screen and (min-width: 800px) {
             #wrap {
-            display: table;
-            height: 100%;
-            text-align: center;
-            margin: 0 auto;
-        }
+                display: table;
+                height: 100%;
+                text-align: center;
+                margin: 0 auto;
+            }
 
-        #content {
-            height: 100%;
-            display: table-cell;
-            vertical-align: middle;
-        }
+            #content {
+                height: 100%;
+                display: table-cell;
+                vertical-align: middle;
+            }
 
-        #first_div {
-            max-width: 768px;
-            margin: 0 auto;
-            background-color: white;
-            height: 860px;
-            text-align: center;
-        }
+            #first_div {
+                max-width: 768px;
+                margin: 0 auto;
+                background-color: white;
+                height: 860px;
+                text-align: center;
+            }
 
-        #first_div img {
-            margin: 0 auto;
-            margin-top: 7%;
-        }
+            #first_div img {
+                margin: 0 auto;
+                margin-top: 7%;
+            }
 
-        #login_form {
-            vertical-align: middle;
-            max-width: 90%;
-            margin: 0 auto;
-            background-color: white;
-            height: 300px;
-        }
+            #login_form {
+                vertical-align: middle;
+                max-width: 90%;
+                margin: 0 auto;
+                background-color: white;
+                height: 300px;
+            }
 
-        #user_name {
-            vertical-align: middle;
-            margin-top: 5%;
-            background-color: #efefef;
-            height: 50px;
-            width: 80%;
-            cursor: pointer;
-            color: black;
-            border-radius: 10px;
-            box-shadow: 5px 5px 5px;
-        }
+            #user_name {
+                vertical-align: middle;
+                margin-top: 5%;
+                background-color: #efefef;
+                height: 50px;
+                width: 80%;
+                cursor: pointer;
+                color: black;
+                border-radius: 10px;
+                box-shadow: 5px 5px 5px;
+            }
 
-        #user_name:focus {
-            border: 1px solid aqua;
-            border-radius: 10px;
-        }
+            #user_name:focus {
+                border: 1px solid aqua;
+                border-radius: 10px;
+            }
 
-        #password {
-            cursor: pointer;
-            background-color: #efefef;
-            margin-top: 5%;
-            height: 50px;
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 5px 5px 5px;
-        }
+            #password {
+                cursor: pointer;
+                background-color: #efefef;
+                margin-top: 5%;
+                height: 50px;
+                width: 80%;
+                border-radius: 10px;
+                box-shadow: 5px 5px 5px;
+            }
 
-        #password:focus {
-            border: 1px solid aqua;
-            border-radius: 10px;
-        }
+            #password:focus {
+                border: 1px solid aqua;
+                border-radius: 10px;
+            }
 
-        #submit_btn {
-            vertical-align: middle;
-            cursor: pointer;
-            margin-top: 5%;
-            height: 60px;
-            width: 80%;
-            border-radius: 5px;
-            border: 1px solid #efefef;
-            background-color: deepskyblue;
-            font-size: 20px;
-            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-            box-shadow: 5px 5px 5px;
-        }
+            #submit_btn {
+                vertical-align: middle;
+                cursor: pointer;
+                margin-top: 5%;
+                height: 60px;
+                width: 80%;
+                border-radius: 5px;
+                border: 1px solid #efefef;
+                background-color: deepskyblue;
+                font-size: 20px;
+                font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+                box-shadow: 5px 5px 5px;
+            }
 
-        #hr {
-            width: 80%;
-        }
+            #hr {
+                width: 80%;
+            }
 
-        #go_signup {
-            margin-top: 3%;
-            font-size: 20px;
-            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+            #go_signup {
+                margin-top: 3%;
+                font-size: 20px;
+                font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
 
-        }
+            }
 
-        #naverIdLogin {
-            cursor: pointer;
-            height: 180px;
-            width: 100% !important;
-        }
+            #naverIdLogin {
+                cursor: pointer;
+                height: 180px;
+                width: 100% !important;
+            }
 
-        #naverIdLogin img {
-            height: 60px !important;
-            width: 70% !important;
-            box-shadow: 5px 5px 5px;
-        }
+            #naverIdLogin img {
+                height: 60px !important;
+                width: 70% !important;
+                box-shadow: 5px 5px 5px;
+            }
         }
     </style>
 </head>
@@ -358,6 +358,70 @@
             </div>
         </div>
     </div>
+    <a id="kakao-login"></a>
+    <a href="http://developers.kakao.com/logout"></a>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script type='text/javascript'>
+        Kakao.init('4e669c4b74a582a0382b81be90fca4ff');
+        Kakao.Auth.createLoginButton({
+            container: '#kakao-login',
+            success: function (authObj) {
+                Kakao.API.request({
+                    url: '/v1/user/me',
+                    success: function (res) {
+                        
+                        var data ={
+                            user_name : JSON.stringify(res.id),
+                            password : '123'
+                        }
+                        console.log(data)
+                        $.ajax({//user table에 정보가 있는지 없는 지 확인
+                        type: "post",
+                        url: "login",
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                        cache: false,
+                        datatype: "json",
+                        data: data,
+                        success: function (result) {
+                            if (result.result == 'good') {//네이버 로그인 성공(user테이블에 정보 있음)
+                                alert("카카오로그인성공1");
+                                $(window).attr('location', 'main');
+                            } else {//
+                                $.ajax({//첫 로그인이라 user테이블에 내용 삽입
+                                    type: "post",
+                                    url: "kakao_signup",
+                                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                                    cache: false,
+                                    datatype: "json",
+                                    data: data,
+                                    success: function (result) {
+                                        if (result.result == 'kakao') {
+                                            alert("카카오로그인성공2");
+                                            $(window).attr('location', 'main');
+                                        } else {
+                                            alert("kakao error1");
+                                        }
+                                    },
+                                    error: function (error) {
+                                        alert("kakao error 2");
+                                    }
+
+                                })
+                            }
+                        },
+                        error: function (error) {
+                            alert("kakao ajax error");
+                        }
+
+                    })
+                    }
+                });
+            },
+            fail: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+    </script>
 </body>
 <script type="text/javascript">
     $("#login_form").submit(function (event) {

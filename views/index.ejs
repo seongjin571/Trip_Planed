@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -7,15 +8,121 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-    index
-    <button id="logout">로그아웃</button>
-    
+
 </body>
 <script>
-    $("#logout").click(function(){
-        alert("로그아웃 됩니다");
-        $(location).attr('href','/logout');
-    })
+    var string1 = "2019-07-30";
+    var string2 = "2019-08-03";
+    var arr1 = string1.split('-');
+    var arr2 = string2.split('-');
+
+
+    var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+    var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+
+    var a, b;
+    var first_all_day = 0;
+    var second_all_day = 0;
+
+    if (arr1[1] == 1) {
+        first_all_day = first_all_day + parseInt(arr1[2]);
+    } else {
+        for (a = 1; a < arr1[1]; a++) {
+            if ((a == 1) || (a == 3) || (a == 5) || (a == 7) || (a == 8) || (a == 10) || (a == 12)) {
+                first_all_day = first_all_day + 31;
+            }
+            else if ((a == 2)) {
+                first_all_day = first_all_day + 28;
+            }
+            else {
+                first_all_day = first_all_day + 30;
+            }
+        }
+        first_all_day = first_all_day + parseInt(arr1[2]);
+    } 
+   
+    if (arr2[1] == 1) {
+        second_all_day = second_all_day + parseInt(arr2[2]);
+    } else {
+        for (a = 1; a < arr2[1]; a++) {
+            if ((a == 1) || (a == 3) || (a == 5) || (a == 7) || (a == 8) || (a == 10) || (a == 12)) {
+                second_all_day = second_all_day + 31;
+            }
+            else if ((a == 2)) {
+                second_all_day = second_all_day + 28;
+            }
+            else {
+                second_all_day = second_all_day + 30;
+            }
+        }
+        second_all_day = second_all_day + parseInt(arr2[2]);
+    } 
+    
+
+    var c = second_all_day - first_all_day +1;
+    console.log(c)
+    var month = parseInt(dat1.getMonth());
+    var day = parseInt(dat1.getDate());
+
+
+    var result = [];
+    for (i = 0; i < c; i++) {
+        if (i == 0) {
+            result[i] = month + "-" + day;
+            console.log(result[i])
+            day = day + 1;
+        }
+        else {
+            if ((month == 1) || (month == 3) || (month == 5) || (month == 7) || (month == 8) || (month == 10) || (month == 12)) {
+                if (day > 31) {
+                    month = month + 1;
+                    day = day - 31;
+                    result[i] = month + "-" + day;
+                    console.log(result[i])
+                    day = day + 1;
+                }
+                else {
+                    result[i] = month + "-" + day;
+                  
+                    console.log(result[i])
+                    day = day + 1;
+                }
+            }
+            else if (month == 2) {
+                if (day > 28) {
+                    month = month + 1;
+                    day = day - 28;
+                    result[i] = month + "-" + day;
+                    console.log(result[i])
+                    day = day + 1;
+                }
+                else {
+                    result[i] = month + "-" + day;
+                    console.log(result[i])
+                    day = day + 1;
+                }
+            }
+            else {
+                if (day > 30) {
+                    month = month + 1;
+                    day = day - 30;
+                    result[i] = month + "-" + day;
+                    console.log(result[i])
+                    day = day + 1;
+                }
+                else {
+                    result[i] = month + "-" + day;
+                    console.log(result[i])
+                    day = day + 1;
+                }
+            }
+        }
+
+    }
+
+
 </script>
+
 </html>
