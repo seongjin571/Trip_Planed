@@ -44,11 +44,11 @@
 
                 <div class="form-data">
                     <div class="check_img_div">
-                        <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img check-img" id="nocheckid2" />
-                        <img src="/images/check.png" alt="체크 이미지" class="okcheck-img check-img" id="checkid2" />
+                        <img src="/images/nocheck.png" alt="체크 이미지" class="nocheck-img check-img" id="nocheckid3" />
+                        <img src="/images/check.png" alt="체크 이미지" class="okcheck-img check-img" id="checkid3" />
                         <label for="password">비밀번호 확인</label>
                     </div>
-                    <input type="password" id="password" name='password' onchange='change_password(this)'
+                    <input type="password" id="password2" name='password' onchange='two_change_password(this)'
                         class="member-data" />
                 </div>
                 <input id="submit_btn" onclick="gogo();" type='button' value='확인' style='margin-bottom: 10px;' />
@@ -66,12 +66,14 @@
 <script>
     var flag1 = 0;
     var flag2 = 0;
+    var flag3 = 0;
     var email_reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     var user_name_reg = /^[A-Za-z0-9]{6,12}$/;
     var password_reg = /(?=.*\d{1,15})(?=.*[~`!@#$%\^&*()-+=]{1,15})(?=.*[a-zA-Z]{2,15}).{8,15}$/;
 
     var user_name_value;
     var password_value;
+    var password_value2;
 
     function change_user_name(obj) {
         user_name_value = $("#user_name").val();
@@ -108,8 +110,23 @@
         }
     }
 
+    function two_change_password(obj) {
+        password_value2 = $("#password2").val();
+        if (password_value == password_value2) {
+            flag3 = 1;
+            document.getElementById('checkid3').style.display = 'inline';
+            document.getElementById('nocheckid3').style.display = 'none';
+        }
+        else {
+            document.getElementById('checkid3').style.display = 'none';
+            document.getElementById('nocheckid3').style.display = 'inline';
+        }
+    }
+
+
     function gogo() {
-        if (flag1 == 1 && flag2 == 1) {
+        if (flag1 == 1 && flag2 == 1 && flag3 == 1) {
+            document.getElementById("password2").disabled = true;
             document.querySelector("#signup_form").submit();
             console.log("hrere")
         }
