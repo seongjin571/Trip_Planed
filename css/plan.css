@@ -191,7 +191,7 @@ span[class^=plan-delete-btn]:hover {
 }
 .only-tour-info{
     overflow-y: auto;
-    height: 320px;
+    height: 300px;
 }
 .tour-content{
     float: left;
@@ -287,7 +287,7 @@ span[class^=plan-delete-btn]:hover {
 .info{
     color: #6c6c6c;
 }
-#map{
+.map{
     margin: 10px auto;
     width: 350px;
     height: 250px;

@@ -38,16 +38,33 @@ addPlan.prototype = {
         planAddBtn.addEventListener('click', function (e) {
             this.setTimeInput(0);
             const planDayWrap = document.getElementsByClassName('plan-day-wrap')[this.day];
+            let length = planDayWrap.children.length;
             const addPlanDiv = document.getElementsByClassName('add-plan')[this.day];
-            const templateHtml = document.querySelector('.template-direct').innerHTML;
-            const planTitle = document.querySelector('.plan-title').innerHTML;
             const newTemplateHtml = templateHtml.replace('{startTime}', this.startTime.value)
-                .replace('{finishTime}', this.finishTime.value)
-                .replace('{planContent}', this.planContent.value)
-                .replace(/{day}/gi, this.day);
-            planDayWrap.removeChild(addPlanDiv);
-            planDayWrap.innerHTML += newTemplateHtml;
-            planDayWrap.appendChild(addPlanDiv);
+            .replace('{finishTime}', this.finishTime.value)
+            .replace('{planContent}', this.planContent.value)
+            .replace(/{day}/gi, this.day)
+            console.log(length);
+            if(length === 1){
+            $('.add-plan:eq(this.day)').before("a");
+            }
+            for(let i = 0; i < length; i++){
+                console.log(i);
+                console.log(planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.value)
+                if(this.startTime.value < planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.value){
+                    if(this.finishTime.value <= planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.value){
+        
+                        const templateHtml = document.querySelector('.template-direct').innerHTML;
+                        const planTitle = document.querySelector('.plan-title').innerHTML;
+                            console.log(i , doc);
+                        // planDayWrap.insertBefore(doc, planDayWrap.children[i]);
+                    }
+                }
+            }
+
+            // planDayWrap.removeChild(addPlanDiv);
+            // planDayWrap.innerHTML += newTemplateHtml;
+            // planDayWrap.appendChild(addPlanDiv);
             this.enrollDeleteBtn();
             this.closeModal();
         }.bind(this));
@@ -92,7 +109,8 @@ addPlan.prototype = {
                             document.querySelector('.address2').innerHTML = result.response.body.items.item.addr1;
                             document.querySelector('.tel2').innerHTML = result.response.body.items.item.tel;
                             document.querySelector('.homepage2').innerHTML = result.response.body.items.item.homepage;
-                            drawMap(tour.dataset.mapy, tour.dataset.mapx);
+                            console.log(tour.dataset.mapy)
+                            drawMap(tour.dataset.mapy, tour.dataset.mapx, 1);
                         }
                     });
                 })
@@ -218,13 +236,13 @@ function addTourList(result) {
                     tourName.dataset.id = e.dataset.id;
                     tourName.dataset.img = e.firstElementChild.src;
                     tourName.dataset.mapx = e.dataset.mapx;
-                    tourName.dataset.maxy = e.dataset.mapy;
+                    tourName.dataset.mapy = e.dataset.mapy;
                     tourName.dataset.typeid = e.dataset.typeId;
                     document.querySelector('.overview').innerHTML = result.response.body.items.item.overview;
                     document.querySelector('.address').innerHTML = result.response.body.items.item.addr1;
                     document.querySelector('.tel').innerHTML = result.response.body.items.item.tel;
                     document.querySelector('.homepage').innerHTML = result.response.body.items.item.homepage;
-                    drawMap(e.dataset.mapy, e.dataset.mapx);
+                    drawMap(e.dataset.mapy, e.dataset.mapx, 0);
                 }
             });
             document.querySelector('.tour-info-container').style.display = "block";
@@ -233,8 +251,8 @@ function addTourList(result) {
     });
 }
 
-function drawMap(mapX, mapY) {
-    var container = document.getElementById('map');
+function drawMap(mapX, mapY, index) {
+    var container = document.getElementsByClassName('map')[index];
     var options = {
         center: new kakao.maps.LatLng(mapX, mapY),
         level: 4
