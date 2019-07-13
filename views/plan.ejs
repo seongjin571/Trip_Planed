@@ -22,8 +22,8 @@
             </ul>
         </div>
         <img class="trip-location" src="/images/back.png" width="100%" height="auto" />
-        <!-- <p class="location-name">가평</p> -->
-        <h1 class="plan-title" data-totalDay=5><%= result.plan_title %></h1>
+        <h1 class="plan-title" data-total-day=<%= result.total_day  %> data-start-day=<%= result.start_day%>
+            data-finish-day=<%= result.finish_day%> data-id=<% id %>> <%= result.plan_title %></h1>
         <div class="plan-container">
             <% for(let i = 0; i < result.total_day; i++){ %>
             <div class="plan-day" data-day=<%= i+1 %>>
@@ -40,7 +40,7 @@
 
         <div class="tour-dest-container">
             <div class="tour-dest-wrap">
-                <h1 class="tour-dest"><span class="big-city"><%= result.big_location %></span> <%= result.small_location %></h1>
+                <h1 class="tour-dest"><span class="big-city"><%= result.big_location %></span> <span class="small-city"><%= result.small_location %></span></h1>
                 <select name="tour-type" class="tour-type" data-big="<%= result.select_big_location %>"
                     data-small="<%= result.select_small_location %>">
                     <option value>전체</option>
@@ -139,7 +139,7 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4e669c4b74a582a0382b81be90fca4ff"></script>
 </body>
 <script type="template-direct" class="template-direct">
-            <div class="one-plan">
+            <div class="one-plan" data-type-id=0>
                 <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
                 <div class="time">
                     <input name="startTime" value={startTime} readonly class="start-time" />
@@ -153,7 +153,7 @@
 
 </script>
 <script type="template-tour" class="template-tour">
-        <div class="one-plan">
+        <div class="one-plan" data-type-id={typeId}>
                 <img src="/images/tour{typeId}.png" class="type-image">
                 <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
                 <div class="time">
@@ -162,7 +162,7 @@
                     <input name="finishTime" value={finishTime} readonly class="finish-time" />
                 </div>
                 <div class="detail-plan">
-                    <div class="tour-link" data-id={tourId} data-mapx={mapx} data-mapy={mapy} data-tour-img={tourImg}>
+                    <div class="tour-link type-id-wrap" data-id={tourId} data-mapx={mapx} data-mapy={mapy} data-tour-img={tourImg}>
                         <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
                     </div>
                 </div>
@@ -180,23 +180,6 @@
 <script src="/js/plan.js"></script>
 
 <script>
-<<<<<<< HEAD
-    const city = document.querySelector(".big-city").innerHTML;
-    console.log(city)
-    const selTourType = document.querySelector('.tour-type');
-    const bigLocation = selTourType.dataset.big;
-    const smallLocation = selTourType.dataset.small;
-    const tourUl = document.querySelector('.tour-dest-ul');
-    const templateHtml = document.querySelector('.template-tour-list').innerHTML;
-    $.ajax({
-        url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + bigLocation + "&sigunguCode=" + smallLocation + "&numOfRows=100&MobileOS=ETC&MobileApp=AppTest",
-        dataType: "json",
-        success: function (result) {
-                addTourList(result);
-        }
-    });
-=======
->>>>>>> 4e4700fd3654f734e5e53f11d2d80b6e19a6d617
 
 </script>
 
