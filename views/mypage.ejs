@@ -15,7 +15,7 @@
         </a>
         <ul class="nav">
             <li class="nav-list"><a class="nav-link" href="/mypage">마이페이지</a></li>
-            <li class="nav-list"><a class="nav-link" href="/api/shareplan">공유계획</a></li>
+            <li class="nav-list"><a class="nav-link" href="/shareplan">공유계획</a></li>
             <li class="nav-list"><a class="nav-link" href="/logout">로그아웃</a></li>
         </ul>
     </div>
@@ -27,9 +27,9 @@
         <li class="plan-list" data-planId=<%= result[i].plan_id %> data-totalday=<%= result[i].total_day%>>
             <div class="sample-img"></div>
             <div class="plan-content-wrap">
-                <span>춘천</span>
+                <span><%= result[i].big_city %> <%= result[i].small_city %></span>
                 <h3><%= result[i].plan_title %></h3>
-                <p>일정 : 7/15 ~ 7/19</p>
+                <p>일정 : <%= result[i].start_day %> ~ <%= result[i].finish_day %></p>
                 <img src="/images/heart.png" alt="하트 이미지" class="heart-img">
                 <span class="good-count"><%= result[i].good %></span>
             </div>
@@ -62,9 +62,9 @@
             <div class="one-plan">
                     <span></span>
                     <div class="time">
-                        <input name="startTime" value={startTime} readonly class="start-time" />
+                        <input name="startTime" value="{startTime}" readonly class="start-time" />
                         <span> - </span>
-                        <input name="finishTime" value={finishTime} readonly class="finish-time" />
+                        <input name="finishTime" value="{finishTime}" readonly class="finish-time" />
                     </div>
                     <div class="detail-plan">
                             <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
@@ -72,7 +72,7 @@
                 </div>
     </script>
     <script>
-        const eiffelImg = "<img src='images/tour.png' class='eiffel-img'>";
+        const typeImg = "<img src='/images/tour{typeId}.png' class='type-img'>";
         const planList = document.querySelectorAll('.plan-list');
         planList.forEach(function (e) {
             e.addEventListener('click', function (v) {
@@ -94,10 +94,13 @@
                         console.log(e);
                         const dayWrap = document.getElementsByClassName('plan-day-wrap')[e.day - 1];
                         let onePlan = document.querySelector('.template-tour').innerHTML;
-                        const newTemplateHtml = onePlan.replace('{startTime}', e.start_time)
+                        let newTemplateHtml = onePlan.replace('{startTime}', e.start_time)
                             .replace('{finishTime}', e.finish_time)
                             .replace('{planContent}', e.plan_content);
-                        if (e.tour_flag === 1) newTemplateHtml = newTemplateHtml.replace('<span></span>', eiffelImg);
+                        if (e.tour_flag !== 0) {
+                            newTemplateHtml = newTemplateHtml.replace('<span></span>', typeImg)
+                            .replace('{typeId}', e.tour_flag)
+                        }
                         dayWrap.innerHTML += newTemplateHtml;
                     })
                 })

@@ -7,6 +7,9 @@
 body::-webkit-scrollbar { 
     display: none; 
 }
+input:focus {
+    outline: none;
+  }
 p, div, button, input{
     font-family: 'LotteMartDream';
 }
@@ -86,7 +89,12 @@ h3{
     height: 30px;
     line-height: 30px;
     margin: 0;
-} 
+}
+
+.plan-content-wrap{
+    height: 150px;
+    background-color: white;
+}
 
 .detail-plan-container {
     display: none;
@@ -118,4 +126,11 @@ h3{
 #plan-modal-container{
 height: 70%;
 overflow-y: auto;
+}
+.type-img{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 10;
+    top: 10;
 }
