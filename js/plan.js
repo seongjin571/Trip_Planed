@@ -57,14 +57,15 @@ addPlan.prototype = {
         const addTourBtn = document.querySelector('.add-tour-plan-btn');
         addTourBtn.addEventListener('click', function (e) {
             this.setTimeInput(1);
-            this.day = document.querySelector('#select-day').value - 1;
-            const tourName = document.querySelector('.tour-name').innerHTML;
+            this.day = document.querySelector('.select-day').value - 1;
+            const tourName = document.querySelector('.tour-name');
             const addPlanDiv = document.getElementsByClassName('add-plan')[this.day];
             const planDayWrap = document.getElementsByClassName('plan-day-wrap')[this.day];
             const templateHtml = document.querySelector('.template-tour').innerHTML;
             const newTemplateHtml = templateHtml.replace('{startTime}', this.startTime.value)
                 .replace('{finishTime}', this.finishTime.value)
-                .replace('{planContent}', tourName)
+                .replace('{planContent}', tourName.innerHTML)
+                .replace('{typeId}',tourName.dataset.typeid)
                 .replace(/{day}/gi, this.day);
             planDayWrap.removeChild(addPlanDiv);
             planDayWrap.innerHTML += newTemplateHtml;
@@ -156,25 +157,60 @@ function addTourList(result) {
     let newTourHTML = '';
     let tourData;
     $.each(result.response.body.items.item, function (i, data) {
-        console.log(data);
         tourData = data;
         newTourHTML += templateHtml.replace('{tourId}', data.contentid)
             .replace(/{typeId}/gi, data.contenttypeid)
             .replace('{tourImg}', data.firstimage)
-            .replace('{tourName}', data.title);
+            .replace('{tourName}', data.title)
+            .replace('{mapX}',data.mapx)
+            .replace('{mapY}',data.mapy)
         tourUl.innerHTML = newTourHTML;
     });
     const tourList = document.querySelectorAll('.tour-dest-list');
     tourList.forEach(function (e) {
         e.addEventListener('click', function () {
+            const tourName = document.querySelector('.tour-name');
             $.ajax({
                 url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&contentId=" + e.dataset.id + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest",
                 dataType: "json",
                 success: function (result) {
-                    console.log(result);
+                    document.querySelector('.tour-img').style.backgroundImage = "url('"+ e.firstElementChild.src + "')";
+                    tourName.innerHTML = result.response.body.items.item.title;
+                    tourName.dataset.id = e.dataset.id;
+                    tourName.dataset.img = e.firstElementChild.src;
+                    tourName.dataset.mapx = e.dataset.mapx;
+                    tourName.dataset.maxy = e.dataset.mapy;
+                    tourName.dataset.typeid = e.dataset.typeId;
+                    document.querySelector('.overview').innerHTML = result.response.body.items.item.overview;
+                    document.querySelector('.address').innerHTML = result.response.body.items.item.addr1;
+                    document.querySelector('.tel').innerHTML = result.response.body.items.item.tel;
+                    document.querySelector('.homepage').innerHTML = result.response.body.items.item.homepage;
+                    drawMap(e.dataset.mapy,e.dataset.mapx);
                 }
             });
             document.querySelector('.tour-info-container').style.display = "block";
+            document.querySelector('body').style.overflow = 'hidden';
         })
+    });
+}
+
+function drawMap(mapX, mapY) {
+    var container = document.getElementById('map');
+    var options = {
+        center: new kakao.maps.LatLng(mapX,mapY),
+        level: 4
+    };
+
+    var map = new kakao.maps.Map(container, options);
+    
+    var position = {
+        title: "title",
+        latlng : new kakao.maps.LatLng(mapX,mapY)
+    };
+    
+    var markers = new kakao.maps.Marker({
+        map: map,
+        position: position.latlng,
+        title: position.title
     });
 }
