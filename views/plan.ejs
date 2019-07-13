@@ -9,52 +9,7 @@
     <link rel="stylesheet" href="/css/footer.css">
 </head>
 <style>
-        .modal {
-            display: none;
-            /* Hidden by default */
-            position: fixed;
-            /* Stay in place */
-            z-index: 1;
-            /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%;
-            /* Full width */
-            height: 100%;
-            /* Full height */
-            overflow: auto;
-            /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
-        }
-    
-        /* Modal Content/Box */
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            /* 15% from the top and centered */
-            padding: 20px;
-            border: 1px solid #888;
-            width: 50%;
-            /* Could be more or less, depending on screen size */
-        }
-    
-        /* The Close Button */
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-    
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
+
     </style>
 <body>
     <div>
@@ -71,8 +26,7 @@
         <img class="trip-location" src="/images/back.png" width="100%" height="auto" />
         <h1 class="plan-title" data-total-day=<%= result.total_day  %> data-start-day=<%= result.start_day%>
             data-finish-day=<%= result.finish_day%> data-id=<%= id %>> <%= result.plan_title %></h1>
-        <button id="myBtn"
-            style="margin-left: 50%; display: -webkit-inline-box;"><%= result.big_location %>의 날씨보기</button> 
+        <button id="myBtn"><%= result.big_location %>의 날씨보기</button> 
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
