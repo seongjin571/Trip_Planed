@@ -40,7 +40,7 @@
 
         <div class="tour-dest-container">
             <div class="tour-dest-wrap">
-                <h1 class="tour-dest"><%= result.big_location %> <%= result.small_location %></h1>
+                <h1 class="tour-dest"><span class="big-city"><%= result.big_location %></span> <%= result.small_location %></h1>
                 <select name="tour-type" class="tour-type" data-big="<%= result.select_big_location %>"
                     data-small="<%= result.select_small_location %>">
                     <option value>전체</option>
@@ -161,6 +161,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
+    const city = document.querySelector(".big-city").innerHTML;
+    console.log(city)
     const selTourType = document.querySelector('.tour-type');
     const bigLocation = selTourType.dataset.big;
     const smallLocation = selTourType.dataset.small;
