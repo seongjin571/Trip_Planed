@@ -180,23 +180,11 @@
 <script src="/js/plan.js"></script>
 
 <script>
-<<<<<<< HEAD
     const city = document.querySelector(".big-city").innerHTML;
     console.log(city)
-    const selTourType = document.querySelector('.tour-type');
-    const bigLocation = selTourType.dataset.big;
-    const smallLocation = selTourType.dataset.small;
-    const tourUl = document.querySelector('.tour-dest-ul');
-    const templateHtml = document.querySelector('.template-tour-list').innerHTML;
-    $.ajax({
-        url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + bigLocation + "&sigunguCode=" + smallLocation + "&numOfRows=100&MobileOS=ETC&MobileApp=AppTest",
-        dataType: "json",
-        success: function (result) {
-                addTourList(result);
-        }
-    });
-=======
->>>>>>> 4e4700fd3654f734e5e53f11d2d80b6e19a6d617
+    
+   
+
 
 </script>
 
