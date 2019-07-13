@@ -32,14 +32,39 @@
                             console.log(response);
                             $(response).find('location').each(function () {
                                 var city = $(this).find('city').text();
-                                if (city == input) {
-                                    $(this).find('data').find('tmEf')[0];
-                                    var output = $(this).find('data').find('tmEf')[0].textContent;
-                                    output = output.substring(10,16);
-                                    //output = JSON.stringify(output);
-                                    
-                                    console.log(output);
-                                    console.log($(this).find('data').find('wf')[0]);
+                                console.log(city)
+                                if(city == '경기도')
+                                {
+                                    city = '서울';
+                                    console.log('경기도 -> 서울')
+                                }else if(city == '강원도')
+                                {
+                                    city = '춘천';
+                                }
+                                else if(city == '충청북도')
+                                {
+                                    city = '청주';
+                                }else if(city == '충청남도')
+                                {
+                                    city = '홍성';
+                                }else if(city == '경상북도')
+                                {
+                                    city = '대구';
+                                }else if(city == '경상남도')
+                                {
+                                    city = '부산';
+                                }else if(city == '전라북도')
+                                {
+                                    city = '전주';
+                                }else if(city == '전라남도')
+                                {
+                                    city = '목포';
+                                }else if(city == '제주도')
+                                {
+                                    city = '서귀포';
+                                }
+                                else if (city == input) {
+                                    console.log('ok')
                                 }
                             })
                         }
