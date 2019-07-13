@@ -67,7 +67,7 @@ addPlan.prototype = {
                 .replace('{tourImg}', tourName.dataset.img)
                 .replace('{mapx}', tourName.dataset.mapx)
                 .replace('{mapy}', tourName.dataset.mapy)
-                .replace('{typeId}', tourName.dataset.typeid)
+                .replace(/{typeId}/gi, tourName.dataset.typeid)
                 .replace(/{day}/gi, this.day);
             planDayWrap.removeChild(addPlanDiv);
             planDayWrap.innerHTML += newTemplateHtml;
@@ -157,7 +157,7 @@ storePlanBtn.addEventListener('click', function () {
             member_id: planTitle.dataset.id,
             total_day: planTitle.dataset.totalDay,
             start_day: planTitle.dataset.startDay,
-            finsish_day: planTitle.dataset.finishDay,
+            finish_day: planTitle.dataset.finishDay,
             big_city: document.querySelector('.big-city').innerHTML,
             small_city: document.querySelector('.small-city').innerHTML,
             
