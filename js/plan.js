@@ -145,6 +145,7 @@ storePlanBtn.addEventListener('click', function () {
     const planCount = document.querySelectorAll('.one-plan');
     let data = [];
     const planTitle = document.querySelector('.plan-title');
+    console.log(planTitle.innerHTML);
     for (let i = 0; i < planCount.length; i++) {
         let typeId = document.getElementsByClassName('one-plan')[i].dataset.typeId
         data[i] = {

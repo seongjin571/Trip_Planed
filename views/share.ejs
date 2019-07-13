@@ -77,7 +77,8 @@
         .share-plan-container {
             background-color: #efefef;
         }
-        .standard{
+
+        .standard {
             color: black;
         }
     </style>
@@ -99,7 +100,6 @@
         <div class="select-all-option">
             <label for="">지역선택</label>
             <select name="select_big_location" class="select-location">
-                <option>선택하세요</option>
                 <option value="0">전체</option>
                 <option value="1">서울</option>
                 <option value="2">인천</option>
@@ -130,7 +130,7 @@
             <ul class="share-plan-ul"></ul>
         </div>
         <div class="more-btn-wrap">
-            <button class="more-btn">더보기</button>
+            <button class="more-btn" data-count=0>더보기</button>
         </div>
     </div>
     <div class="footer">
@@ -184,39 +184,47 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script>
-        // let value;
+        const moreBtn = document.querySelector('.more-btn');
+        let moreCount = 0;
+
         let sharePlanUl = document.querySelector('.share-plan-ul');
+        const smallLocation = document.querySelector('.select-small-location');
         const templatePlanHtml = document.querySelector('.template-one-plan').innerHTML;
-        function getAllPlan(order) {
-            let url = 'api/getAllLocation?order=' + order;
+        function getAllPlan(order, count) {
+            console.log("count값" + count)
+            let url = 'api/getAllLocation?order=' + order + "&count=" + count;
             const shareHttp = new XMLHttpRequest();
             shareHttp.addEventListener("load", function (result) {
                 const data = JSON.parse(shareHttp.responseText);
                 console.log(data.result);
                 let newTemplateHtml = "";
                 data.result.forEach(function (e) {
+                    console.log(e);
                     newTemplateHtml += templatePlanHtml.replace('{planId}', e.plan_id)
                         .replace('{startDay}', e.start_day)
                         .replace('{finishDay}', e.finish_day)
                         .replace('{planTitle}', e.plan_title)
                         .replace('{good}', e.good)
-                        // .replace('{bigCity}'.e.big_city)
-                        // .replace('{smallCity}',e.small_city)
+                        .replace('{bigCity}', e.big_city)
+                        .replace('{smallCity}',e.small_city)
                         .replace('{totalDay}', e.total_day);
-                    sharePlanUl.innerHTML = newTemplateHtml;
-                })
+                    })
+                    sharePlanUl.innerHTML += newTemplateHtml;
+                    moreBtn.dataset.count = 0;
+                    moreCount = 0;
             });
             shareHttp.open('get', url);
             shareHttp.send();
         }
-        let order = document.querySelector('.standard').dataset.name;
-        getAllPlan(order);
-        let smallCity;
+        getAllPlan(document.querySelector('.standard').dataset.name, 0);
+
         const selectLoction = document.querySelector('.select-location');
         selectLoction.addEventListener('change', function () {
-            if (this.value == 0) {
-                order = document.querySelector('.standard').dataset.name;
-                getAllPlan(order);
+            if (Number(this.value) === 0) {
+                sharePlanUl.innerHTML = "";
+                const order = document.querySelector('.standard').dataset.name;
+                smallLocation.innerHTML = "<option>선택하세요</option>";
+                getAllPlan(order, 0);
             }
             else {
                 url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + this.value + "&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest";
@@ -225,7 +233,6 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
-                        const smallLocation = document.querySelector('.select-small-location');
                         smallLocation.innerHTML = "";
                         smallLocation.innerHTML = "<option>선택하세요</option>";
                         $.each(result.response.body.items.item, function (i, d) {
@@ -235,14 +242,13 @@
                 });
             }
         })
-        const smallLocation = document.querySelector('.select-small-location');
-        smallLocation.addEventListener('change', function (e) {
-            order = document.querySelector('.standard').dataset.name;
-            smallCity = this.options[this.selectedIndex].text;
-            url = '/api/getOneLocation?smallCity=' + smallCity + "&order=" + order;
+
+        function getOneLocation(smallCity, order, count) {
+            url = '/api/getOneLocation?smallCity=' + smallCity + "&order=" + order + "&count=" + count;
             const smallCityHttp = new XMLHttpRequest();
             smallCityHttp.addEventListener("load", function (result) {
                 const data = JSON.parse(smallCityHttp.responseText);
+                console.log(data)
                 if (data.result.length === 0) {
                     alert('해당 지역에 계획이 없습니다.');
                 } else {
@@ -250,18 +256,63 @@
                     data.result.forEach(function (e) {
                         newTemplateHtml += templatePlanHtml.replace('{planId}', e.plan_id)
                             .replace('{startDay}', e.start_day)
-                            .replace('{finishDay', e.finish_day)
-                            // .replace('{bigCity}'.e.big_city)
-                            // .replace('{smallCity}',e.small_city)
+                            .replace('{finishDay}', e.finish_day)
+                            .replace('{bigCity}',e.big_city)
+                            .replace('{smallCity}',e.small_city)
                             .replace('{totalDay}', e.total_day);
-                        sharePlanUl.innerHTML = newTemplateHtml;
-                    })
+                        })
+                        sharePlanUl.innerHTML += newTemplateHtml;
+                        moreBtn.dataset.count = 0;
+                        moreCount = 0;
                 }
             });
-
             smallCityHttp.open('get', url);
             smallCityHttp.send();
+        }
+
+        smallLocation.addEventListener('change', function (e) {
+            const order = document.querySelector('.standard').dataset.name;
+            const smallCity = this.options[this.selectedIndex].text;
+            sharePlanUl.innerHTML = "";
+            getOneLocation(smallCity, order, 0);
         });
+
+        const optionList = document.querySelectorAll('.option-list');
+        optionList.forEach(function (e) {
+            e.addEventListener('click', function () {
+                optionList.forEach(function (v) {
+                    v.classList.remove('standard');
+                })
+                e.classList.add('standard');
+                const order = e.dataset.name;
+                if (Number(selectLoction.value) === 0) {
+                    smallLocation.innerHTML = "<option>선택하세요</option>";
+                    sharePlanUl.innerHTML = "";
+                    getAllPlan(order, 0);
+                }
+                else {
+                    const smallCity = smallLocation.options[smallLocation.selectedIndex].text;
+                    sharePlanUl.innerHTML = "";
+                    getOneLocation(smallCity, order, 0);
+
+                }
+            })
+        })
+        moreBtn.addEventListener('click',function(e){
+            const currCount = Number(this.dataset.count) + 6;
+            const order = document.querySelector('.standard').dataset.name;
+            this.dataset.count = currCount;
+            if (Number(selectLoction.value) === 0) {
+                    smallLocation.innerHTML = "<option>선택하세요</option>";
+                    getAllPlan(order, currCount);
+                }
+                else {
+                    const smallCity = smallLocation.options[smallLocation.selectedIndex].text;
+                    getOneLocation(smallCity, order, currCount);
+                }
+            
+
+        })
 
         // const typeImg = "<img src='/images/tour{typeId}.png' class='type-img'>";
         // const planList = document.querySelectorAll('.plan-list');
