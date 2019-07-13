@@ -20,23 +20,24 @@
         </ul>
     </div>
     <img class="trip-location" src="/images/mypage.png" width="100%" height="auto" />
-    <ul class="plan-ul">
-        <% const planLength = result.length;
+    <div class="myplan-wrap">
+        <ul class="plan-ul">
+            <% const planLength = result.length;
                 for(let i = 0; i < planLength; i++){
             %>
-        <li class="plan-list" data-planId=<%= result[i].plan_id %> data-totalday=<%= result[i].total_day%>>
-            <div class="sample-img"></div>
-            <div class="plan-content-wrap">
-                <span><%= result[i].big_city %> <%= result[i].small_city %></span>
-                <h3><%= result[i].plan_title %></h3>
-                <p>일정 : <%= result[i].start_day %> ~ <%= result[i].finish_day %></p>
-                <img src="/images/noheart.png" alt="하트 이미지" class="noheart-img heart">
-                <img src="/images/heart.png" alt="하트 이미지" class="heart-img heart">
-                <span class="good-count"><%= result[i].good %></span>
-            </div>
-        </li>
-        <% } %>
-    </ul>
+            <li class="plan-list" data-planId=<%= result[i].plan_id %> data-totalday=<%= result[i].total_day%>>
+                <div class="sample-img"></div>
+                <div class="plan-content-wrap">
+                    <span><%= result[i].big_city %> <%= result[i].small_city %></span>
+                    <h3><%= result[i].plan_title %></h3>
+                    <p>일정 : <%= result[i].start_day %> ~ <%= result[i].finish_day %></p>
+                    <img src="/images/heart.png" alt="하트 이미지" class="heart-img heart">
+                    <span class="good-count"><%= result[i].good %></span>
+                </div>
+            </li>
+            <% } %>
+        </ul>
+    </div>
     <div class="footer">
         <div class="copy-rights">
             © 2019 2H&A. All rights reserved.
@@ -100,7 +101,7 @@
                             .replace('{planContent}', e.plan_content);
                         if (e.tour_flag !== 0) {
                             newTemplateHtml = newTemplateHtml.replace('<span></span>', typeImg)
-                            .replace('{typeId}', e.tour_flag)
+                                .replace('{typeId}', e.tour_flag)
                         }
                         dayWrap.innerHTML += newTemplateHtml;
                     })

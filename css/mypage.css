@@ -29,7 +29,7 @@ html {
 .plan-ul{
     padding: 0;
     max-width: 1000px;
-    margin: 50px auto;
+    margin: 0 auto;
 }
 .plan-ul::after{
     content: '';
@@ -90,8 +90,13 @@ h3{
     line-height: 30px;
     margin: 0;
 }
-
+.myplan-wrap{
+    padding: 50px 0;
+    background-color: #efefef;
+}
 .plan-content-wrap{
+    padding: 10px;
+    box-sizing: border-box;
     height: 150px;
     background-color: white;
 }
