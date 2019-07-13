@@ -349,3 +349,7 @@ span[class^=plan-delete-btn]:hover {
     text-decoration: none;
     cursor: pointer;
 }
+#myBtn{
+    margin-left: 50%;
+    display: -webkit-inline-box;
+}
