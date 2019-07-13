@@ -61,10 +61,10 @@
             height: 40px;
             background-color: #4c80f1;
             color: white;
-            background-color: #4c80f1;
             border: none;
             color: white;
             border-radius: 3px;
+            font-size: 15px;
         }
 
         .more-btn-wrap {
@@ -79,7 +79,14 @@
         }
 
         .standard {
-            color: black;
+            color: #4c80f1;
+        }
+
+        .heart-img {
+            display: none;
+        }
+        .heart-wrap{
+            display: inline-block;
         }
     </style>
 </head>
@@ -130,7 +137,7 @@
             <ul class="share-plan-ul"></ul>
         </div>
         <div class="more-btn-wrap">
-            <button class="more-btn" data-count=0>더보기</button>
+            <button class="more-btn" data-count=6>더보기</button>
         </div>
     </div>
     <div class="footer">
@@ -154,9 +161,12 @@
                 <span>{bigCity} {smallCity}</span>
                 <h3>{planTitle}</h3>
                 <p>일정 : {startDay} ~ {finishDay}</p>
-                <img src="/images/heart.png" alt="하트 이미지" class="heart-img heart">
-                <img src="/images/noheart.png" alt="하트 이미지" class="noheart-img heart">
+                <div class="heart-wrap">
+                    <img src="/images/heart.png" alt="하트 이미지" class="heart-img heart">
+                    <img src="/images/noheart.png" alt="하트 이미지" class="noheart-img heart">
                     <span class="good-count">{good}</span>
+                </div>
+
             </div>
         </li>
     </script>
@@ -183,35 +193,52 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script>
-        const moreBtn = document.querySelector('.more-btn');
-        let moreCount = 0;
 
+    <script>
+        const typeImg = "<img src='/images/tour{typeId}.png' class='type-img'>";
+        let smallCity;
+        let bigCityVal = 0;
+        const moreBtn = document.querySelector('.more-btn');
+        let flag = false;
         let sharePlanUl = document.querySelector('.share-plan-ul');
         const smallLocation = document.querySelector('.select-small-location');
         const templatePlanHtml = document.querySelector('.template-one-plan').innerHTML;
         function getAllPlan(order, count) {
-            console.log("count값" + count)
             let url = 'api/getAllLocation?order=' + order + "&count=" + count;
             const shareHttp = new XMLHttpRequest();
             shareHttp.addEventListener("load", function (result) {
                 const data = JSON.parse(shareHttp.responseText);
-                console.log(data.result);
+                moreBtn.dataset.length = data.length[0].length;
                 let newTemplateHtml = "";
+
+                if (moreBtn.dataset.count >= data.length[0].length)
+                    moreBtn.style.display = 'none';
+                else {
+                    moreBtn.style.display = 'block';
+                }
                 data.result.forEach(function (e) {
-                    console.log(e);
                     newTemplateHtml += templatePlanHtml.replace('{planId}', e.plan_id)
                         .replace('{startDay}', e.start_day)
                         .replace('{finishDay}', e.finish_day)
                         .replace('{planTitle}', e.plan_title)
                         .replace('{good}', e.good)
                         .replace('{bigCity}', e.big_city)
-                        .replace('{smallCity}',e.small_city)
+                        .replace('{smallCity}', e.small_city)
                         .replace('{totalDay}', e.total_day);
-                    })
-                    sharePlanUl.innerHTML += newTemplateHtml;
-                    moreBtn.dataset.count = 0;
-                    moreCount = 0;
+                })
+                if (!flag) sharePlanUl.innerHTML = newTemplateHtml;
+                else sharePlanUl.innerHTML += newTemplateHtml;
+                flag = false;
+                const planList = document.querySelectorAll('.plan-list');
+                planList.forEach(function (e) {
+                    e.addEventListener('click', function (v) {
+                        if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
+                            getPlanInfo(e, v);
+                        }else{
+                            ////하트 로직
+                        }
+                    });
+                });
             });
             shareHttp.open('get', url);
             shareHttp.send();
@@ -221,18 +248,20 @@
         const selectLoction = document.querySelector('.select-location');
         selectLoction.addEventListener('change', function () {
             if (Number(this.value) === 0) {
-                sharePlanUl.innerHTML = "";
+                flag = false;
                 const order = document.querySelector('.standard').dataset.name;
                 smallLocation.innerHTML = "<option>선택하세요</option>";
+                moreBtn.dataset.count = 6;
                 getAllPlan(order, 0);
             }
             else {
+                flag = false;
                 url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + this.value + "&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest";
                 $.ajax({
                     url: url,
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        moreBtn.dataset.count = 6;
                         smallLocation.innerHTML = "";
                         smallLocation.innerHTML = "<option>선택하세요</option>";
                         $.each(result.response.body.items.item, function (i, d) {
@@ -248,32 +277,54 @@
             const smallCityHttp = new XMLHttpRequest();
             smallCityHttp.addEventListener("load", function (result) {
                 const data = JSON.parse(smallCityHttp.responseText);
-                console.log(data)
                 if (data.result.length === 0) {
                     alert('해당 지역에 계획이 없습니다.');
+                    location.reload();
                 } else {
+                    if (data.length <= 6)
+                        moreBtn.style.display = 'none';
+                    if (data.length[0].length > 6) {
+                        moreBtn.style.display = 'block';
+                    } else {
+                        moreBtn.style.display = 'none';
+                    }
+                    moreBtn.dataset.length = data.length[0].length;
                     let newTemplateHtml = "";
                     data.result.forEach(function (e) {
                         newTemplateHtml += templatePlanHtml.replace('{planId}', e.plan_id)
                             .replace('{startDay}', e.start_day)
                             .replace('{finishDay}', e.finish_day)
-                            .replace('{bigCity}',e.big_city)
-                            .replace('{smallCity}',e.small_city)
+                            .replace('{bigCity}', e.big_city)
+                            .replace('{planTitle}', e.plan_title)
+                            .replace('{good}', e.good)
+                            .replace('{smallCity}', e.small_city)
                             .replace('{totalDay}', e.total_day);
-                        })
-                        sharePlanUl.innerHTML += newTemplateHtml;
-                        moreBtn.dataset.count = 0;
-                        moreCount = 0;
+                    })
+                    if (!flag) sharePlanUl.innerHTML = newTemplateHtml;
+                    else sharePlanUl.innerHTML += newTemplateHtml;
+                    flag = false;
+                    moreBtn.dataset.count = 6;
                 }
+                const planList = document.querySelectorAll('.plan-list');
+                planList.forEach(function (e) {
+                    e.addEventListener('click', function (v) {
+                        if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
+                            getPlanInfo(e, v);
+                        }else{
+                            ////하트 로직
+                        }
+                    });
+                });
             });
             smallCityHttp.open('get', url);
             smallCityHttp.send();
+
         }
 
         smallLocation.addEventListener('change', function (e) {
             const order = document.querySelector('.standard').dataset.name;
-            const smallCity = this.options[this.selectedIndex].text;
-            sharePlanUl.innerHTML = "";
+            smallCity = this.options[this.selectedIndex].text;
+            flag = false;
             getOneLocation(smallCity, order, 0);
         });
 
@@ -286,76 +337,75 @@
                 e.classList.add('standard');
                 const order = e.dataset.name;
                 if (Number(selectLoction.value) === 0) {
+                    moreBtn.dataset.count = 6;
                     smallLocation.innerHTML = "<option>선택하세요</option>";
-                    sharePlanUl.innerHTML = "";
+                    flag = false;
                     getAllPlan(order, 0);
                 }
                 else {
-                    const smallCity = smallLocation.options[smallLocation.selectedIndex].text;
-                    sharePlanUl.innerHTML = "";
+                    moreBtn.dataset.count = 6;
+                    smallCity = smallLocation.options[smallLocation.selectedIndex].text;
+                    flag = false;
                     getOneLocation(smallCity, order, 0);
 
                 }
             })
         })
-        moreBtn.addEventListener('click',function(e){
-            const currCount = Number(this.dataset.count) + 6;
+        moreBtn.addEventListener('click', function (e) {
+            const currCount = Number(this.dataset.count);
             const order = document.querySelector('.standard').dataset.name;
-            this.dataset.count = currCount;
             if (Number(selectLoction.value) === 0) {
-                    smallLocation.innerHTML = "<option>선택하세요</option>";
-                    getAllPlan(order, currCount);
-                }
-                else {
-                    const smallCity = smallLocation.options[smallLocation.selectedIndex].text;
-                    getOneLocation(smallCity, order, currCount);
-                }
-            
+                flag = true;
+                smallLocation.innerHTML = "<option>선택하세요</option>";
+                getAllPlan(order, currCount);
+                this.dataset.count = currCount + 6;
 
+            }
+            else {
+                flag = true;
+                getOneLocation(smallCity, order, currCount);
+                this.dataset.count = currCount + 6;
+            }
         })
 
-        // const typeImg = "<img src='/images/tour{typeId}.png' class='type-img'>";
-        // const planList = document.querySelectorAll('.plan-list');
-        // planList.forEach(function (e) {
-        //     e.addEventListener('click', function (v) {
-        //         const planContainer = document.querySelector('.plan-container');
-        //         planContainer.innerHTML = "";
-        //         document.querySelector('.detail-plan-container').style.display = "block";
-        //         const planId = e.dataset.planid;
-        //         const totalDay = e.dataset.totalday;
-        //         const templateHtml = document.querySelector('.template-day').innerHTML;
-        //         for (let i = 0; i < totalDay; i++) {
-        //             const newTemplateHtml = templateHtml.replace('{day}', i + 1);
-        //             planContainer.innerHTML += newTemplateHtml;
-        //         }
-        //         const url = "/getPlan?planId=" + planId;
-        //         planHttp = new XMLHttpRequest();
-        //         planHttp.addEventListener("load", function (result) {
-        //             const data = JSON.parse(planHttp.responseText);
-        //             data.result.forEach(function (e) {
-        //                 console.log(e);
-        //                 const dayWrap = document.getElementsByClassName('plan-day-wrap')[e.day - 1];
-        //                 let onePlan = document.querySelector('.template-tour').innerHTML;
-        //                 let newTemplateHtml = onePlan.replace('{startTime}', e.start_time)
-        //                     .replace('{finishTime}', e.finish_time)
-        //                     .replace('{planContent}', e.plan_content);
-        //                 if (e.tour_flag !== 0) {
-        //                     newTemplateHtml = newTemplateHtml.replace('<span></span>', typeImg)
-        //                         .replace('{typeId}', e.tour_flag)
-        //                 }
-        //                 dayWrap.innerHTML += newTemplateHtml;
-        //             })
-        //         })
-        //         planHttp.open("GET", url);
-        //         planHttp.send();
-        //     })
-        // })
 
-        // const detailPlanContainer = document.querySelector('.detail-plan-container');
-        // detailPlanContainer.addEventListener('click', function (e) {
-        //     if (e.target.className === 'detail-plan-verti-div')
-        //         this.style.display = 'none';
-        // });
+        function getPlanInfo(e, v) {
+            const planContainer = document.querySelector('.plan-container');
+            planContainer.innerHTML = "";
+            document.querySelector('.detail-plan-container').style.display = "block";
+            const planId = e.dataset.planid;
+            const totalDay = e.dataset.totalday;
+            const templateHtml = document.querySelector('.template-day').innerHTML;
+            for (let i = 0; i < totalDay; i++) {
+                const newTemplateHtml = templateHtml.replace('{day}', i + 1);
+                planContainer.innerHTML += newTemplateHtml;
+            }
+            const url = "/getPlan?planId=" + planId;
+            planHttp = new XMLHttpRequest();
+            planHttp.addEventListener("load", function (result) {
+                const data = JSON.parse(planHttp.responseText);
+                data.result.forEach(function (e) {
+                    console.log(e);
+                    const dayWrap = document.getElementsByClassName('plan-day-wrap')[e.day - 1];
+                    let onePlan = document.querySelector('.template-tour').innerHTML;
+                    let newTemplateHtml = onePlan.replace('{startTime}', e.start_time)
+                        .replace('{finishTime}', e.finish_time)
+                        .replace('{planContent}', e.plan_content);
+                    if (e.tour_flag !== 0) {
+                        newTemplateHtml = newTemplateHtml.replace('<span></span>', typeImg)
+                            .replace('{typeId}', e.tour_flag)
+                    }
+                    dayWrap.innerHTML += newTemplateHtml;
+                })
+            })
+            planHttp.open("GET", url);
+            planHttp.send();
+        }
+        const detailPlanContainer = document.querySelector('.detail-plan-container');
+        detailPlanContainer.addEventListener('click', function (e) {
+            if (e.target.className === 'detail-plan-verti-div')
+                this.style.display = 'none';
+        });
 
     </script>
 </body>
