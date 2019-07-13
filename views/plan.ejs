@@ -8,6 +8,55 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
 </head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<style>
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
 
 <body>
     <div>
@@ -23,11 +72,22 @@
         </div>
         <img class="trip-location" src="/images/back.png" width="100%" height="auto" />
         <!-- <p class="location-name">가평</p> -->
-        <h1 class="plan-title" data-totalDay=5><%= result.plan_title %></h1>
+        <h1 class="plan-title" data-totalDay=5><%= result.plan_title %> <button id="myBtn"
+                style="margin-left: 50%; display: -webkit-inline-box;"><%= result.big_location %>의 날씨보기</button> </h1>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="text_area">
+                    <ul class="weather-ul"></ul>
+                </div>
+            </div>
+
+        </div>
         <div class="plan-container">
             <% for(let i = 0; i < result.total_day; i++){ %>
             <div class="plan-day" data-day=<%= i+1 %>>
-                <div class="day-count"><%= i+1 %> Day (<%= dayArr[i] %>)</div>
+                <div class="day-count"><span><%= i+1 %> Day %></span><span class="dayArr">(<%= dayArr[i] %>)%></span>
+                </div>
                 <div class="plan-day-wrap">
                     <div class="add-plan" data-day=<%= i+1 %>>
                         <button class="add-direct" data-day=<%= i+1 %>>일정 추가</button>
@@ -40,7 +100,8 @@
 
         <div class="tour-dest-container">
             <div class="tour-dest-wrap">
-                <h1 class="tour-dest"><span class="big-city"><%= result.big_location %></span> <%= result.small_location %></h1>
+                <h1 class="tour-dest"><span class="big-city"><%= result.big_location %></span>
+                    <%= result.small_location %></h1>
                 <select name="tour-type" class="tour-type" data-big="<%= result.select_big_location %>"
                     data-small="<%= result.select_small_location %>">
                     <option value>전체</option>
@@ -90,10 +151,14 @@
                     <div class="tour-content">
                         <h2 class="tour-name"></h2>
                         <div class="tour-info">
-                            <span>소개: </span><p class="overview info"></p>
-                            <span>위치: </span><p class="address info"></p>
-                            <span>전화번호: </span><p class="tel info"></p>
-                            <span>홈페이지: </span><p class="homepage info"></p>
+                            <span>소개: </span>
+                            <p class="overview info"></p>
+                            <span>위치: </span>
+                            <p class="address info"></p>
+                            <span>전화번호: </span>
+                            <p class="tel info"></p>
+                            <span>홈페이지: </span>
+                            <p class="homepage info"></p>
                             <div id="map"></div>
                         </div>
                         <div class="add-tour">
@@ -101,8 +166,7 @@
                             <select name="day" class="select-day">
                                 <option>선택하세요</option>
                                 <% for(let i = 0; i < result.total_day; i++){ %>
-                                <option value=<%= i+1 %>><%= i+1 %> Day (<%= dayArr[i] %>)</option>
-                                <% } %>
+                                <option value=<%= i+1 %>><%= i+1 %> Day (<%= dayArr[i] %>)</option> <% } %>
                             </select><br />
                             <label for="start-time">시작 시간</label><input type="time" name="startTime"
                                 class="input-start-time" />
@@ -117,26 +181,31 @@
     </div>
 
     <div class="only-tour-info-container">
-            <div class="tour-info-wrap">
-                <div class="tour-info-verti-div">
-                    <div class="only-tour-info-content">
-                        <div class="only-tour-img">
-                        </div>
-                        <div class="only-tour-content">
-                            <h2 class="tour-name2"></h2>
-                            <div class="only-tour-info">
-                                <span>소개: </span><p class="overview2 info"></p>
-                                <span>위치: </span><p class="address2 info"></p>
-                                <span>전화번호: </span><p class="tel2 info"></p>
-                                <span>홈페이지: </span><p class="homepage2 info"></p>
-                                <div id="map2"></div>
-                            </div>
+        <div class="tour-info-wrap">
+            <div class="tour-info-verti-div">
+                <div class="only-tour-info-content">
+                    <div class="only-tour-img">
+                    </div>
+                    <div class="only-tour-content">
+                        <h2 class="tour-name2"></h2>
+                        <div class="only-tour-info">
+                            <span>소개: </span>
+                            <p class="overview2 info"></p>
+                            <span>위치: </span>
+                            <p class="address2 info"></p>
+                            <span>전화번호: </span>
+                            <p class="tel2 info"></p>
+                            <span>홈페이지: </span>
+                            <p class="homepage2 info"></p>
+                            <div id="map2"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4e669c4b74a582a0382b81be90fca4ff"></script>
+    </div>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4e669c4b74a582a0382b81be90fca4ff"></script>
 </body>
 <script type="template-direct" class="template-direct">
             <div class="one-plan">
@@ -180,11 +249,68 @@
 <script src="/js/plan.js"></script>
 
 <script>
-    const city = document.querySelector(".big-city").innerHTML;
-    console.log(city)
-    
-   
+    var modal = document.getElementById('myModal');
 
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+
+    const input = document.querySelector(".big-city").innerHTML;
+    var txt = document.getElementsByClassName("weather-ul")[0];
+
+    txt.innerHTML = "";
+    //console.log(input);
+    $.ajax({
+        //crossOrigin : true,
+        url: 'http://www.kma.go.kr/weather/forecast/mid-term-rss3.jsp?stnId=108',
+        dataType: 'xml',
+        success: function (response) {
+            console.log(response);
+            $(response).find('location').each(function () {
+                var city = $(this).find('city').text();
+                if (city == input) {
+                    $(this).find('data').each(function () {
+                        var output1 = $(this).find('tmEf').text();
+                        var output2 = $(this).find('wf').text();
+                        output1 = output1.substring(0,10);
+                        var output3 = $(this).find('tmEf').text();
+                        output3 = output3.substring(11,16);
+                        if(output3 == '00:00')
+                        {
+                            var am = '오전';
+                            txt.innerHTML += "<li style='font-size : 20px;'>" + output1 + am +'</li>';
+                        }
+                        else
+                        {
+                            var pm = '오후';
+                            txt.innerHTML += "<li style='font-size : 20px;'>" + output1 + pm +'</li>';
+                        }
+                        txt.innerHTML += "<li style='color : blue; font-size : 25px;'>" + output2 + '</li>';
+                    })
+                }
+            })
+        }
+    })
 
 </script>
 

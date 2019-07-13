@@ -11,35 +11,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var press_btn = document.getElementById("city_btn");
-            press_btn.onclick = function () {
-                //console.log("press");
-                var input = document.getElementById("city").value;
-                var txt = document.getElementsByClassName("weather-ul")[0];
-
-                txt.innerHTML = "";
-                console.log(input);
-                $.ajax({
-                        //crossOrigin : true,
-                        url: 'http://www.kma.go.kr/weather/forecast/mid-term-rss3.jsp?stnId=108',
-                        dataType: 'xml',
-                        success: function (response) {
-                            console.log(response);
-                            $(response).find('location').each(function () {
-                                var city = $(this).find('city').text();
-                                if (city == input) {
-                                    txt.innerHTML += "<li 'font-size : 30px;'>" + city + '</li>';
-                                    $(this).find('data').each(function () {
-                                        var output1 = $(this).find('tmEf').text();
-                                        var output2 = $(this).find('wf').text();
-                                       txt.innerHTML += "<li>" + output1 + '</li>';
-                                       txt.innerHTML += "<li style='color : blue;'>" + output2 + '</li>';
-                                    })
-                                }
-                            })
-                        }
-                    })
-            }
+            
             // window.addEventListener('cli')
 
             document.querySelector('#city').onkeydown = function (e) {
@@ -51,7 +23,7 @@
                     var input = document.getElementById("city").value;
                     var txt = document.getElementsByClassName("weather-ul")[0];
                     txt.innerHTML = "";
-                    console.log(input);
+                    //console.log(input);
                     $.ajax({
                         //crossOrigin : true,
                         url: 'http://www.kma.go.kr/weather/forecast/mid-term-rss3.jsp?stnId=108',
@@ -61,13 +33,13 @@
                             $(response).find('location').each(function () {
                                 var city = $(this).find('city').text();
                                 if (city == input) {
-                                    txt.innerHTML += "<li style='font-size : 30px;'>" + city + '</li>';
-                                    $(this).find('data').each(function () {
-                                        var output1 = $(this).find('tmEf').text();
-                                        var output2 = $(this).find('wf').text();
-                                       txt.innerHTML += "<li>" + output1 + '</li>';
-                                       txt.innerHTML += "<li style='color : blue;'>" + output2 + '</li>';
-                                    })
+                                    $(this).find('data').find('tmEf')[0];
+                                    var output = $(this).find('data').find('tmEf')[0].textContent;
+                                    output = output.substring(10,16);
+                                    //output = JSON.stringify(output);
+                                    
+                                    console.log(output);
+                                    console.log($(this).find('data').find('wf')[0]);
                                 }
                             })
                         }
