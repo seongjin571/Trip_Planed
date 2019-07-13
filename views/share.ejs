@@ -85,11 +85,13 @@
         .heart-img {
             display: none;
         }
-        .heart-wrap{
+
+        .heart-wrap {
             display: inline-block;
         }
     </style>
 </head>
+<span id="user_name" style="display : none;"><%= login_user %></span>
 
 <body>
     <div class="header">
@@ -234,7 +236,36 @@
                     e.addEventListener('click', function (v) {
                         if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
                             getPlanInfo(e, v);
-                        }else{
+                        } else {
+                            var user_name = document.getElementById("user_name").innerHTML;
+                            var plan_Id = e.dataset.planid;
+                            console.log(e.dataset.planid+'ㄴㅇ');
+                            const data = {
+                                user_name: user_name,
+                                plan_Id : plan_Id
+                            }
+                            console.log(data);
+                            $.ajax({
+                                type: "post",
+                                url: "like_table",
+                                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                                cache: false,
+                                datatype: "json",
+                                data: data,
+                                success: function (result) {
+
+                                    if (result.result == 'count1') {
+                                       alert("좋아요 누름");
+                                       location.reload();
+                                    } else {
+                                        alert("좋아요 취소");
+                                        location.reload();
+                                    }
+                                },
+                                error: function (error) {
+                                    alert("error");
+                                }
+                            });//ajax
                             ////하트 로직
                         }
                     });
@@ -310,8 +341,9 @@
                     e.addEventListener('click', function (v) {
                         if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
                             getPlanInfo(e, v);
-                        }else{
+                        } else {
                             ////하트 로직
+
                         }
                     });
                 });
@@ -406,6 +438,8 @@
             if (e.target.className === 'detail-plan-verti-div')
                 this.style.display = 'none';
         });
+
+
 
     </script>
 </body>
