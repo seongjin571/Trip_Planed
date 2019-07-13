@@ -25,14 +25,12 @@ addPlan.prototype = {
 
         const addPlanContainer = document.querySelector('.add-plan-container');
         addPlanContainer.addEventListener('click', function (e) {
-            console.log(e.target);
             if (e.target.className === 'add-plan-verti-div' || e.target.className === 'add-plan-container')
                 this.closeModal();
         }.bind(this));
 
         const tourInfoContainer = document.querySelector('.tour-info-container');
         tourInfoContainer.addEventListener('click', function (e) {
-            console.log(e.target);
             if (e.target.className === 'tour-info-verti-div' || e.target.className === 'tour-info-container')
                 this.closeModal();
         }.bind(this));
@@ -65,7 +63,11 @@ addPlan.prototype = {
             const newTemplateHtml = templateHtml.replace('{startTime}', this.startTime.value)
                 .replace('{finishTime}', this.finishTime.value)
                 .replace('{planContent}', tourName.innerHTML)
-                .replace('{typeId}',tourName.dataset.typeid)
+                .replace('{tourId}', tourName.dataset.id)
+                .replace('{tourImg}', tourName.dataset.img)
+                .replace('{mapx}', tourName.dataset.mapx)
+                .replace('{mapy}', tourName.dataset.mapy)
+                .replace('{typeId}', tourName.dataset.typeid)
                 .replace(/{day}/gi, this.day);
             planDayWrap.removeChild(addPlanDiv);
             planDayWrap.innerHTML += newTemplateHtml;
@@ -73,6 +75,28 @@ addPlan.prototype = {
             this.enrollDeleteBtn();
             this.closeModal();
 
+            const tourLink = document.querySelectorAll('.tour-link');
+            tourLink.forEach(function (tour) {
+                tour.addEventListener('click', function (data) {
+                    document.querySelector('.only-tour-info-container').style.display = "block";
+                    document.querySelector('body').style.overflow = 'hidden';
+
+                    const tourName = document.querySelector('.tour-name2');
+                    $.ajax({
+                        url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&contentId=" + tour.dataset.id + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest",
+                        dataType: "json",
+                        success: function (result) {
+                            document.querySelector('.only-tour-img').style.backgroundImage = "url('" + tour.dataset.tourImg + "')";
+                            tourName.innerHTML = result.response.body.items.item.title;
+                            document.querySelector('.overview2').innerHTML = result.response.body.items.item.overview;
+                            document.querySelector('.address2').innerHTML = result.response.body.items.item.addr1;
+                            document.querySelector('.tel2').innerHTML = result.response.body.items.item.tel;
+                            document.querySelector('.homepage2').innerHTML = result.response.body.items.item.homepage;
+                            drawMap(tour.dataset.mapy, tour.dataset.mapx);
+                        }
+                    });
+                })
+            });
         }.bind(this))
     },
 
@@ -102,18 +126,26 @@ addPlan.prototype = {
 }
 const planFun = new addPlan();
 
+
+const onlyTourInfoContainer = document.querySelector('.only-tour-info-container');
+onlyTourInfoContainer.addEventListener('click', function (e) {
+    if (e.target.className === 'tour-info-verti-div' || e.target.className === 'only-tour-info-container'){
+        document.querySelector('.only-tour-info-container').style.display = 'none';
+        document.querySelector('body').style.overflow = 'unset';
+    }
+});
 const storePlanBtn = document.querySelector('.store-plan-btn');
 storePlanBtn.addEventListener('click', function () {
     addPlanHttp = new XMLHttpRequest();
     addPlanHttp.addEventListener("load", function (result) {
         const data = JSON.parse(addPlanHttp.responseText);
-        if(data.result === 'success') alert("등록되었습니다.");
+        if (data.result === 'success') alert("등록되었습니다.");
     });
 
     const planCount = document.querySelectorAll('.one-plan');
     let data = [];
 
-    for(let i = 0; i < planCount.length; i++){
+    for (let i = 0; i < planCount.length; i++) {
         data[i] = {
             start_time: document.getElementsByClassName('start-time')[i].value,
             finish_time: document.getElementsByClassName('finish-time')[i].value,
@@ -162,8 +194,8 @@ function addTourList(result) {
             .replace(/{typeId}/gi, data.contenttypeid)
             .replace('{tourImg}', data.firstimage)
             .replace('{tourName}', data.title)
-            .replace('{mapX}',data.mapx)
-            .replace('{mapY}',data.mapy)
+            .replace('{mapX}', data.mapx)
+            .replace('{mapY}', data.mapy)
         tourUl.innerHTML = newTourHTML;
     });
     const tourList = document.querySelectorAll('.tour-dest-list');
@@ -174,7 +206,7 @@ function addTourList(result) {
                 url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&contentId=" + e.dataset.id + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest",
                 dataType: "json",
                 success: function (result) {
-                    document.querySelector('.tour-img').style.backgroundImage = "url('"+ e.firstElementChild.src + "')";
+                    document.querySelector('.tour-img').style.backgroundImage = "url('" + e.firstElementChild.src + "')";
                     tourName.innerHTML = result.response.body.items.item.title;
                     tourName.dataset.id = e.dataset.id;
                     tourName.dataset.img = e.firstElementChild.src;
@@ -185,7 +217,7 @@ function addTourList(result) {
                     document.querySelector('.address').innerHTML = result.response.body.items.item.addr1;
                     document.querySelector('.tel').innerHTML = result.response.body.items.item.tel;
                     document.querySelector('.homepage').innerHTML = result.response.body.items.item.homepage;
-                    drawMap(e.dataset.mapy,e.dataset.mapx);
+                    drawMap(e.dataset.mapy, e.dataset.mapx);
                 }
             });
             document.querySelector('.tour-info-container').style.display = "block";
@@ -197,17 +229,17 @@ function addTourList(result) {
 function drawMap(mapX, mapY) {
     var container = document.getElementById('map');
     var options = {
-        center: new kakao.maps.LatLng(mapX,mapY),
+        center: new kakao.maps.LatLng(mapX, mapY),
         level: 4
     };
 
     var map = new kakao.maps.Map(container, options);
-    
+
     var position = {
         title: "title",
-        latlng : new kakao.maps.LatLng(mapX,mapY)
+        latlng: new kakao.maps.LatLng(mapX, mapY)
     };
-    
+
     var markers = new kakao.maps.Marker({
         map: map,
         position: position.latlng,

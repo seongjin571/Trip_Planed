@@ -4,6 +4,9 @@
     font-weight: 800;
     src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
   }
+  input:focus {
+    outline: none;
+  }
 button:hover {
     cursor: pointer;
 }
@@ -11,6 +14,9 @@ body::-webkit-scrollbar {
     display: none; 
 }
 .tour-info::-webkit-scrollbar { 
+    display: none; 
+}
+.only-tour-info::-webkit-scrollbar { 
     display: none; 
 }
 body,
@@ -47,7 +53,7 @@ p, div, button, input{
     margin-top: 25px;
 }
 
-.add-plan-container, .tour-info-container {
+.add-plan-container, .tour-info-container, .only-tour-info-container {
     display: none;
     position: fixed;
     left: 0;
@@ -173,6 +179,20 @@ span[class^=plan-delete-btn]:hover {
     background-position: center;
     background-color: black;
 }
+.only-tour-img{
+    border-right: 1px solid #dedede;
+    width: 450px;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    float: left;
+    background-position: center;
+    background-color: black;
+}
+.only-tour-info{
+    overflow-y: auto;
+    height: 320px;
+}
 .tour-content{
     float: left;
     height: 600px;
@@ -180,7 +200,14 @@ span[class^=plan-delete-btn]:hover {
     padding: 20px;
     box-sizing: border-box;
 }
-.tour-info-content::after{
+.only-tour-content{
+    float: left;
+    height: 400px;
+    width: 449px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.tour-info-content::after, .only-tour-info-content::after{
     content: '';
     clear: both;
     display: block;
@@ -208,6 +235,11 @@ span[class^=plan-delete-btn]:hover {
 }
 .tour-info-content {
     height: 600px;
+    background-color: white;
+    border-radius: 3px;
+}
+.only-tour-info-content{
+    height: 400px;
     background-color: white;
     border-radius: 3px;
 }
@@ -267,4 +299,7 @@ span[class^=plan-delete-btn]:hover {
     left: 10;
     top: 10;
 }
+.tour-link:hover input{
+    color: gray;
+    cursor: pointer;
 }

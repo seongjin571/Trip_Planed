@@ -115,6 +115,27 @@
             </div>
         </div>
     </div>
+
+    <div class="only-tour-info-container">
+            <div class="tour-info-wrap">
+                <div class="tour-info-verti-div">
+                    <div class="only-tour-info-content">
+                        <div class="only-tour-img">
+                        </div>
+                        <div class="only-tour-content">
+                            <h2 class="tour-name2"></h2>
+                            <div class="only-tour-info">
+                                <span>소개: </span><p class="overview2 info"></p>
+                                <span>위치: </span><p class="address2 info"></p>
+                                <span>전화번호: </span><p class="tel2 info"></p>
+                                <span>홈페이지: </span><p class="homepage2 info"></p>
+                                <div id="map2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4e669c4b74a582a0382b81be90fca4ff"></script>
 </body>
 <script type="template-direct" class="template-direct">
@@ -141,7 +162,7 @@
                     <input name="finishTime" value={finishTime} readonly class="finish-time" />
                 </div>
                 <div class="detail-plan">
-                    <div class="tour-link" >
+                    <div class="tour-link" data-id={tourId} data-mapx={mapx} data-mapy={mapy} data-tour-img={tourImg}>
                         <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
                     </div>
                 </div>
