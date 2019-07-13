@@ -90,24 +90,19 @@
                     <div class="tour-content">
                         <h2 class="tour-name"></h2>
                         <div class="tour-info">
-                            <p>강원도 춘천시 남산면 방하리에 있는 섬. | 명칭 유래 남이섬이라는 지명은 남이(南怡) 장군의 묘소로부터 유래하였다. 그러나 남이 장군의 묘소가 섬 어디에
-                                있는지는
-                                정확히 알려지지 않고 있다. 자연환경 강원도 춘천시와 경기도 가평군의 경계를 이루고 있으며 어쩌구 저쩌구 하면서 그렇다고 이러아아훅 오</p>
-                            <p>입장료 : 30,000원</p>
-                            <p>위치 : 강원 춘천시 남산면 남이섬길 1
-                                구(지번) 주소
-                                남산면 방하리 198 (지번)</p>
-                            <p>전화 번호 : 031-580-8114</p>
-                            <p>운영 시간 : 09:00 ~ 22:00</p>
+                            <span>소개: </span><p class="overview info"></p>
+                            <span>위치: </span><p class="address info"></p>
+                            <span>전화번호: </span><p class="tel info"></p>
+                            <span>홈페이지: </span><p class="homepage info"></p>
+                            <div id="map"></div>
                         </div>
                         <div class="add-tour">
                             <label for="select-day">날짜 선택</label>
-                            <select name="day" id="select-day">
-                                <option value=1 selected="selected">1Day</option>
-                                <option value=2>2Day</option>
-                                <option value=3>3Day</option>
-                                <option value=4>4Day</option>
-                                <option value=5>5Day</option>
+                            <select name="day" class="select-day">
+                                <option>선택하세요</option>
+                                <% for(let i = 0; i < result.total_day; i++){ %>
+                                <option value=<%= i+1 %>><%= i+1 %> Day (<%= dayArr[i] %>)</option>
+                                <% } %>
                             </select><br />
                             <label for="start-time">시작 시간</label><input type="time" name="startTime"
                                 class="input-start-time" />
@@ -120,6 +115,28 @@
             </div>
         </div>
     </div>
+
+    <div class="only-tour-info-container">
+            <div class="tour-info-wrap">
+                <div class="tour-info-verti-div">
+                    <div class="only-tour-info-content">
+                        <div class="only-tour-img">
+                        </div>
+                        <div class="only-tour-content">
+                            <h2 class="tour-name2"></h2>
+                            <div class="only-tour-info">
+                                <span>소개: </span><p class="overview2 info"></p>
+                                <span>위치: </span><p class="address2 info"></p>
+                                <span>전화번호: </span><p class="tel2 info"></p>
+                                <span>홈페이지: </span><p class="homepage2 info"></p>
+                                <div id="map2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4e669c4b74a582a0382b81be90fca4ff"></script>
 </body>
 <script type="template-direct" class="template-direct">
             <div class="one-plan">
@@ -137,7 +154,7 @@
 </script>
 <script type="template-tour" class="template-tour">
         <div class="one-plan">
-                <img src="images/tour.png" class="eiffel-img">
+                <img src="/images/tour{typeId}.png" class="type-image">
                 <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
                 <div class="time">
                     <input name="startTime" value={startTime} readonly class="start-time" />
@@ -145,22 +162,25 @@
                     <input name="finishTime" value={finishTime} readonly class="finish-time" />
                 </div>
                 <div class="detail-plan">
+                    <div class="tour-link" data-id={tourId} data-mapx={mapx} data-mapy={mapy} data-tour-img={tourImg}>
                         <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
+                    </div>
                 </div>
             </div>
 </script>
 <script type="template-tour" class="template-tour-list">
-            <li class='tour-dest-list' data-id={tourId} data-type-id={typeId}>
+            <li class='tour-dest-list' data-id={tourId} data-type-id={typeId} data-mapX={mapX} data-mapY={mapY}>
                 <img class='tour-dest-img' src={tourImg} onerror="this.src='/images/tour1.jpg'"></img>
                 <div class="tour-title-wrap">
                     <img src="/images/tour{typeId}.png" class="tour-type-image"><h4 class='tour-dest-content'>{tourName}</h4>
                 </div>
             </li>
 </script>
-<script src="/js/plan.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/js/plan.js"></script>
 
 <script>
+<<<<<<< HEAD
     const city = document.querySelector(".big-city").innerHTML;
     console.log(city)
     const selTourType = document.querySelector('.tour-type');
@@ -175,50 +195,9 @@
                 addTourList(result);
         }
     });
+=======
+>>>>>>> 4e4700fd3654f734e5e53f11d2d80b6e19a6d617
 
-    selTourType.addEventListener('change', function () {
-        tourUl.innerHTML = "";
-        $.ajax({
-            url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + bigLocation + "&sigunguCode=" + smallLocation + "&contentTypeId=" + this.value + "&numOfRows=100&MobileOS=ETC&MobileApp=AppTest",
-            dataType: "json",
-            success: function (result) {
-                addTourList(result);
-            }
-        });
-    })
-    function addTourList(result) {
-        let newTourHTML = '';
-        let tourData;
-        $.each(result.response.body.items.item, function (i, data) {
-            console.log(data);
-            tourData = data;
-            newTourHTML += templateHtml.replace('{tourId}', data.contentid)
-                .replace(/{typeId}/gi, data.contenttypeid)
-                .replace('{tourImg}', data.firstimage)
-                .replace('{tourName}', data.title);
-            tourUl.innerHTML = newTourHTML;
-        });
-        const tourList = document.querySelectorAll('.tour-dest-list');
-        tourList.forEach(function (e) {
-            e.addEventListener('click', function () {
-            // $.ajax({
-            //     url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&contentId=" + e.dataset.id + "&contentTypeId="+ e.dataset.typeId +"&numOfRows=50&MobileOS=ETC&MobileApp=AppTest",
-            //     dataType: "json",
-            //     success: function(result){
-            //         console.log(result);
-            //     }
-            // });
-            $.ajax({
-                url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&contentId="+e.dataset.id+"&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest",
-                dataType: "json",
-                success: function(result){
-                    console.log(result);
-                }
-            });
-            // document.querySelector('.tour-info-container').style.display = "block";
-            })
-        });
-    }
 </script>
 
 </html>
