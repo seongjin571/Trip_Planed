@@ -59,7 +59,7 @@ input[class^=start-time],
 input[class^=finish-time] {
     background-color: inherit;
     border: none;
-    width: 15%;
+    width: 24%;
     text-align: center;
 }
 

@@ -67,7 +67,7 @@ addPlan.prototype = {
                 .replace('{tourImg}', tourName.dataset.img)
                 .replace('{mapx}', tourName.dataset.mapx)
                 .replace('{mapy}', tourName.dataset.mapy)
-                .replace('{typeId}', tourName.dataset.typeid)
+                .replace(/{typeId}/gi, tourName.dataset.typeid)
                 .replace(/{day}/gi, this.day);
             planDayWrap.removeChild(addPlanDiv);
             planDayWrap.innerHTML += newTemplateHtml;
@@ -144,17 +144,23 @@ storePlanBtn.addEventListener('click', function () {
 
     const planCount = document.querySelectorAll('.one-plan');
     let data = [];
-
+    const planTitle = document.querySelector('.plan-title');
     for (let i = 0; i < planCount.length; i++) {
+        let typeId = document.getElementsByClassName('one-plan')[i].dataset.typeId
         data[i] = {
             start_time: document.getElementsByClassName('start-time')[i].value,
             finish_time: document.getElementsByClassName('finish-time')[i].value,
             plan_content: document.getElementsByClassName('plan-content')[i].value,
             day: document.getElementsByClassName('one-plan')[i].parentElement.parentElement.dataset.day,
-            plan_title: document.querySelector('.plan-title').innerHTML,
-            tour_flag: 0,
-            member_id: 'seongjin571',
-            total_day: document.querySelector('.plan-title').dataset.totalday
+            plan_title: planTitle.innerHTML,
+            tour_flag: typeId,
+            member_id: planTitle.dataset.id,
+            total_day: planTitle.dataset.totalDay,
+            start_day: planTitle.dataset.startDay,
+            finish_day: planTitle.dataset.finishDay,
+            big_city: document.querySelector('.big-city').innerHTML,
+            small_city: document.querySelector('.small-city').innerHTML,
+            
         }
     }
     addPlanHttp.open("POST", "/addPlan");

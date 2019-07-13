@@ -1,0 +1,291 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/mypage.css">
+    <link rel="stylesheet" href="/css/planchart.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        .select-all-option {
+            text-align: center;
+            height: 80px;
+            line-height: 80px;
+        }
+
+        .select-location,
+        .select-small-location {
+            height: 30px;
+            margin: 20px 0px 20px 10px;
+        }
+
+        label {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            border: 2px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .list-option-ul {
+            display: inline-flex;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-list {
+            margin-left: 15px;
+            float: left;
+            list-style: none;
+            cursor: pointer;
+            color: #595959;
+        }
+
+        .share-plan-ul {
+            padding: 0;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+
+        .share-plan-ul::after {
+            content: '';
+            clear: both;
+            display: block;
+        }
+
+        .more-btn {
+            margin-left: 15%;
+            width: 70%;
+            height: 40px;
+            background-color: #4c80f1;
+            color: white;
+            background-color: #4c80f1;
+            border: none;
+            color: white;
+            border-radius: 3px;
+        }
+
+        .more-btn-wrap {
+            background-color: #efefef;
+            margin: 0 auto;
+            max-width: 1000px;
+            padding: 30px 0;
+        }
+
+        .share-plan-container {
+            background-color: #efefef;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="/main">
+            <img src="/images/logo.png" alt="트립 프랜드 로고" class="logo-img">
+        </a>
+        <ul class="nav">
+            <li class="nav-list"><a class="nav-link" href="/mypage">마이페이지</a></li>
+            <li class="nav-list"><a class="nav-link" href="/api/shareplan">공유계획</a></li>
+            <li class="nav-list"><a class="nav-link" href="/logout">로그아웃</a></li>
+        </ul>
+    </div>
+    <img class="trip-location" src="/images/share.png" width="100%" height="auto" />
+    <div class="share-plan-container">
+        <div class="select-all-option">
+            <label for="">지역선택</label>
+            <select name="select_big_location" class="select-location">
+                <option>선택하세요</option>
+                <option value="1">서울</option>
+                <option value="2">인천</option>
+                <option value="3">대전</option>
+                <option value="4">대구</option>
+                <option value="5">광주</option>
+                <option value="6">부산</option>
+                <option value="7">울산</option>
+                <option value="31">경기도</option>
+                <option value="32">강원도</option>
+                <option value="33">충청북도</option>
+                <option value="34">충청남도</option>
+                <option value="35">경상북도</option>
+                <option value="36">경상남도</option>
+                <option value="37">전라북도</option>
+                <option value="38">전라남도</option>
+                <option value="39">제주도</option>
+            </select>
+            <select name="select_small_location" class="select-small-location">
+                <option>선택하세요</option>
+            </select>
+            <ul class="list-option-ul">
+                <li class="option-list standard" data-name="good">좋아요 순</li>
+                <li class="option-list" data-name="start_day">최신 순</li>
+            </ul>
+        </div>
+        <div class="plan-wrap">
+            <ul class="share-plan-ul"></ul>
+        </div>
+        <div class="more-btn-wrap">
+            <button class="more-btn">더보기</button>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="copy-rights">
+            © 2019 2H&A. All rights reserved.
+        </div>
+    </div>
+
+    <div class="detail-plan-container">
+        <div class="detail-plan-wrap">
+            <div class="detail-plan-verti-div">
+                <div class="plan-container" id="plan-modal-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="template-one-plan" class="template-one-plan">
+        <li class="plan-list" data-planId={planId} data-totalday={totalDay}>
+            <div class="sample-img"></div>
+            <div class="plan-content-wrap">
+                <span>{bigCity} {smallCity}</span>
+                <h3>{planTitle}</h3>
+                <p>일정 : {startDay} ~ {finishDay}</p>
+                <img src="/images/heart.png" alt="하트 이미지" class="heart-img">
+                    <span class="good-count">{good}</span>
+            </div>
+        </li>
+    </script>
+    <script type="template-day" class="template-day">
+                <div class="plan-day">
+                        <div class="day-count">{day}Day</div>
+                        <div class="plan-day-wrap">
+                        </div>
+                    </div>
+        </script>
+
+    <script type="template-tour" class="template-tour">
+            <div class="one-plan">
+                    <span></span>
+                    <div class="time">
+                        <input name="startTime" value="{startTime}" readonly class="start-time" />
+                        <span> - </span>
+                        <input name="finishTime" value="{finishTime}" readonly class="finish-time" />
+                    </div>
+                    <div class="detail-plan">
+                            <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
+                    </div>
+                </div>
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        let sharePlanUl = document.querySelector('.share-plan-ul');
+        const templatePlanHtml = document.querySelector('.template-one-plan').innerHTML;
+        let url = 'api/getAllLocation?order=good';
+        const shareHttp = new XMLHttpRequest();
+        shareHttp.addEventListener("load", function (result) {
+            const data = JSON.parse(shareHttp.responseText);
+            console.log(data.result);
+            let newTemplateHtml = "";
+            data.result.forEach(function (e) {
+                 newTemplateHtml += templatePlanHtml.replace('{planId}', e.plan_id)
+                    .replace('{startDay}', e.start_day)
+                    .replace('{finishDay', e.finish_day)
+                    // .replace('{bigCity}'.e.big_city)
+                    // .replace('{smallCity}',e.small_city)
+                    .replace('{totalDay}', e.total_day);
+                sharePlanUl.innerHTML = newTemplateHtml;
+            })
+
+        });
+        shareHttp.open('get', url);
+        shareHttp.send();
+
+        let smallCity;
+        const selectLoction = document.querySelector('.select-location');
+        selectLoction.addEventListener('change', function () {
+            url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + this.value + "&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest";
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    const smallLocation = document.querySelector('.select-small-location');
+                    smallLocation.innerHTML = "";
+                    smallLocation.innerHTML = "<option>선택하세요</option>";
+                    $.each(result.response.body.items.item, function (i, d) {
+                        smallLocation.innerHTML += '<option value =' + d.code + ">" + d.name + "</option>";
+                    });
+                }
+            });
+        })
+        const smallLocation = document.querySelector('.select-small-location');
+        smallLocation.addEventListener('change', function (e) {
+            const order = document.querySelector('.standard').dataset.name;
+            smallCity = this.options[this.selectedIndex].text;
+            url = '/api/getOneLocation?smallCity=' + smallCity + "&order=" + order;
+            const smallCityHttp = new XMLHttpRequest();
+            smallCityHttp.addEventListener("load", function (result) {
+                let newTemplateHtml = "";
+                const data = JSON.parse(smallCityHttp.responseText);
+                data.result.forEach(function (e) {
+                    newTemplateHtml += templatePlanHtml.replace('{planId}', e.plan_id)
+                    .replace('{startDay}', e.start_day)
+                    .replace('{finishDay', e.finish_day)
+                    // .replace('{bigCity}'.e.big_city)
+                    // .replace('{smallCity}',e.small_city)
+                    .replace('{totalDay}', e.total_day);
+                sharePlanUl.innerHTML = newTemplateHtml;
+            })
+            });
+            smallCityHttp.open('get', url);
+            smallCityHttp.send();
+        });
+
+        const typeImg = "<img src='/images/tour{typeId}.png' class='type-img'>";
+        const planList = document.querySelectorAll('.plan-list');
+        planList.forEach(function (e) {
+            e.addEventListener('click', function (v) {
+                const planContainer = document.querySelector('.plan-container');
+                planContainer.innerHTML = "";
+                document.querySelector('.detail-plan-container').style.display = "block";
+                const planId = e.dataset.planid;
+                const totalDay = e.dataset.totalday;
+                const templateHtml = document.querySelector('.template-day').innerHTML;
+                for (let i = 0; i < totalDay; i++) {
+                    const newTemplateHtml = templateHtml.replace('{day}', i + 1);
+                    planContainer.innerHTML += newTemplateHtml;
+                }
+                const url = "/getPlan?planId=" + planId;
+                planHttp = new XMLHttpRequest();
+                planHttp.addEventListener("load", function (result) {
+                    const data = JSON.parse(planHttp.responseText);
+                    data.result.forEach(function (e) {
+                        console.log(e);
+                        const dayWrap = document.getElementsByClassName('plan-day-wrap')[e.day - 1];
+                        let onePlan = document.querySelector('.template-tour').innerHTML;
+                        let newTemplateHtml = onePlan.replace('{startTime}', e.start_time)
+                            .replace('{finishTime}', e.finish_time)
+                            .replace('{planContent}', e.plan_content);
+                        if (e.tour_flag !== 0) {
+                            newTemplateHtml = newTemplateHtml.replace('<span></span>', typeImg)
+                                .replace('{typeId}', e.tour_flag)
+                        }
+                        dayWrap.innerHTML += newTemplateHtml;
+                    })
+                })
+                planHttp.open("GET", url);
+                planHttp.send();
+            })
+        })
+
+        const detailPlanContainer = document.querySelector('.detail-plan-container');
+        detailPlanContainer.addEventListener('click', function (e) {
+            if (e.target.className === 'detail-plan-verti-div')
+                this.style.display = 'none';
+        });
+
+    </script>
+</body>
+
+</html>
