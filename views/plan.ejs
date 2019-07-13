@@ -103,11 +103,10 @@
                         <div class="add-tour">
                             <label for="select-day">날짜 선택</label>
                             <select name="day" id="select-day">
-                                <option value=1 selected="selected">1Day</option>
-                                <option value=2>2Day</option>
-                                <option value=3>3Day</option>
-                                <option value=4>4Day</option>
-                                <option value=5>5Day</option>
+                                <option>선택하세요</option>
+                                <% for(let i = 0; i < result.total_day; i++){ %>
+                                <option value=<%= i+1 %>selected="selected"><%= i+1 %> Day (<%= dayArr[i] %>)</option>
+                                <% } %>
                             </select><br />
                             <label for="start-time">시작 시간</label><input type="time" name="startTime"
                                 class="input-start-time" />
@@ -137,7 +136,7 @@
 </script>
 <script type="template-tour" class="template-tour">
         <div class="one-plan">
-                <img src="images/tour.png" class="eiffel-img">
+                <img src="images/tour.png" class="type-image">
                 <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
                 <div class="time">
                     <input name="startTime" value={startTime} readonly class="start-time" />
@@ -157,66 +156,11 @@
                 </div>
             </li>
 </script>
-<script src="/js/plan.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/js/plan.js"></script>
 
 <script>
-    const selTourType = document.querySelector('.tour-type');
-    const bigLocation = selTourType.dataset.big;
-    const smallLocation = selTourType.dataset.small;
-    const tourUl = document.querySelector('.tour-dest-ul');
-    const templateHtml = document.querySelector('.template-tour-list').innerHTML;
-    $.ajax({
-        url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + bigLocation + "&sigunguCode=" + smallLocation + "&numOfRows=100&MobileOS=ETC&MobileApp=AppTest",
-        dataType: "json",
-        success: function (result) {
-                addTourList(result);
-        }
-    });
 
-    selTourType.addEventListener('change', function () {
-        tourUl.innerHTML = "";
-        $.ajax({
-            url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + bigLocation + "&sigunguCode=" + smallLocation + "&contentTypeId=" + this.value + "&numOfRows=100&MobileOS=ETC&MobileApp=AppTest",
-            dataType: "json",
-            success: function (result) {
-                addTourList(result);
-            }
-        });
-    })
-    function addTourList(result) {
-        let newTourHTML = '';
-        let tourData;
-        $.each(result.response.body.items.item, function (i, data) {
-            console.log(data);
-            tourData = data;
-            newTourHTML += templateHtml.replace('{tourId}', data.contentid)
-                .replace(/{typeId}/gi, data.contenttypeid)
-                .replace('{tourImg}', data.firstimage)
-                .replace('{tourName}', data.title);
-            tourUl.innerHTML = newTourHTML;
-        });
-        const tourList = document.querySelectorAll('.tour-dest-list');
-        tourList.forEach(function (e) {
-            e.addEventListener('click', function () {
-            // $.ajax({
-            //     url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&contentId=" + e.dataset.id + "&contentTypeId="+ e.dataset.typeId +"&numOfRows=50&MobileOS=ETC&MobileApp=AppTest",
-            //     dataType: "json",
-            //     success: function(result){
-            //         console.log(result);
-            //     }
-            // });
-            $.ajax({
-                url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&contentId="+e.dataset.id+"&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest",
-                dataType: "json",
-                success: function(result){
-                    console.log(result);
-                }
-            });
-            // document.querySelector('.tour-info-container').style.display = "block";
-            })
-        });
-    }
 </script>
 
 </html>

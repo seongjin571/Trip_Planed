@@ -129,3 +129,52 @@ storePlanBtn.addEventListener('click', function () {
     addPlanHttp.send(JSON.stringify(data));
 })
 
+const selTourType = document.querySelector('.tour-type');
+const bigLocation = selTourType.dataset.big;
+const smallLocation = selTourType.dataset.small;
+const tourUl = document.querySelector('.tour-dest-ul');
+const templateHtml = document.querySelector('.template-tour-list').innerHTML;
+$.ajax({
+    url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + bigLocation + "&sigunguCode=" + smallLocation + "&numOfRows=100&MobileOS=ETC&MobileApp=AppTest",
+    dataType: "json",
+    success: function (result) {
+        addTourList(result);
+    }
+});
+
+selTourType.addEventListener('change', function () {
+    tourUl.innerHTML = "";
+    $.ajax({
+        url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&areaCode=" + bigLocation + "&sigunguCode=" + smallLocation + "&contentTypeId=" + this.value + "&numOfRows=100&MobileOS=ETC&MobileApp=AppTest",
+        dataType: "json",
+        success: function (result) {
+            addTourList(result);
+        }
+    });
+})
+function addTourList(result) {
+    let newTourHTML = '';
+    let tourData;
+    $.each(result.response.body.items.item, function (i, data) {
+        console.log(data);
+        tourData = data;
+        newTourHTML += templateHtml.replace('{tourId}', data.contentid)
+            .replace(/{typeId}/gi, data.contenttypeid)
+            .replace('{tourImg}', data.firstimage)
+            .replace('{tourName}', data.title);
+        tourUl.innerHTML = newTourHTML;
+    });
+    const tourList = document.querySelectorAll('.tour-dest-list');
+    tourList.forEach(function (e) {
+        e.addEventListener('click', function () {
+            $.ajax({
+                url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=RjJLwUTtegMNM%2Barsc%2BPwTW3xU4RZiJFAelIy54Z6sGrJuW36IQthQdAOLg1ZhdXbDD6H1EiuBs2IiOpL3umlQ%3D%3D&contentId=" + e.dataset.id + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                }
+            });
+            document.querySelector('.tour-info-container').style.display = "block";
+        })
+    });
+}
