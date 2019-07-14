@@ -5,7 +5,7 @@ planList.forEach(function (e) {
         const planContainer = document.querySelector('.plan-container');
         planContainer.innerHTML = "";
         document.querySelector('.detail-plan-container').style.display = "block";
-        document.querySelector('body').style.overflow = 'hidden';
+        document.querySelector('html').style.overflow = 'hidden';
         const planId = e.dataset.planid;
         const totalDay = e.dataset.totalday;
         const templateHtml = document.querySelector('.template-day').innerHTML;
@@ -40,6 +40,6 @@ const detailPlanContainer = document.querySelector('.detail-plan-container');
 detailPlanContainer.addEventListener('click', function (e) {
     if (e.target.className === 'detail-plan-verti-div'){
         this.style.display = 'none';
-        document.querySelector('body').style.overflow = 'unset';
+        document.querySelector('html').style.overflow = 'unset';
     }
 });
