@@ -13,12 +13,11 @@ planList.forEach(function (e) {
             const newTemplateHtml = templateHtml.replace('{day}', i + 1);
             planContainer.innerHTML += newTemplateHtml;
         }
-        const url = "/getPlan?planId=" + planId;
+        const url = "/api/getPlan?planId=" + planId;
         planHttp = new XMLHttpRequest();
         planHttp.addEventListener("load", function (result) {
             const data = JSON.parse(planHttp.responseText);
             data.result.forEach(function (e) {
-                console.log(e);
                 const dayWrap = document.getElementsByClassName('plan-day-wrap')[e.day - 1];
                 let onePlan = document.querySelector('.template-tour').innerHTML;
                 let newTemplateHtml = onePlan.replace('{startTime}', e.start_time)
