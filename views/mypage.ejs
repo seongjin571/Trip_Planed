@@ -2,6 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/mypage.css">
     <link rel="stylesheet" href="/css/planchart.css">
     <link rel="stylesheet" href="/css/header.css">
@@ -17,6 +18,14 @@
             <li class="nav-list"><a class="nav-link" href="/mypage">마이페이지</a></li>
             <li class="nav-list"><a class="nav-link" href="/shareplan">공유계획</a></li>
             <li class="nav-list"><a class="nav-link" href="/logout">로그아웃</a></li>
+        </ul>
+        <img src="/images/hambuger.png" class="menu-btn" alt="메뉴 아이콘">
+    </div>
+    <div class="nav-m-wrap">
+        <ul class="nav-m">
+            <li class="nav-list-m"><a class="nav-link-m" href="/mypage">마이페이지</a></li>
+            <li class="nav-list-m"><a class="nav-link-m" href="/shareplan">공유계획</a></li>
+            <li class="nav-list-m"><a class="nav-link-m" href="/logout">로그아웃</a></li>
         </ul>
     </div>
     <img class="trip-location" src="/images/mypage.png" width="100%" height="auto" />
@@ -73,51 +82,8 @@
                     </div>
                 </div>
     </script>
-    <script>
-        const typeImg = "<img src='/images/tour{typeId}.png' class='type-img'>";
-        const planList = document.querySelectorAll('.plan-list');
-        planList.forEach(function (e) {
-            e.addEventListener('click', function (v) {
-                const planContainer = document.querySelector('.plan-container');
-                planContainer.innerHTML = "";
-                document.querySelector('.detail-plan-container').style.display = "block";
-                const planId = e.dataset.planid;
-                const totalDay = e.dataset.totalday;
-                const templateHtml = document.querySelector('.template-day').innerHTML;
-                for (let i = 0; i < totalDay; i++) {
-                    const newTemplateHtml = templateHtml.replace('{day}', i + 1);
-                    planContainer.innerHTML += newTemplateHtml;
-                }
-                const url = "/getPlan?planId=" + planId;
-                planHttp = new XMLHttpRequest();
-                planHttp.addEventListener("load", function (result) {
-                    const data = JSON.parse(planHttp.responseText);
-                    data.result.forEach(function (e) {
-                        console.log(e);
-                        const dayWrap = document.getElementsByClassName('plan-day-wrap')[e.day - 1];
-                        let onePlan = document.querySelector('.template-tour').innerHTML;
-                        let newTemplateHtml = onePlan.replace('{startTime}', e.start_time)
-                            .replace('{finishTime}', e.finish_time)
-                            .replace('{planContent}', e.plan_content);
-                        if (e.tour_flag !== 0) {
-                            newTemplateHtml = newTemplateHtml.replace('<span></span>', typeImg)
-                                .replace('{typeId}', e.tour_flag)
-                        }
-                        dayWrap.innerHTML += newTemplateHtml;
-                    })
-                })
-                planHttp.open("GET", url);
-                planHttp.send();
-            })
-        })
-
-        const detailPlanContainer = document.querySelector('.detail-plan-container');
-        detailPlanContainer.addEventListener('click', function (e) {
-            if (e.target.className === 'detail-plan-verti-div')
-                this.style.display = 'none';
-        });
-
-    </script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/mypage.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,26 @@
+@font-face {
+    font-family: 'LotteMartDream';
+    font-style: normal;
+    font-weight: 800;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
+  }
+button:hover {
+    cursor: pointer;
+}
+body::-webkit-scrollbar { 
+    display: none; 
+}
+body,
+html {
+    font-family: 'LotteMartDream';
+    margin: 0;
+}
+p,div,button,input{
+    font-family: 'LotteMartDream';
+}
+body{
+    overflow: hidden;
+}
 #wrap {
     display: table;
     height: 100%;
@@ -17,149 +40,69 @@
     text-align: center;
 }
 
-#first_div img {
+#first_div > img {
     margin: 30px auto;
     width: 50%;
 }
-
-#login_form {
-    vertical-align: middle;
-    max-width: 90%;
-    margin: 0 auto;
-    background-color: white;
+.input-wrap{
+    margin-bottom: 15px;
 }
-
-
-#hr {
-    width: 80%;
+.input-label{
+    width: 60px;
+    display: inline-block;
 }
-
-#go_signup {
-    margin-top: 5%;
-    font-size: 15px;
-    font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-
-}
-
-#naverIdLogin {
-    cursor: pointer;
-
-    height: 170px;
-    width: 100% !important;
-}
-
-#naverIdLogin img {
-    height: 70px !important;
-    width: 70% !important;
-    box-shadow: 5px 5px 5px;
+#naverIdLogin img, #kakao-login img{
+    width: 50%;
+    height: auto;
+    margin-bottom: 15px;
 }
 #login_form .login_input{
     height: 30px;
-    margin: 20px 0px 20px 10px;
-    width: 220px;
+    width: 180px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 3px;
 }
 #submit_btn{
     margin: 0;
-    width: 100%;
+    width: 50%;
     height: 35px;
     background-color: #4c80f1;
     color: white;
     border: none;
     color: white;
     border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px
+}
+#go_signup{
+    font-size: 13px;
+    margin: 20px 0;
+}
+#first_div{
+    width: 320px;
 }
 
-@media screen and (min-width: 360px) and (max-width: 500px) {
-    #wrap {
-        display: table;
-        height: 100%;
-        text-align: center;
-        margin: 0 auto;
-    }
-
-    #content {
-        height: 100%;
-        display: table-cell;
-        vertical-align: middle;
-    }
-
+@media screen and (min-width: 500px) and (max-width: 800px) {
     #first_div {
-        max-width: 360px;
+        width: 500px;
     }
-
-
-    #hr {
-        width: 80%;
+    #submit_btn{
+        font-size: 15px
     }
-
-    #go_signup {
-        margin-top: 5%;
+    #go_signup{
         font-size: 15px;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-
-    }
-
-    #naverIdLogin {
-        cursor: pointer;
-
-        height: 122px;
-        width: 100% !important;
-    }
-
-    #naverIdLogin img {
-        height: 50px !important;
-        width: 70% !important;
-        box-shadow: 5px 5px 5px;
-    }
-}
-
-@media screen and (min-width: 500px) and (max-width: 768px) {
-    #first_div {
-        max-width: 500px;
     }
 }
 
 @media screen and (min-width: 800px) {
-    #wrap {
-        display: table;
-        height: 100%;
-        text-align: center;
-        margin: 0 auto;
-    }
-
-    #content {
-        height: 100%;
-        display: table-cell;
-        vertical-align: middle;
-    }
-
     #first_div {
-        max-width: 768px;
+        width: 600px;
     }
-
-
-    #hr {
-        width: 80%;
+    #submit_btn{
+        width: 40%;
     }
-
-    #go_signup {
-        margin-top: 3%;
-        font-size: 20px;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-
-    }
-
-    #naverIdLogin {
-        cursor: pointer;
-        height: 180px;
-        width: 100% !important;
-    }
-
-    #naverIdLogin img {
-        height: 60px !important;
-        width: 70% !important;
-        box-shadow: 5px 5px 5px;
+    #naverIdLogin img, #kakao-login img{
+        width: 40%;
+        margin-bottom: 20px;
     }
 }

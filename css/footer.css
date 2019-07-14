@@ -2,9 +2,22 @@
 height: 100px;
 line-height: 100px;
 background-color: #353535;
+padding: 10px;
 }
 .copy-rights{
     color: white;
-    max-width: 1000px;
+    max-width: 600px;
     margin: 0 auto;
+}
+
+@media screen and (min-width: 700px) and (max-width: 1000px) {
+    .copy-rights {
+        max-width: 600px;
+    }
+
+}
+@media screen and (min-width: 1000px) {
+    .copy-rights {
+        max-width: 1000px;
+    }
 }

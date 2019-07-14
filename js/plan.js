@@ -49,7 +49,7 @@ addPlan.prototype = {
             let flag = false;
             if (length === 1) {
                 $('.add-plan').eq(this.day).before(newTemplateHtml);
-            }else{
+            } else {
                 for (let i = 0; i < length - 1; i++) {
                     console.log($('.plan-day-wrap').eq(this.day).children()[i]);
                     if (this.startTime.value < planDayWrap.children[i].firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.value) {
@@ -59,8 +59,8 @@ addPlan.prototype = {
                         }
                     }
                 }
-                if(!flag) $('.add-plan').eq(this.day).before(newTemplateHtml);
-        }
+                if (!flag) $('.add-plan').eq(this.day).before(newTemplateHtml);
+            }
             this.enrollDeleteBtn();
             this.closeModal();
         }.bind(this));
@@ -267,3 +267,68 @@ function drawMap(mapX, mapY, index) {
         title: position.title
     });
 }
+
+var modal = document.getElementById('myModal');
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function () {
+    modal.style.display = "block";
+}
+span.onclick = function () {
+    modal.style.display = "none";
+}
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+var input = document.querySelector(".big-city").innerHTML;
+var txt = document.getElementsByClassName("weather-ul")[0];
+txt.innerHTML = "";
+$.ajax({
+    url: 'http://www.kma.go.kr/weather/forecast/mid-term-rss3.jsp?stnId=108',
+    dataType: 'xml',
+    success: function (response) {
+        $(response).find('location').each(function () {
+            var city = $(this).find('city').text();
+            if (input == '경기도') {
+                input = '서울';
+            } else if (input == '강원도') {
+                input = '춘천';
+            }
+            else if (input == '충청북도') {
+                input = '청주';
+            } else if (input == '충청남도') {
+                input = '홍성';
+            } else if (input == '경상북도') {
+                input = '대구';
+            } else if (input == '경상남도') {
+                input = '부산';
+            } else if (input == '전라북도') {
+                input = '전주';
+            } else if (input == '전라남도') {
+                input = '목포';
+            } else if (input == '제주도') {
+                input = '서귀포';
+            }
+            if (city == input) {
+                $(this).find('data').each(function () {
+                    var output1 = $(this).find('tmEf').text();
+                    var output2 = $(this).find('wf').text();
+                    output1 = output1.substring(0, 10);
+                    var output3 = $(this).find('tmEf').text();
+                    output3 = output3.substring(11, 16);
+                    if (output3 == '00:00') {
+                        var am = '오전';
+                        txt.innerHTML += "<li style='font-size : 20px;'>" + output1 + am + '</li>';
+                    }
+                    else {
+                        var pm = '오후';
+                        txt.innerHTML += "<li style='font-size : 20px;'>" + output1 + pm + '</li>';
+                    }
+                    txt.innerHTML += "<li style='color : blue; font-size : 25px;'>" + output2 + '</li>';
+                })
+            }
+        })
+    }
+})

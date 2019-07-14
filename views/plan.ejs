@@ -1,271 +1,212 @@
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>plan</title>
-    <link rel="stylesheet" href="/css/plan.css">
-    <link rel="stylesheet" href="/css/planchart.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/footer.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>plan</title>
+        <link rel="stylesheet" href="/css/plan.css">
+        <link rel="stylesheet" href="/css/planchart.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
+    </head>
 
-<body>
-    <div>
-        <div class="header">
-            <a href="/main">
-                <img src="/images/logo.png" alt="트립 프랜드 로고" class="logo-img">
-            </a>
-            <ul class="nav">
-                <li class="nav-list"><a class="nav-link" href="/mypage">마이페이지</a></li>
-                <li class="nav-list"><a class="nav-link" href="/shareplan">공유계획</a></li>
-                <li class="nav-list"><a class="nav-link" href="/logout">로그아웃</a></li>
-            </ul>
-        </div>
-        <img class="trip-location" src="/images/back.png" width="100%" height="auto" />
-        <h1 class="plan-title" data-total-day=<%= result.total_day  %> data-start-day=<%= result.start_day%>
-            data-finish-day=<%= result.finish_day%> data-id=<%= id %>> <%= result.plan_title %></h1>
-        <button id="myBtn"><%= result.big_location %>의 날씨보기</button>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div id="text_area">
-                    <ul class="weather-ul"></ul>
-                </div>
+    <body>
+        <div>
+            <div class="header">
+                <a href="/main">
+                    <img src="/images/logo.png" alt="트립 프랜드 로고" class="logo-img">
+                </a>
+                <ul class="nav">
+                    <li class="nav-list"><a class="nav-link" href="/mypage">마이페이지</a></li>
+                    <li class="nav-list"><a class="nav-link" href="/shareplan">공유계획</a></li>
+                    <li class="nav-list"><a class="nav-link" href="/logout">로그아웃</a></li>
+                </ul>
+                <img src="/images/hambuger.png" class="menu-btn" alt="메뉴 아이콘">
             </div>
-
-        </div>
-        <div class="plan-container">
-            <% for(let i = 0; i < result.total_day; i++){ %>
-            <div class="plan-day" data-day=<%= i+1 %>>
-                <div class="day-count"><%= i+1 %> Day (<%= dayArr[i] %>)</div>
-                <div class="plan-day-wrap">
-                    <div class="add-plan" data-day=<%= i+1 %>>
-                        <button class="add-direct" data-day=<%= i+1 %>>일정 추가</button>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-        </div>
-        <button class="store-plan-btn">계획 저장</button>
-
-        <div class="tour-dest-container">
-            <div class="tour-dest-wrap">
-                <h1 class="tour-dest"><span class="big-city"><%= result.big_location %></span> <span
-                        class="small-city"><%= result.small_location %></span></h1>
-                <select name="tour-type" class="tour-type" data-big="<%= result.select_big_location %>"
-                    data-small="<%= result.select_small_location %>">
-                    <option value>전체</option>
-                    <option value="12">관광지</option>
-                    <option value="14">문화 시설</option>
-                    <option value="15">행사/공연/축제</option>
-                    <option value="25">여행코스</option>
-                    <option value="28">레포츠</option>
-                    <option value="32">숙박</option>
-                    <option value="38">쇼핑</option>
-                    <option value="39">음식점</option>
-                </select>
-                <ul class="tour-dest-ul">
+            <div class="nav-m-wrap">
+                <ul class="nav-m">
+                    <li class="nav-list-m"><a class="nav-link-m" href="/mypage">마이페이지</a></li>
+                    <li class="nav-list-m"><a class="nav-link-m" href="/shareplan">공유계획</a></li>
+                    <li class="nav-list-m"><a class="nav-link-m" href="/logout">로그아웃</a></li>
                 </ul>
             </div>
-        </div>
-        <div class="footer">
-            <div class="copy-rights">
-                © 2019 2H&A. All rights reserved.
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <div class="add-plan-container">
-        <div class="add-plan-wrap">
-            <div class="add-plan-verti-div">
-                <div class="add-plan-content">
-                    <h1><span class="day"></span>Day</h1>
-                    <label for="start-time">시작 시간</label><input type="time" name="startTime" class="input-start-time" />
-                    <label for="finish-time">종료 시간</label><input type="time" name="finsihTime"
-                        class="input-finish-time" /><br />
-                    <label for="plan-content">일정 내용</label><br />
-                    <input type="text" name="planContent" id="plan-content" class="input-plan-content" />
-                    <button class="add-plan-btn">일정 추가</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="tour-info-container">
-        <div class="tour-info-wrap">
-            <div class="tour-info-verti-div">
-                <div class="tour-info-content">
-                    <div class="tour-img">
+            <img class="trip-location" src="/images/back.png" width="100%" height="auto" />
+            <h1 class="plan-title" data-total-day=<%= result.total_day  %> data-start-day=<%= result.start_day%>
+                data-finish-day=<%= result.finish_day%> data-id=<%= id %>> <%= result.plan_title %></h1>
+            <button id="myBtn"><%= result.big_location %>의 날씨보기</button>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div id="text_area">
+                        <ul class="weather-ul"></ul>
                     </div>
-                    <div class="tour-content">
-                        <h2 class="tour-name"></h2>
-                        <div class="tour-info">
-                            <span>소개: </span>
-                            <p class="overview info"></p>
-                            <span>위치: </span>
-                            <p class="address info"></p>
-                            <span>전화번호: </span>
-                            <p class="tel info"></p>
-                            <span>홈페이지: </span>
-                            <p class="homepage info"></p>
-                            <div class="map"></div>
-                        </div>
-                        <div class="add-tour">
-                            <label for="select-day">날짜 선택</label>
-                            <select name="day" class="select-day">
-                                <option>선택하세요</option>
-                                <% for(let i = 0; i < result.total_day; i++){ %>
-                                <option value=<%= i+1 %>><%= i+1 %> Day (<%= dayArr[i] %>)</option>
-                                <% } %>
-                            </select><br />
-                            <label for="start-time">시작 시간</label><input type="time" name="startTime"
-                                class="input-start-time" />
-                            <label for="finish-time">종료 시간</label><input type="time" name="finsihTime"
-                                class="input-finish-time" /><br />
-                            <button class="add-tour-plan-btn">일정 추가</button>
+                </div>
+
+            </div>
+            <div class="plan-container">
+                <% for(let i = 0; i < result.total_day; i++){ %>
+                <div class="plan-day" data-day=<%= i+1 %>>
+                    <div class="day-count"><%= i+1 %> Day (<%= dayArr[i] %>)</div>
+                    <div class="plan-day-wrap">
+                        <div class="add-plan" data-day=<%= i+1 %>>
+                            <button class="add-direct" data-day=<%= i+1 %>>일정 추가</button>
                         </div>
                     </div>
                 </div>
+                <% } %>
+            </div>
+            <button class="store-plan-btn">계획 저장</button>
+
+            <div class="tour-dest-container">
+                <div class="tour-dest-wrap">
+                    <h1 class="tour-dest"><span class="big-city"><%= result.big_location %></span> <span
+                            class="small-city"><%= result.small_location %></span></h1>
+                    <select name="tour-type" class="tour-type" data-big="<%= result.select_big_location %>"
+                        data-small="<%= result.select_small_location %>">
+                        <option value>전체</option>
+                        <option value="12">관광지</option>
+                        <option value="14">문화 시설</option>
+                        <option value="15">행사/공연/축제</option>
+                        <option value="25">여행코스</option>
+                        <option value="28">레포츠</option>
+                        <option value="32">숙박</option>
+                        <option value="38">쇼핑</option>
+                        <option value="39">음식점</option>
+                    </select>
+                    <ul class="tour-dest-ul">
+                    </ul>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="copy-rights">
+                    © 2019 2H&A. All rights reserved.
+                </div>
             </div>
         </div>
-    </div>
+        </div>
 
-    <div class="only-tour-info-container">
-        <div class="tour-info-wrap">
-            <div class="tour-info-verti-div">
-                <div class="only-tour-info-content">
-                    <div class="only-tour-img">
+        <div class="add-plan-container">
+            <div class="add-plan-wrap">
+                <div class="add-plan-verti-div">
+                    <div class="add-plan-content">
+                        <h1><span class="day"></span>Day</h1>
+                        <label for="start-time">시작 시간</label><input type="time" name="startTime" class="input-start-time" />
+                        <label for="finish-time">종료 시간</label><input type="time" name="finsihTime"
+                            class="input-finish-time" /><br />
+                        <label for="plan-content">일정 내용</label><br />
+                        <input type="text" name="planContent" id="plan-content" class="input-plan-content" />
+                        <button class="add-plan-btn">일정 추가</button>
                     </div>
-                    <div class="only-tour-content">
-                        <h2 class="tour-name2"></h2>
-                        <div class="only-tour-info">
-                            <span>소개: </span>
-                            <p class="overview2 info"></p>
-                            <span>위치: </span>
-                            <p class="address2 info"></p>
-                            <span>전화번호: </span>
-                            <p class="tel2 info"></p>
-                            <span>홈페이지: </span>
-                            <p class="homepage2 info"></p>
-                            <div class="map"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tour-info-container">
+            <div class="tour-info-wrap">
+                <div class="tour-info-verti-div">
+                    <div class="tour-info-content">
+                        <div class="tour-img">
+                        </div>
+                        <div class="tour-content">
+                            <h2 class="tour-name"></h2>
+                            <div class="tour-info">
+                                <span>소개: </span>
+                                <p class="overview info"></p>
+                                <span>위치: </span>
+                                <p class="address info"></p>
+                                <span>전화번호: </span>
+                                <p class="tel info"></p>
+                                <span>홈페이지: </span>
+                                <p class="homepage info"></p>
+                                <div class="map"></div>
+                            </div>
+                            <div class="add-tour">
+                                <label for="select-day">날짜 선택</label>
+                                <select name="day" class="select-day">
+                                    <option>선택하세요</option>
+                                    <% for(let i = 0; i < result.total_day; i++){ %>
+                                    <option value=<%= i+1 %>><%= i+1 %> Day (<%= dayArr[i] %>)</option>
+                                    <% } %>
+                                </select><br />
+                                <label for="start-time">시작 시간</label><input type="time" name="startTime"
+                                    class="input-start-time" />
+                                <label for="finish-time">종료 시간</label><input type="time" name="finsihTime"
+                                    class="input-finish-time" /><br />
+                                <button class="add-tour-plan-btn">일정 추가</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4e669c4b74a582a0382b81be90fca4ff"></script>
-</body>
-<script type="template-direct" class="template-direct">
-            <div class="one-plan" data-type-id=0>
-                    <img />
-                <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
-                <div class="time">
-                    <input name="startTime" value={startTime} readonly class="start-time" />
-                    <span> - </span>
-                    <input name="finishTime" value={finishTime} readonly class="finish-time" />
-                </div>
-                <div class="detail-plan">
-                        <input name="planContent" value='{planContent}' readonly class="plan-content" />
-                </div>
-            </div>
 
-</script>
-<script type="template-tour" class="template-tour">
-        <div class="one-plan" data-type-id={typeId}>
-                <img src="/images/tour{typeId}.png" class="type-image">
-                <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
-                <div class="time">
-                    <input name="startTime" value={startTime} readonly class="start-time" />
-                    <span> - </span>
-                    <input name="finishTime" value={finishTime} readonly class="finish-time" />
-                </div>
-                <div class="detail-plan">
-                    <div class="tour-link type-id-wrap" data-id={tourId} data-mapx={mapx} data-mapy={mapy} data-tour-img={tourImg}>
-                        <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
+        <div class="only-tour-info-container">
+            <div class="tour-info-wrap">
+                <div class="tour-info-verti-div">
+                    <div class="only-tour-info-content">
+                        <div class="only-tour-img">
+                        </div>
+                        <div class="only-tour-content">
+                            <h2 class="tour-name2"></h2>
+                            <div class="only-tour-info">
+                                <span>소개: </span>
+                                <p class="overview2 info"></p>
+                                <span>위치: </span>
+                                <p class="address2 info"></p>
+                                <span>전화번호: </span>
+                                <p class="tel2 info"></p>
+                                <span>홈페이지: </span>
+                                <p class="homepage2 info"></p>
+                                <div class="map"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-</script>
-<script type="template-tour" class="template-tour-list">
-            <li class='tour-dest-list' data-id={tourId} data-type-id={typeId} data-mapX={mapX} data-mapY={mapY}>
-                <img class='tour-dest-img' src={tourImg} onerror="this.src='/images/tour1.jpg'"></img>
-                <div class="tour-title-wrap">
-                    <img src="/images/tour{typeId}.png" class="tour-type-image"><h4 class='tour-dest-content'>{tourName}</h4>
+        </div>
+        <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4e669c4b74a582a0382b81be90fca4ff"></script>
+    </body>
+    <script type="template-direct" class="template-direct">
+                <div class="one-plan" data-type-id=0>
+                        <img />
+                    <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
+                    <div class="time">
+                        <input name="startTime" value={startTime} readonly class="start-time" />
+                        <span> - </span>
+                        <input name="finishTime" value={finishTime} readonly class="finish-time" />
+                    </div>
+                    <div class="detail-plan">
+                            <input name="planContent" value='{planContent}' readonly class="plan-content" />
+                    </div>
                 </div>
-            </li>
-</script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="/js/plan.js"></script>
 
-<script>
-    var modal = document.getElementById('myModal');
-    var btn = document.getElementById("myBtn");
-    var span = document.getElementsByClassName("close")[0];
-    btn.onclick = function () {
-        modal.style.display = "block";
-    }
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-    var input = document.querySelector(".big-city").innerHTML;
-    var txt = document.getElementsByClassName("weather-ul")[0];
-    txt.innerHTML = "";
-    $.ajax({
-        url: 'http://www.kma.go.kr/weather/forecast/mid-term-rss3.jsp?stnId=108',
-        dataType: 'xml',
-        success: function (response) {
-            $(response).find('location').each(function () {
-                var city = $(this).find('city').text();
-                if (input == '경기도') {
-                    input = '서울';
-                } else if (input == '강원도') {
-                    input = '춘천';
-                }
-                else if (input == '충청북도') {
-                    input = '청주';
-                } else if (input == '충청남도') {
-                    input = '홍성';
-                } else if (input == '경상북도') {
-                    input = '대구';
-                } else if (input == '경상남도') {
-                    input = '부산';
-                } else if (input == '전라북도') {
-                    input = '전주';
-                } else if (input == '전라남도') {
-                    input = '목포';
-                } else if (input == '제주도') {
-                    input = '서귀포';
-                }
-                if (city == input) {
-                    $(this).find('data').each(function () {
-                        var output1 = $(this).find('tmEf').text();
-                        var output2 = $(this).find('wf').text();
-                        output1 = output1.substring(0, 10);
-                        var output3 = $(this).find('tmEf').text();
-                        output3 = output3.substring(11, 16);
-                        if (output3 == '00:00') {
-                            var am = '오전';
-                            txt.innerHTML += "<li style='font-size : 20px;'>" + output1 + am + '</li>';
-                        }
-                        else {
-                            var pm = '오후';
-                            txt.innerHTML += "<li style='font-size : 20px;'>" + output1 + pm + '</li>';
-                        }
-                        txt.innerHTML += "<li style='color : blue; font-size : 25px;'>" + output2 + '</li>';
-                    })
-                }
-            })
-        }
-    })
-
-</script>
+    </script>
+    <script type="template-tour" class="template-tour">
+            <div class="one-plan" data-type-id={typeId}>
+                    <img src="/images/tour{typeId}.png" class="type-image">
+                    <span class="plan-delete-btn{day}" data-day={day}>&times;</span>
+                    <div class="time">
+                        <input name="startTime" value={startTime} readonly class="start-time" />
+                        <span> - </span>
+                        <input name="finishTime" value={finishTime} readonly class="finish-time" />
+                    </div>
+                    <div class="detail-plan">
+                        <div class="tour-link type-id-wrap" data-id={tourId} data-mapx={mapx} data-mapy={mapy} data-tour-img={tourImg}>
+                            <input id="tour-input" name="planContent" value='{planContent}' readonly class="plan-content" />
+                        </div>
+                    </div>
+                </div>
+    </script>
+    <script type="template-tour" class="template-tour-list">
+                <li class='tour-dest-list' data-id={tourId} data-type-id={typeId} data-mapX={mapX} data-mapY={mapY}>
+                    <img class='tour-dest-img' src={tourImg} onerror="this.src='/images/tour1.jpg'"></img>
+                    <div class="tour-title-wrap">
+                        <img src="/images/tour{typeId}.png" class="tour-type-image"><h4 class='tour-dest-content'>{tourName}</h4>
+                    </div>
+                </li>
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/js/plan.js"></script>
+    <script src="/js/nav.js"></script>
 
 </html>
