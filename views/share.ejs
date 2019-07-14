@@ -237,37 +237,8 @@
                         if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
                             getPlanInfo(e, v);
                         } else {
-                            var user_name = document.getElementById("user_name").innerHTML;
-                            var plan_Id = e.dataset.planid;
-                            console.log(e.dataset.planid+'ㄴㅇ');
-                            const data = {
-                                user_name: user_name,
-                                plan_Id : plan_Id
-                            }
-                            console.log(data);
-                            $.ajax({
-                                type: "post",
-                                url: "like_table",
-                                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                                cache: false,
-                                datatype: "json",
-                                data: data,
-                                success: function (result) {
-
-                                    if (result.result == 'count1') {
-                                       const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
-                                       e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount + 1;
-                                    } else {
-                                        const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
-                                       e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount - 1;
-                                    }
-                                },
-                                error: function (error) {
-                                    alert("error");
-                                }
-                            });//ajax
-                            ////하트 로직
-                        }
+                            execGoodLogic(e);
+                        }   
                     });
                 });
             });
@@ -342,9 +313,8 @@
                         if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
                             getPlanInfo(e, v);
                         } else {
-                            ////하트 로직
-
-                        }
+                            execGoodLogic(e);
+                        }   
                     });
                 });
             });
@@ -438,6 +408,36 @@
             if (e.target.className === 'detail-plan-verti-div')
                 this.style.display = 'none';
         });
+
+        function execGoodLogic(e) {
+            var user_name = document.getElementById("user_name").innerHTML;
+            var plan_Id = e.dataset.planid;
+            const data = {
+                user_name: user_name,
+                plan_Id: plan_Id
+            }
+            $.ajax({
+                type: "post",
+                url: "like_table",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                cache: false,
+                datatype: "json",
+                data: data,
+                success: function (result) {
+
+                    if (result.result == 'count1') {
+                        const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
+                        e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount + 1;
+                    } else {
+                        const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
+                        e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount - 1;
+                    }
+                },
+                error: function (error) {
+                    alert("error");
+                }
+            });
+        }
 
 
 
