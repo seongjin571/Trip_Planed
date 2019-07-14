@@ -255,11 +255,11 @@
                                 success: function (result) {
 
                                     if (result.result == 'count1') {
-                                       const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
-                                       e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount + 1;
+                                       alert("좋아요 누름");
+                                       location.reload();
                                     } else {
-                                        const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
-                                       e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount - 1;
+                                        alert("좋아요 취소");
+                                        location.reload();
                                     }
                                 },
                                 error: function (error) {
