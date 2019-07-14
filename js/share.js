@@ -11,6 +11,7 @@ function getAllPlan(order, count) {
     const shareHttp = new XMLHttpRequest();
     shareHttp.addEventListener("load", function (result) {
         const data = JSON.parse(shareHttp.responseText);
+        console.log(data);
         moreBtn.dataset.length = data.length[0].length;
         let newTemplateHtml = "";
 
@@ -20,6 +21,9 @@ function getAllPlan(order, count) {
             moreBtn.style.display = 'block';
         }
         data.result.forEach(function (e) {
+            let goodFlag;
+            if(data.goodPlanId.includes(e.plan_id)) goodFlag = 1;
+            else goodFlag = 0;
             newTemplateHtml += templatePlanHtml.replace('{planId}', e.plan_id)
                 .replace('{startDay}', e.start_day)
                 .replace('{finishDay}', e.finish_day)
@@ -27,7 +31,8 @@ function getAllPlan(order, count) {
                 .replace('{good}', e.good)
                 .replace('{bigCity}', e.big_city)
                 .replace('{smallCity}', e.small_city)
-                .replace('{totalDay}', e.total_day);
+                .replace('{totalDay}', e.total_day)
+                .replace('{goodFlag}',goodFlag);
         })
         if (!flag) sharePlanUl.innerHTML = newTemplateHtml;
         else sharePlanUl.innerHTML += newTemplateHtml;
@@ -38,7 +43,6 @@ function getAllPlan(order, count) {
                 if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
                     getPlanInfo(e, v);
                 } else {
-                    console.log(i)
                     execGoodLogic(e,i);
                 }   
             });
@@ -95,6 +99,10 @@ function getOneLocation(smallCity, order, count) {
             moreBtn.dataset.length = data.length[0].length;
             let newTemplateHtml = "";
             data.result.forEach(function (e) {
+                let goodFlag;
+                console.log(data.goodPlanId, e.plan_id)
+                if(data.goodPlanId.includes(e.plan_id)) goodFlag = 1;
+                else goodFlag = 0;
                 newTemplateHtml += templatePlanHtml.replace('{planId}', e.plan_id)
                     .replace('{startDay}', e.start_day)
                     .replace('{finishDay}', e.finish_day)
@@ -102,7 +110,8 @@ function getOneLocation(smallCity, order, count) {
                     .replace('{planTitle}', e.plan_title)
                     .replace('{good}', e.good)
                     .replace('{smallCity}', e.small_city)
-                    .replace('{totalDay}', e.total_day);
+                    .replace('{totalDay}', e.total_day)
+                    .replace('{goodFlag}',goodFlag);
             })
             if (!flag) sharePlanUl.innerHTML = newTemplateHtml;
             else sharePlanUl.innerHTML += newTemplateHtml;
@@ -231,15 +240,12 @@ function execGoodLogic(e,i) {
             if (result.result == 'count1') {
                 const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
                 e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount + 1;
-                console.log('여기까지 들어옴')
-                document.getElementsByClassName('heart-img heart')[i].style.display = "inline";
-                document.getElementsByClassName('noheart-img heart')[i].style.display = "none";
+                document.getElementsByClassName('heart-img')[i].src = '/images/heart1.png'; 
 
             } else {
                 const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
                 e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount - 1;
-                document.getElementsByClassName('heart-img heart')[i].style.display = "none";
-                document.getElementsByClassName('noheart-img heart')[i].style.display = "inline";
+                document.getElementsByClassName('heart-img')[i].src = '/images/heart0.png';
             }
         },
         error: function (error) {

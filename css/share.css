@@ -74,10 +74,6 @@ label {
     color: #4c80f1;
 }
 
-.heart-img {
-    display: none;
-}
-
 .heart-wrap {
     display: inline-block;
 }

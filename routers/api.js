@@ -54,9 +54,21 @@ router.get('/getPlan', function (req, res) {
 })
 
 router.get('/getAllLocation', function(req, res, next){
+    const userId = req.session.authId;
     const planCount = req.query.count;
     const orderStandard = req.query.order;
     let length = 0;
+    let goodPlanId = [];
+    const goodSql = "select plan_id from like_table where user_name = ?";
+    conn.query(goodSql, userId, function (err, result) {
+        if (err) {
+            throw err;
+        } else {
+            for(let i = 0; i < result.length; i++){
+                goodPlanId[i] = result[i].plan_id;
+            }
+        }
+    })
     const sqlLength = "select count(*) AS length from one_plan";
     conn.query(sqlLength, function (err, result) {
         if (err) {
@@ -70,16 +82,28 @@ router.get('/getAllLocation', function(req, res, next){
         if (err) {
             throw err;
         } else {
-            res.send({ result: result, length: length });
+            res.send({ result: result, length: length, goodPlanId : goodPlanId });
         }
     })
 })
 
 router.get('/getOneLocation',function(req, res, next){
+    const userId = req.session.authId;
     const smallCity = req.query.smallCity;
     const orderStandard = req.query.order;
     const planCount = req.query.count;
     let length = 0;
+    let goodPlanId = [];
+    const goodSql = "select plan_id from like_table where user_name = ?";
+    conn.query(goodSql, userId, function (err, result) {
+        if (err) {
+            throw err;
+        } else {
+            for(let i = 0; i < result.length; i++){
+                goodPlanId[i] = result[i].plan_id;
+            }
+        }
+    })
     const sqlLength = "select count(*) AS length from one_plan where small_city= ?";
     conn.query(sqlLength, smallCity, function (err, result) {
         if (err) {
@@ -93,7 +117,7 @@ router.get('/getOneLocation',function(req, res, next){
         if (err) {
             throw err;
         } else {
-            res.send({ result: result, length: length });
+            res.send({ result: result, length: length, goodPlanId: goodPlanId });
         }
     })
 })
