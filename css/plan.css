@@ -85,7 +85,7 @@ p, div, button, input{
     height: 50px;
     border: 1px solid rgba(216, 214, 214, 0.8);
     border-radius: 3px;
-    margin: 20px 0;
+    margin: 10px 0 20px 0;
 }
 
 .input-plan-content {
@@ -160,6 +160,7 @@ span[class^=plan-delete-btn]:hover {
 }
 .tour-dest-content{
     margin: 0;
+    white-space: nowrap;
 }
 .tour-dest-img{
     box-sizing: border-box;
@@ -219,7 +220,7 @@ span[class^=plan-delete-btn]:hover {
 }
 
 .add-tour input{
-    margin: 20px 0;
+    margin: 10px 0;
 }
 .add-tour input, .add-tour select{
     height: 30px;
@@ -229,7 +230,7 @@ span[class^=plan-delete-btn]:hover {
 }
 .tour-info-wrap{
     display: table;
-    width: 900px;
+    width: 600px;
     margin: 0 auto;
     height: 100%;
 }
@@ -368,6 +369,15 @@ span[class^=plan-delete-btn]:hover {
     .tour-dest-list:nth-child(2n + 2){
         margin: 0 0 30px 20px;
     }
+    .tour-info-wrap{
+        width: 602px;
+    }
+    .tour-img, .tour-content{
+        width: 300px;
+    }
+    .tour-info{
+        height: 290px;
+    }
 }
 @media screen and (min-width: 1000px) {
     .tour-dest-wrap{
@@ -377,5 +387,17 @@ span[class^=plan-delete-btn]:hover {
     }
     .tour-dest-list:nth-child(3n + 2){
         margin: 0 20px 30px 20px;
+    }
+    .tour-info-wrap{
+        width: 900px;
+    }
+    .tour-img{
+        width: 450px;
+    }
+    .tour-content{
+        width: 448px;
+    }
+    .tour-info{
+        height: 275px;
     }
 }
