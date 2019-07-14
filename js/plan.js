@@ -40,27 +40,26 @@ addPlan.prototype = {
             const planDayWrap = document.getElementsByClassName('plan-day-wrap')[this.day];
             let length = planDayWrap.children.length;
             const addPlanDiv = document.getElementsByClassName('add-plan')[this.day];
+            const templateHtml = document.querySelector('.template-direct').innerHTML;
+            const planTitle = document.querySelector('.plan-title').innerHTML;
             const newTemplateHtml = templateHtml.replace('{startTime}', this.startTime.value)
-            .replace('{finishTime}', this.finishTime.value)
-            .replace('{planContent}', this.planContent.value)
-            .replace(/{day}/gi, this.day)
-            console.log(length);
-            if(length === 1){
-            $('.add-plan:eq(this.day)').before("a");
-            }
-            for(let i = 0; i < length; i++){
-                console.log(i);
+                .replace('{finishTime}', this.finishTime.value)
+                .replace('{planContent}', this.planContent.value)
+                .replace(/{day}/gi, this.day)
+            if (length === 1) {
+                $('.add-plan').eq(this.day).before(newTemplateHtml);
+            }else{
+            for (let i = 0; i < length - 1; i++) {
+                // const a= $('.plan-day-wrap').eq(i).find('input');
+                // console.log(a);
                 console.log(planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.value)
-                if(this.startTime.value < planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.value){
-                    if(this.finishTime.value <= planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.value){
-        
-                        const templateHtml = document.querySelector('.template-direct').innerHTML;
-                        const planTitle = document.querySelector('.plan-title').innerHTML;
-                            console.log(i , doc);
-                        // planDayWrap.insertBefore(doc, planDayWrap.children[i]);
+                if (this.startTime.value < planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.value) {
+                    if (this.finishTime.value <= planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.value) {
+
                     }
                 }
             }
+        }
 
             // planDayWrap.removeChild(addPlanDiv);
             // planDayWrap.innerHTML += newTemplateHtml;
@@ -147,7 +146,7 @@ const planFun = new addPlan();
 
 const onlyTourInfoContainer = document.querySelector('.only-tour-info-container');
 onlyTourInfoContainer.addEventListener('click', function (e) {
-    if (e.target.className === 'tour-info-verti-div' || e.target.className === 'only-tour-info-container'){
+    if (e.target.className === 'tour-info-verti-div' || e.target.className === 'only-tour-info-container') {
         document.querySelector('.only-tour-info-container').style.display = 'none';
         document.querySelector('body').style.overflow = 'unset';
     }
@@ -179,7 +178,7 @@ storePlanBtn.addEventListener('click', function () {
             finish_day: planTitle.dataset.finishDay,
             big_city: document.querySelector('.big-city').innerHTML,
             small_city: document.querySelector('.small-city').innerHTML,
-            
+
         }
     }
     addPlanHttp.open("POST", "/addPlan");
