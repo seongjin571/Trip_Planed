@@ -15,7 +15,7 @@ addPlan.prototype = {
         addDirBtn.forEach(function (e) {
             e.addEventListener('click', function (v) {
                 document.querySelector('.add-plan-container').style.display = 'block';
-                document.querySelector('body').style.overflow = 'hidden';
+                document.querySelector('html').style.overflow = 'hidden';
                 this.day = e.parentNode.dataset.day - 1;
                 const dayWrap = document.querySelector('.day');
                 planAddBtn.dataset.day = this.day + 1;
@@ -72,7 +72,7 @@ addPlan.prototype = {
             tourLink.forEach(function (tour) {
                 tour.addEventListener('click', function (data) {
                     document.querySelector('.only-tour-info-container').style.display = "block";
-                    document.querySelector('body').style.overflow = 'hidden';
+                    document.querySelector('html').style.overflow = 'hidden';
 
                     const tourName = document.querySelector('.tour-name2');
                     $.ajax({
@@ -102,7 +102,7 @@ addPlan.prototype = {
     closeModal: function () {
         document.querySelector('.add-plan-container').style.display = 'none';
         document.querySelector('.tour-info-container').style.display = 'none';
-        document.querySelector('body').style.overflow = 'unset';
+        document.querySelector('html').style.overflow = 'unset';
         this.startTime.value = "";
         this.finishTime.value = "";
         this.planContent.value = "";
@@ -256,7 +256,7 @@ function addTourList(result) {
                 }
             });
             document.querySelector('.tour-info-container').style.display = "block";
-            document.querySelector('body').style.overflow = 'hidden';
+            document.querySelector('html').style.overflow = 'hidden';
         })
     });
 }
@@ -287,13 +287,16 @@ var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
 btn.onclick = function () {
     modal.style.display = "block";
+    document.querySelector('html').style.overflow = 'hidden';
 }
 span.onclick = function () {
     modal.style.display = "none";
+    document.querySelector('html').style.overflow = 'unset';
 }
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        document.querySelector('html').style.overflow = 'unset';
     }
 }
 var input = document.querySelector(".big-city").innerHTML;
@@ -334,13 +337,12 @@ $.ajax({
                     output3 = output3.substring(11, 16);
                     if (output3 == '00:00') {
                         var am = '오전';
-                        txt.innerHTML += "<li style='font-size : 20px;'>" + output1 + am + '</li>';
+                        txt.innerHTML += "<li class='weather-list' style='font-size : 20px;'><div class='weather-day'>" + output1 + am + "</div><div class='weather-content'>" + output2 + "</div></li>";
                     }
                     else {
                         var pm = '오후';
-                        txt.innerHTML += "<li style='font-size : 20px;'>" + output1 + pm + '</li>';
+                        txt.innerHTML += "<li class='weather-list' style='font-size : 20px;'><div class='weather-day'>" + output1 + pm + "</div><div class='weather-content'>" + output2 + "</div></li>";
                     }
-                    txt.innerHTML += "<li style='color : blue; font-size : 25px;'>" + output2 + '</li>';
                 })
             }
         })

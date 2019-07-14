@@ -66,7 +66,7 @@ p, div, button, input{
 .add-plan-wrap {
     display: table;
     height: 100%;
-    width: 40%;
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -85,12 +85,12 @@ p, div, button, input{
     height: 50px;
     border: 1px solid rgba(216, 214, 214, 0.8);
     border-radius: 3px;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 20px 10;
 }
 
 .input-plan-content {
     width: 100%;
-    margin-bottom: 20px;
+    margin: 10px 0 20px 0 !important;
 }
 
 .add-plan-btn, .add-tour-plan-btn {
@@ -306,42 +306,35 @@ span[class^=plan-delete-btn]:hover {
 }
 .modal {
     display: none;
-    /* Hidden by default */
     position: fixed;
-    /* Stay in place */
     z-index: 1;
-    /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
-    /* Full width */
     height: 100%;
-    /* Full height */
     overflow: auto;
-    /* Enable scroll if needed */
     background-color: rgb(0, 0, 0);
-    /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 50%;
-    /* Could be more or less, depending on screen size */
+    width: 350px;
+    box-sizing: border-box;
+    position: relative;
 }
 
-/* The Close Button */
 .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
+    position: absolute;
+    top: 10;
+    right: 20;
 }
 
 .close:hover,
@@ -361,6 +354,30 @@ span[class^=plan-delete-btn]:hover {
     border-radius: 3px;
     width: 130px;
 }
+.weather-ul{
+    padding: 0;
+    list-style: none;
+}
+.weather-list{
+    float: left;
+    width: 140px;
+    margin-bottom: 20px;
+}
+.modal-content::after, .weather-ul::after{
+    content: '';
+    clear: both;
+    display: block;
+}
+.weather-content{
+    font-size: 17px;
+    text-align: center;
+}
+.weather-day{
+    color: #4c80f1;
+    font-size: 16px;
+    text-align: center;
+}
+
 @media screen and (min-width: 660px) and (max-width: 1000px) {
      .tour-dest-wrap{
         max-width: 660px;
@@ -377,6 +394,9 @@ span[class^=plan-delete-btn]:hover {
     }
     .tour-info{
         height: 290px;
+    }
+    .add-plan-wrap {
+        width: 50%;
     }
 }
 @media screen and (min-width: 1000px) {
@@ -399,5 +419,8 @@ span[class^=plan-delete-btn]:hover {
     }
     .tour-info{
         height: 275px;
+    }
+    .add-plan-wrap {
+        width: 40%;
     }
 }
