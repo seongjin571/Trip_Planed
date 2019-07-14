@@ -164,8 +164,8 @@
                 <h3>{planTitle}</h3>
                 <p>일정 : {startDay} ~ {finishDay}</p>
                 <div class="heart-wrap">
-                    <img src="/images/heart.png" alt="하트 이미지" class="heart-img heart">
-                    <img src="/images/noheart.png" alt="하트 이미지" class="noheart-img heart">
+                    <img src="/images/heart.png" alt="하트 이미지" class="heart-img heart" id="on_heart_img">
+                    <img src="/images/noheart.png" alt="하트 이미지" class="noheart-img heart" id="off_heart_img">
                     <span class="good-count">{good}</span>
                 </div>
 
@@ -232,47 +232,14 @@
                 else sharePlanUl.innerHTML += newTemplateHtml;
                 flag = false;
                 const planList = document.querySelectorAll('.plan-list');
-                planList.forEach(function (e) {
+                planList.forEach(function (e,i) {
                     e.addEventListener('click', function (v) {
                         if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
                             getPlanInfo(e, v);
                         } else {
-<<<<<<< HEAD
-                            var user_name = document.getElementById("user_name").innerHTML;
-                            var plan_Id = e.dataset.planid;
-                            console.log(e.dataset.planid+'ㄴㅇ');
-                            const data = {
-                                user_name: user_name,
-                                plan_Id : plan_Id
-                            }
-                            console.log(data);
-                            $.ajax({
-                                type: "post",
-                                url: "like_table",
-                                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                                cache: false,
-                                datatype: "json",
-                                data: data,
-                                success: function (result) {
-
-                                    if (result.result == 'count1') {
-                                       alert("좋아요 누름");
-                                       location.reload();
-                                    } else {
-                                        alert("좋아요 취소");
-                                        location.reload();
-                                    }
-                                },
-                                error: function (error) {
-                                    alert("error");
-                                }
-                            });//ajax
-                            ////하트 로직
-                        }
-=======
-                            execGoodLogic(e);
+                            console.log(i)
+                            execGoodLogic(e,i);
                         }   
->>>>>>> 5f5e04b3181870bb322b0c8f486825f67d631e45
                     });
                 });
             });
@@ -342,12 +309,13 @@
                     moreBtn.dataset.count = 6;
                 }
                 const planList = document.querySelectorAll('.plan-list');
-                planList.forEach(function (e) {
+                planList.forEach(function (e,i) {
                     e.addEventListener('click', function (v) {
                         if (!v.target.classList.contains('heart-wrap') && !v.target.classList.contains('heart')) {
                             getPlanInfo(e, v);
                         } else {
-                            execGoodLogic(e);
+                            console.log(i)
+                            execGoodLogic(e,i);
                         }   
                     });
                 });
@@ -443,8 +411,9 @@
                 this.style.display = 'none';
         });
 
-        function execGoodLogic(e) {
+        function execGoodLogic(e,i) {
             var user_name = document.getElementById("user_name").innerHTML;
+            //console.log(i)
             var plan_Id = e.dataset.planid;
             const data = {
                 user_name: user_name,
@@ -462,9 +431,15 @@
                     if (result.result == 'count1') {
                         const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
                         e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount + 1;
+                        console.log('여기까지 들어옴')
+                        document.getElementsByClassName('heart-img heart')[i].style.display = "inline";
+                        document.getElementsByClassName('noheart-img heart')[i].style.display = "none";
+
                     } else {
                         const goodCount = Number(e.lastElementChild.lastElementChild.lastElementChild.innerHTML);
                         e.lastElementChild.lastElementChild.lastElementChild.innerHTML = goodCount - 1;
+                        document.getElementsByClassName('heart-img heart')[i].style.display = "none";
+                        document.getElementsByClassName('noheart-img heart')[i].style.display = "inline";
                     }
                 },
                 error: function (error) {
