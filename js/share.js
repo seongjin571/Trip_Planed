@@ -7,7 +7,7 @@ let sharePlanUl = document.querySelector('.share-plan-ul');
 const smallLocation = document.querySelector('.select-small-location');
 const templatePlanHtml = document.querySelector('.template-one-plan').innerHTML;
 function getAllPlan(order, count) {
-    let url = 'api/getAllLocation?order=' + order + "&count=" + count;
+    let url = '/api/getAllLocation?order=' + order + "&count=" + count;
     const shareHttp = new XMLHttpRequest();
     shareHttp.addEventListener("load", function (result) {
         const data = JSON.parse(shareHttp.responseText);
@@ -185,7 +185,7 @@ function getPlanInfo(e, v) {
         const newTemplateHtml = templateHtml.replace('{day}', i + 1);
         planContainer.innerHTML += newTemplateHtml;
     }
-    const url = "/getPlan?planId=" + planId;
+    const url = "/api/getPlan?planId=" + planId;
     planHttp = new XMLHttpRequest();
     planHttp.addEventListener("load", function (result) {
         const data = JSON.parse(planHttp.responseText);
@@ -214,7 +214,6 @@ detailPlanContainer.addEventListener('click', function (e) {
 
 function execGoodLogic(e,i) {
     var user_name = document.getElementById("user_name").innerHTML;
-    //console.log(i)
     var plan_Id = e.dataset.planid;
     const data = {
         user_name: user_name,
@@ -222,7 +221,7 @@ function execGoodLogic(e,i) {
     }
     $.ajax({
         type: "post",
-        url: "like_table",
+        url: "/api/like_table",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         cache: false,
         datatype: "json",

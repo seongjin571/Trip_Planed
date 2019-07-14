@@ -85,7 +85,6 @@ addPlan.prototype = {
                             document.querySelector('.address2').innerHTML = result.response.body.items.item.addr1;
                             document.querySelector('.tel2').innerHTML = result.response.body.items.item.tel;
                             document.querySelector('.homepage2').innerHTML = result.response.body.items.item.homepage;
-                            console.log(tour.dataset.mapy)
                             drawMap(tour.dataset.mapy, tour.dataset.mapx, 1);
                         }
                     });
@@ -166,7 +165,7 @@ storePlanBtn.addEventListener('click', function () {
     addPlanHttp.addEventListener("load", function (result) {
         const data = JSON.parse(addPlanHttp.responseText);
         if (data.result === 'success') {alert("등록되었습니다.");
-        window.location.href='/mypage';
+        window.location.href='/users';
     }
     });
 
@@ -192,7 +191,7 @@ storePlanBtn.addEventListener('click', function () {
 
         }
     }
-    addPlanHttp.open("POST", "/addPlan");
+    addPlanHttp.open("POST", "/api/addPlan");
     addPlanHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
     addPlanHttp.send(JSON.stringify(data));
 })
