@@ -1,7 +1,7 @@
+
 .select-all-option {
     text-align: center;
-    height: 80px;
-    line-height: 80px;
+    height: 100px;
 }
 
 .select-location,
@@ -37,7 +37,8 @@ label {
 .share-plan-ul {
     padding: 0;
     margin: 0 auto;
-    max-width: 1000px;
+    width: 330px;
+    margin: 0 auto;
 }
 
 .share-plan-ul::after {
@@ -79,4 +80,26 @@ label {
 
 .heart-wrap {
     display: inline-block;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1000px) {
+    .share-plan-ul {
+        width: 660px;
+    }
+    .select-all-option {
+        text-align: center;
+        height: 80px;
+        line-height: 80px;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .share-plan-ul {
+        width: 1000px;
+    }
+    .select-all-option {
+        text-align: center;
+        height: 80px;
+        line-height: 80px;
+    }
 }

@@ -38,29 +38,12 @@ addPlan.prototype = {
         planAddBtn.addEventListener('click', function (e) {
             this.setTimeInput(0);
             const planDayWrap = document.getElementsByClassName('plan-day-wrap')[this.day];
-            let length = planDayWrap.children.length;
-            const addPlanDiv = document.getElementsByClassName('add-plan')[this.day];
             const templateHtml = document.querySelector('.template-direct').innerHTML;
-            const planTitle = document.querySelector('.plan-title').innerHTML;
             const newTemplateHtml = templateHtml.replace('{startTime}', this.startTime.value)
                 .replace('{finishTime}', this.finishTime.value)
                 .replace('{planContent}', this.planContent.value)
                 .replace(/{day}/gi, this.day)
-            let flag = false;
-            if (length === 1) {
-                $('.add-plan').eq(this.day).before(newTemplateHtml);
-            } else {
-                for (let i = 0; i < length - 1; i++) {
-                    console.log($('.plan-day-wrap').eq(this.day).children()[i]);
-                    if (this.startTime.value < planDayWrap.children[i].firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.value) {
-                        if (this.finishTime.value <= planDayWrap.children[i].firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.value) {
-                            flag = true;
-                            $('.plan-day-wrap').eq(this.day).children()[i].before(newTemplateHtml);
-                        }
-                    }
-                }
-                if (!flag) $('.add-plan').eq(this.day).before(newTemplateHtml);
-            }
+            this.insertPlanLogic(planDayWrap, newTemplateHtml);
             this.enrollDeleteBtn();
             this.closeModal();
         }.bind(this));
@@ -70,7 +53,6 @@ addPlan.prototype = {
             this.setTimeInput(1);
             this.day = document.querySelector('.select-day').value - 1;
             const tourName = document.querySelector('.tour-name');
-            const addPlanDiv = document.getElementsByClassName('add-plan')[this.day];
             const planDayWrap = document.getElementsByClassName('plan-day-wrap')[this.day];
             const templateHtml = document.querySelector('.template-tour').innerHTML;
             const newTemplateHtml = templateHtml.replace('{startTime}', this.startTime.value)
@@ -82,9 +64,7 @@ addPlan.prototype = {
                 .replace('{mapy}', tourName.dataset.mapy)
                 .replace(/{typeId}/gi, tourName.dataset.typeid)
                 .replace(/{day}/gi, this.day);
-            planDayWrap.removeChild(addPlanDiv);
-            planDayWrap.innerHTML += newTemplateHtml;
-            planDayWrap.appendChild(addPlanDiv);
+            this.insertPlanLogic(planDayWrap, newTemplateHtml)
             this.enrollDeleteBtn();
             this.closeModal();
 
@@ -136,6 +116,38 @@ addPlan.prototype = {
                 onePlanParent.removeChild(v.target.parentNode);
             })
         })
+    },
+    
+    insertPlanLogic: function(planDayWrap, newTemplateHtml){
+        let length = planDayWrap.children.length;
+        if (length === 1) {
+            $('.add-plan').eq(this.day).before(newTemplateHtml);
+        } else {
+            for (let i = 0; i < length - 1; i++) {
+                let startTime = planDayWrap.children[i].firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.value;
+                let finishTime = planDayWrap.children[i].firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.value;
+                if (this.startTime.value < startTime) {
+                    if (this.finishTime.value <= startTime) {
+                        $(newTemplateHtml).insertBefore($('.plan-day-wrap').eq(this.day).children()[i]);
+                        break;
+                    }else{
+                        alert("시간을 잘못 입력하셨습니다");
+                        break;
+                    }
+                }else if(this.startTime.value == startTime){
+                    alert("시간을 잘못 입력하셨습니다");
+                    break;
+                }else{
+                    if(this.finishTime.value < finishTime){
+                        alert("시간을 잘못 입력하셨습니다");
+                        break;
+                    }
+                    if(i === length - 2){
+                        $('.add-plan').eq(this.day).before(newTemplateHtml);
+                    } 
+                }
+            }
+        }
     }
 }
 const planFun = new addPlan();
@@ -153,7 +165,9 @@ storePlanBtn.addEventListener('click', function () {
     addPlanHttp = new XMLHttpRequest();
     addPlanHttp.addEventListener("load", function (result) {
         const data = JSON.parse(addPlanHttp.responseText);
-        if (data.result === 'success') alert("등록되었습니다.");
+        if (data.result === 'success') {alert("등록되었습니다.");
+        window.location.href='/mypage';
+    }
     });
 
     const planCount = document.querySelectorAll('.one-plan');
