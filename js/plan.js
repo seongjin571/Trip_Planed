@@ -46,24 +46,21 @@ addPlan.prototype = {
                 .replace('{finishTime}', this.finishTime.value)
                 .replace('{planContent}', this.planContent.value)
                 .replace(/{day}/gi, this.day)
+            let flag = false;
             if (length === 1) {
                 $('.add-plan').eq(this.day).before(newTemplateHtml);
             }else{
-            for (let i = 0; i < length - 1; i++) {
-                // const a= $('.plan-day-wrap').eq(i).find('input');
-                // console.log(a);
-                console.log(planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.value)
-                if (this.startTime.value < planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.value) {
-                    if (this.finishTime.value <= planDayWrap.children[0].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.value) {
-
+                for (let i = 0; i < length - 1; i++) {
+                    console.log($('.plan-day-wrap').eq(this.day).children()[i]);
+                    if (this.startTime.value < planDayWrap.children[i].firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.value) {
+                        if (this.finishTime.value <= planDayWrap.children[i].firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.value) {
+                            flag = true;
+                            $('.plan-day-wrap').eq(this.day).children()[i].before(newTemplateHtml);
+                        }
                     }
                 }
-            }
+                if(!flag) $('.add-plan').eq(this.day).before(newTemplateHtml);
         }
-
-            // planDayWrap.removeChild(addPlanDiv);
-            // planDayWrap.innerHTML += newTemplateHtml;
-            // planDayWrap.appendChild(addPlanDiv);
             this.enrollDeleteBtn();
             this.closeModal();
         }.bind(this));
