@@ -30,9 +30,11 @@
                 </ul>
             </div>
             <img class="trip-location" src="/images/back.png" width="100%" height="auto" />
+            <div class="title_weather">
             <h1 class="plan-title" data-total-day=<%= result.total_day  %> data-start-day=<%= result.start_day%>
                 data-finish-day=<%= result.finish_day%> data-id=<%= id %>> <%= result.plan_title %></h1>
             <button id="myBtn"><%= result.big_location %>의 날씨보기</button>
+        </div>
             <div id="myModal" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>

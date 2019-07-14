@@ -5,7 +5,7 @@
 }
 
 .plan-day { 
-    width: 250px;
+    width: 50%;
     float: left;
     min-height: 150px;
     border-radius: 5px;
@@ -32,13 +32,12 @@
 
 
 .plan-container {
-    max-width: 1000px;
-    min-width: 350px;
+    max-width: 90%;
     margin: 0 auto 50px;
     background-color: white;
-    /* border: 2px solid rgba(212, 212, 212, 0.5); */
     padding: 0 3px;
 }
+
 
 .plan-day:nth-child(2n) .plan-day-wrap {
     background-color: #d1dddb4d;
@@ -71,7 +70,33 @@ input[class^=finish-time] {
     width: 100%;
     font-size: 15px;
 }
-.plan-title{
-    max-width: 1000px;
+.title_weather{
+    position: relative;
+    max-width: 80%;
     margin: 30px auto;
+}
+@media screen and (min-width: 660px) and (max-width: 1000px) {
+    .plan-container{
+       max-width: 660px;
+       margin: 0 auto;
+   }
+   .plan-day{
+    width: 220px;
+   }
+   .title_weather{
+       max-width: 660px;
+   }
+}
+@media screen and (min-width: 1000px) {
+    .plan-container{
+       padding: 0;
+       max-width: 1000px;
+       margin: 0 auto;
+   }
+   .title_weather{
+    max-width: 1000px;
+    }
+    .plan-day{
+        width: 250px;
+    }
 }
