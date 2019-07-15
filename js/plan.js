@@ -156,7 +156,7 @@ const onlyTourInfoContainer = document.querySelector('.only-tour-info-container'
 onlyTourInfoContainer.addEventListener('click', function (e) {
     if (e.target.className === 'tour-info-verti-div' || e.target.className === 'only-tour-info-container') {
         document.querySelector('.only-tour-info-container').style.display = 'none';
-        document.querySelector('body').style.overflow = 'unset';
+        document.querySelector('html').style.overflow = 'unset';
     }
 });
 const storePlanBtn = document.querySelector('.store-plan-btn');
@@ -165,7 +165,7 @@ storePlanBtn.addEventListener('click', function () {
     addPlanHttp.addEventListener("load", function (result) {
         const data = JSON.parse(addPlanHttp.responseText);
         if (data.result === 'success') {alert("등록되었습니다.");
-        window.location.href='/users';
+        window.location.href='/users/mypage';
     }
     });
 
